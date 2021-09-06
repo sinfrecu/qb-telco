@@ -11,6 +11,7 @@ AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
     isLoggedIn = true
     PlayerData = QBCore.Functions.GetPlayerData()
     GetCurrentProject()
+    TriggerEvent('qb-telco:client:UpdateBlip', Config.CurrentProject)
 end)
 
 Citizen.CreateThread(function()
@@ -200,3 +201,28 @@ RegisterNetEvent('qb-telco:client:FinishProject')
 AddEventHandler('qb-telco:client:FinishProject', function(BuilderConfig)
     Config = BuilderConfig
 end)
+
+
+
+
+RegisterNetEvent('qb-telco:client:UpdateBlip')
+AddEventHandler('qb-telco:client:UpdateBlip', function(id)
+--  if PlayerJob.name == "tow" then
+    TelcoBlip = AddBlipForCoord(Config.Projects[id].ProjectLocations["main"].coords.x, Config.Projects[id].ProjectLocations["main"].coords.y, Config.Projects[id].ProjectLocations["main"].coords.z)
+    SetBlipSprite(TelcoBlip, 767)
+    SetBlipDisplay(TelcoBlip, 4)
+    SetBlipScale(TelcoBlip, 0.6)
+    SetBlipAsShortRange(TelcoBlip, true)
+    SetBlipColour(TelcoBlip, 1)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentSubstringPlayerName(Config.Projects[id].ProjectLocations["main"].label)
+    EndTextCommandSetBlipName(TelcoBlip)
+--  end
+
+end)
+
+
+
+
+
+
