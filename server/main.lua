@@ -33,6 +33,7 @@ AddEventHandler('qb-telco:server:FinishProject', function()
         v.IsBusy = false
     end
     table.insert(ProjectDone, Config.CurrentProject)
+    PayTelco()
     if #ProjectDone == #Config.Projects then
       ProjectDone = {}
       -- Fix repeat last job after reset
@@ -63,3 +64,26 @@ function hasDoneLocation(locationId)
     end
     return retval
 end
+
+
+function PayTelco()
+    local src = source 
+    local Player = QBCore.Functions.GetPlayer(src)
+    local drops = tonumber(#ProjectDone)
+    local bonus = 0
+    local DropPrice = math.random(100, 120)
+    if drops > 2 then 
+        bonus = math.ceil((DropPrice / 10) * 5) + 100
+    elseif drops > 3 then
+        bonus = math.ceil((DropPrice / 10) * 7) + 300
+    elseif drops > 10 then
+        bonus = math.ceil((DropPrice / 10) * 10) + 400
+    elseif drops > 20 then
+        bonus = math.ceil((DropPrice / 10) * 12) + 500
+    end
+    local price = (DropPrice * drops) + bonus
+    local payment = price 
+    Player.Functions.AddMoney("bank", payment, "telco-salary")
+    TriggerClientEvent('QBCore:Notify', src, 'You Earned $'..payment, 'success')
+end
+
