@@ -5,9 +5,9 @@
 Todo:
 
 - [x] 💰Pay 
-- [ ] 💲Bonus pay 
+- [x] 💲Bonus pay 
 - [ ] 🔍Job requierd
-- [ ] 📍blit
+- [x] 📍blit and update blit
 - [ ] 📌blit's in task's (?)
 - [ ] 🔨Requierd tool's on inventory 
 - [ ] 🔩Consume metals (?)
