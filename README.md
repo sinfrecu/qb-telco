@@ -4,7 +4,7 @@
 
 Todo:
 
-- [ ] 💰Pay 
+- [x] 💰Pay 
 - [ ] 💲Bonus pay 
 - [ ] 🔍Job requierd
 - [ ] 📍blit
