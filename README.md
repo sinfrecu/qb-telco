@@ -2,7 +2,15 @@
 
 **Communications Technician job For QB-Core**
 
+Todo:
 
+- [ ] 💰Pay 
+- [ ] 💲Bonus pay 
+- [ ] 🔍Job requierd
+- [ ] 📍blit
+- [ ] 📌blit's in task's (?)
+- [ ] 🔨Requierd tool's on inventory 
+- [ ] 🔩Consume metals (?)
 
 
 ----
