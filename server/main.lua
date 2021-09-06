@@ -50,7 +50,7 @@ AddEventHandler('qb-telco:server:FinishProject', function()
     Config.CurrentProject = NewProject
     Config.Projects[NewProject].IsActive = true
     TriggerClientEvent('qb-telco:client:FinishProject', -1, Config)
-    TriggerClientEvent('qb-telco:client:UpdateBlip', NewProject)
+    TriggerClientEvent('qb-telco:client:UpdateBlip', -1, NewProject)
 end)
 
 

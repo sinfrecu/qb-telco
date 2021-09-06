@@ -207,9 +207,11 @@ end)
 
 RegisterNetEvent('qb-telco:client:UpdateBlip')
 AddEventHandler('qb-telco:client:UpdateBlip', function(id)
+    DeleteBlip()
+    Citizen.Wait(5)
 --  if PlayerJob.name == "tow" then
     TelcoBlip = AddBlipForCoord(Config.Projects[id].ProjectLocations["main"].coords.x, Config.Projects[id].ProjectLocations["main"].coords.y, Config.Projects[id].ProjectLocations["main"].coords.z)
-    SetBlipSprite(TelcoBlip, 767)
+    SetBlipSprite(TelcoBlip, 354)
     SetBlipDisplay(TelcoBlip, 4)
     SetBlipScale(TelcoBlip, 0.6)
     SetBlipAsShortRange(TelcoBlip, true)
@@ -221,8 +223,11 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
 
 end)
 
-
-
+function DeleteBlip()
+	if DoesBlipExist(TelcoBlip) then
+		RemoveBlip(TelcoBlip)
+	end
+end
 
 
 
