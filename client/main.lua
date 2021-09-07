@@ -111,12 +111,17 @@ Citizen.CreateThread(function()
                         if TaskDistance < 1.5 then
                             DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] Complete task')
                             if IsControlJustPressed(0, 38) then
-				TouchAnim()
-			 	TouchProcess()	
-                                BuilderData.CurrentTask = k
-                                DoTask()
-				
-                            end
+			      QBCore.Functions.TriggerCallback("qb-telco:server:recurses", function(hasRecurses)
+ 			        if not hasRecurses then
+				  QBCore.Functions.Notify("Process Canceled", "error")
+				else
+				  TouchAnim()
+				  TouchProcess()
+				  BuilderData.CurrentTask = k
+				  DoTask()
+                                end
+                              end)
+                           end
                         end
                     end
                 end
@@ -135,9 +140,9 @@ function DoTask()
     local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
     local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][BuilderData.CurrentTask]
-    local CountDown = 5
     TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, true, false)
 
+--    if RepairJob()
     if TaskData.type == "hammer" then
         TouchAnim()
 	TouchProcess()

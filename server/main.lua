@@ -88,3 +88,20 @@ function PayTelco()
     TriggerClientEvent('QBCore:Notify', src, 'You Earned $'..payment, 'success')
 end
 
+
+QBCore.Functions.CreateCallback('qb-telco:server:recurses', function(source, cb, item)
+
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if Player.Functions.RemoveItem("copper", 2) then
+      TriggerClientEvent('QBCore:Notify', src, 'Valido se desconto', 'success')
+      cb(true)
+    else
+      TriggerClientEvent('QBCore:Notify', src, 'No tienes la cantidad necesaria', 'error')
+      cb(false)
+    end
+
+end)
+
+
+
