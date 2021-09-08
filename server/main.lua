@@ -89,26 +89,44 @@ function PayTelco()
 end
 
 
-QBCore.Functions.CreateCallback('qb-telco:server:recurses', function(source, cb, item)
-  local src = source
-  local xPlayer = QBCore.Functions.GetPlayer(src)
-  local toolkit = {}
-  local toolkit = xPlayer.Functions.GetItemsByName('screwdriversetashdhas')
-  local retval = false
-  if toolkit ~= nil then
-    if xPlayer.Functions.RemoveItem("copper", 2) then
-      TriggerClientEvent('QBCore:Notify', src, 'Valido se desconto', 'success')
-      retval = true
-    else
-      TriggerClientEvent('QBCore:Notify', src, 'No tienes la cantidad necesaria de cobre', 'error')
-      retval = false
-    end
-  else
-    TriggerClientEvent('QBCore:Notify', src, 'No tienes toolkit', 'error')
-    retval = false
-  end
-  return retval
-end)
+--QBCore.Functions.CreateCallback('qb-telco:server:recurses', function(source, cb, item)
+--  local src = source
+--  local xPlayer = QBCore.Functions.GetPlayer(src)
+--  local toolkit = {}
+--  local toolkit = xPlayer.Functions.GetItemsByName('screwdriversetashdhas')
+--  local retval = false
+--  if toolkit ~= nil then
+--    if xPlayer.Functions.RemoveItem("copper", 2) then
+--      TriggerClientEvent('QBCore:Notify', src, 'Valido se desconto', 'success')
+--      retval = true
+--    else
+--      TriggerClientEvent('QBCore:Notify', src, 'No tienes la cantidad necesaria de cobre', 'error')
+--      retval = false
+--    end
+--  else
+--    TriggerClientEvent('QBCore:Notify', src, 'No tienes toolkit', 'error')
+--    retval = false
+--  end
+--  return retval
+--end)
 
+
+QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, cb)
+    local Ply = QBCore.Functions.GetPlayer(source)
+    local Toolkit = Ply.Functions.GetItemByName("screwdriverset")
+
+    if Toolkit ~= nil then
+	if Ply.Functions.RemoveItem("copper", 2) then
+		TriggerClientEvent('QBCore:Notify', source, 'Valido se desconto', 'success')
+	        cb(true)
+	else
+		cb(false)
+		TriggerClientEvent('QBCore:Notify', source, 'No tienes la cantidad necesaria de cobre', 'error')
+	end
+    else
+	TriggerClientEvent('QBCore:Notify', source, 'No tienes Toolkit', 'error')
+        cb(false)
+    end
+end)
 
 

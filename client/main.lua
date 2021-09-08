@@ -116,14 +116,14 @@ Citizen.CreateThread(function()
 
                             DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] Complete task')
                             if IsControlJustPressed(0, 38) then
-			      QBCore.Functions.TriggerCallback("qb-telco:server:recurses", function(hasRecurses)
- 			        if hasRecurses then
+			      QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
+				if hasItem then
+                                  TouchAnim()
+                                  TouchProcess()
+                                  BuilderData.CurrentTask = k
+                                  DoTask()
+				else	
 				  TriggerEvent('inventory:client:requiredItems', requiredItems, true)
-				else
-				  TouchAnim()
-				  TouchProcess()
-				  BuilderData.CurrentTask = k
-				  DoTask()
                                 end
                               end)
                            end

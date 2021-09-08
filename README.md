@@ -9,8 +9,13 @@ Todo:
 - [ ] 🔍Job requierd
 - [x] 📍blit and update blit
 - [ ] 📌blit's in task's (?)
-- [ ] 🔨Requierd tool's on inventory 
-- [x] 🔩Consume metals (?)
+- [x] 🔨Requierd tool's on inventory  "screwdriverset" (Toolkit)
+- [x] 🔩Consume metals , (todo: Random copper 1-3 per task)
+- [ ] coords to vector3
+
+Whislist:
+
+- [ ] Consume item's on config
 
 
 ----
