@@ -125,6 +125,8 @@ Citizen.CreateThread(function()
                             if IsControlJustPressed(0, 38) then
                                 QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
                                     if hasItem then
+                                        -- Prevent sticky panel 
+                                        TriggerEvent('inventory:client:requiredItems', requiredItems, false)
                                         BuilderData.CurrentTask = k
                                         DoTask()
                                     else    
