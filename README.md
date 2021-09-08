@@ -6,16 +6,32 @@ Todo:
 
 - [x] 💰Pay 
 - [x] 💲Bonus pay 
-- [ ] 🔍Job requierd
+- [x] 🔍Job requierd "telco"
 - [x] 📍blit and update blit
-- [ ] 📌blit's in task's (?)
 - [x] 🔨Requierd tool's on inventory  "screwdriverset" (Toolkit)
-- [x] 🔩Consume metals , (todo: Random copper 1-3 per task)
+- [x] 🔩Consume metals ,
+- [ ] Random copper 1-3 per task or requeriments on config.lua
 - [ ] coords to vector3
+- [ ] 📌blit's in task's (?)
 
-Whislist:
 
-- [ ] Consume item's on config
+# Add job to Qb-core (⭐Required)
+
+**Edit the file :** `/resources/[qb]/qb-core/shared.lua` and add job in `QBShared.Jobs = {`
+
+```
+	["telco"] = {
+		label = "Technician",
+		defaultDuty = true,
+		grades = {
+            ['0'] = {
+                name = "Communications",
+                payment = 50
+            },
+        },
+        },
+```
+
 
 
 ----
