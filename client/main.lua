@@ -125,8 +125,6 @@ Citizen.CreateThread(function()
                             if IsControlJustPressed(0, 38) then
                                 QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
                                     if hasItem then
-                                        TouchAnim()
-                                        TouchProcess()
                                         BuilderData.CurrentTask = k
                                         DoTask()
                                     else    
