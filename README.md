@@ -2,7 +2,7 @@
 
 **Communications Technician job For QB-Core**
 
-Todo:
+## Todo:
 
 - [x] 💰Pay 
 - [x] 💲Bonus pay 
@@ -15,7 +15,7 @@ Todo:
 - [ ] 📌blit's in task's (?)
 
 
-# Add job to Qb-core (⭐Required)
+## Add job to Qb-core (⭐Required)
 
 **Edit the file :** `/resources/[qb]/qb-core/shared.lua` and add job in `QBShared.Jobs = {`
 
