@@ -10,7 +10,7 @@ Todo:
 - [x] 📍blit and update blit
 - [ ] 📌blit's in task's (?)
 - [ ] 🔨Requierd tool's on inventory 
-- [ ] 🔩Consume metals (?)
+- [x] 🔩Consume metals (?)
 
 
 ----

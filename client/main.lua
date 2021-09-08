@@ -109,11 +109,16 @@ Citizen.CreateThread(function()
                         inRange = true
                         DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 55, 155, 255, 255, 0, 0, 0, 1, 0, 0, 0)
                         if TaskDistance < 1.5 then
+		          local requiredItems = {
+			    [1] = {name = QBCore.Shared.Items["screwdriverset"]["name"], image = QBCore.Shared.Items["screwdriverset"]["image"]},
+			    [2] = {name = QBCore.Shared.Items["copper"]["name"], image = QBCore.Shared.Items["copper"]["image"]},
+			  }
+
                             DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] Complete task')
                             if IsControlJustPressed(0, 38) then
 			      QBCore.Functions.TriggerCallback("qb-telco:server:recurses", function(hasRecurses)
- 			        if not hasRecurses then
-				  QBCore.Functions.Notify("Process Canceled", "error")
+ 			        if hasRecurses then
+				  TriggerEvent('inventory:client:requiredItems', requiredItems, true)
 				else
 				  TouchAnim()
 				  TouchProcess()
@@ -122,6 +127,8 @@ Citizen.CreateThread(function()
                                 end
                               end)
                            end
+			else
+			TriggerEvent('inventory:client:requiredItems', requiredItems, false)
                         end
                     end
                 end
