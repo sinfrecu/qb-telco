@@ -95,15 +95,15 @@ QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, c
     local Toolkit = Ply.Functions.GetItemByName("screwdriverset")
 
     if Toolkit ~= nil then
-	if Ply.Functions.RemoveItem("copper", 2) then
-		TriggerClientEvent('QBCore:Notify', source, 'Valido se desconto', 'success')
-	        cb(true)
-	else
-		cb(false)
-		TriggerClientEvent('QBCore:Notify', source, 'No tienes la cantidad necesaria de cobre', 'error')
-	end
+    if Ply.Functions.RemoveItem("copper", 2) then
+        TriggerClientEvent('QBCore:Notify', source, 'Valido se desconto', 'success')
+            cb(true)
     else
-	TriggerClientEvent('QBCore:Notify', source, 'No tienes Toolkit', 'error')
+        cb(false)
+        TriggerClientEvent('QBCore:Notify', source, 'No tienes la cantidad necesaria de cobre', 'error')
+    end
+    else
+    TriggerClientEvent('QBCore:Notify', source, 'No tienes Toolkit', 'error')
         cb(false)
     end
 end)

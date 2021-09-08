@@ -28,7 +28,7 @@ function GetCurrentProject()
 end
 
 function DrawText3Ds(x, y, z, text)
-	SetTextScale(0.35, 0.35)
+    SetTextScale(0.35, 0.35)
     SetTextFont(4)
     SetTextProportional(1)
     SetTextColour(255, 255, 255, 215)
@@ -113,29 +113,29 @@ Citizen.CreateThread(function()
                         DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 55, 155, 255, 255, 0, 0, 0, 1, 0, 0, 0)
                         if TaskDistance < 1.5 then
 
-		                    -- this is shit, I already have plans
+                            -- this is shit, I already have plans
                             local requiredItems = {
-			                    [1] = {name = QBCore.Shared.Items["screwdriverset"]["name"], image = QBCore.Shared.Items["screwdriverset"]["image"]},
-			                    [2] = {name = QBCore.Shared.Items["copper"]["name"], image = QBCore.Shared.Items["copper"]["image"]},
-			                }
+                                [1] = {name = QBCore.Shared.Items["screwdriverset"]["name"], image = QBCore.Shared.Items["screwdriverset"]["image"]},
+                                [2] = {name = QBCore.Shared.Items["copper"]["name"], image = QBCore.Shared.Items["copper"]["image"]},
+                            }
                             -- end shit
 
                             DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] Complete task')
 
                             if IsControlJustPressed(0, 38) then
-			                    QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
-				                    if hasItem then
+                                QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
+                                    if hasItem then
                                         TouchAnim()
                                         TouchProcess()
                                         BuilderData.CurrentTask = k
                                         DoTask()
-				                    else	
-				                        TriggerEvent('inventory:client:requiredItems', requiredItems, true)
+                                    else    
+                                        TriggerEvent('inventory:client:requiredItems', requiredItems, true)
                                     end
                                 end)
                             end
-			            else
-			                TriggerEvent('inventory:client:requiredItems', requiredItems, false)
+                        else
+                            TriggerEvent('inventory:client:requiredItems', requiredItems, false)
                         end
                     end
                 end
@@ -157,7 +157,7 @@ function DoTask()
 
     if TaskData.type == "hammer" then
         TouchAnim()
-	TouchProcess()
+    TouchProcess()
         TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, true, true)
     end
 
@@ -241,9 +241,9 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
 end)
 
 function DeleteBlip()
-	if DoesBlipExist(TelcoBlip) then
-		RemoveBlip(TelcoBlip)
-	end
+    if DoesBlipExist(TelcoBlip) then
+        RemoveBlip(TelcoBlip)
+    end
 end
 
 
