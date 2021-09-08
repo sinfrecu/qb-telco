@@ -23,7 +23,7 @@ end)
 
 function GetCurrentProject()
     QBCore.Functions.TriggerCallback('qb-telco:server:GetCurrentProject', function(BuilderConfig)
-        Config = BuilderConfig
+    Config = BuilderConfig
     end)
 end
 
@@ -55,6 +55,8 @@ function GetCompletedTasks()
     return retval
 end
 
+
+
 Citizen.CreateThread(function()
     while true do
         local ped = PlayerPedId()
@@ -65,7 +67,8 @@ Citizen.CreateThread(function()
         if Config.CurrentProject ~= 0 then
             local data = Config.Projects[Config.CurrentProject].ProjectLocations["main"]
             local MainDistance = #(pos - vector3(data.coords.x, data.coords.y, data.coords.z))
-
+            
+            -- Main blip
             if MainDistance < 10 then
                 inRange = true
                 DrawMarker(2, data.coords.x, data.coords.y, data.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 55, 155, 255, 255, 0, 0, 0, 1, 0, 0, 0)
@@ -109,26 +112,30 @@ Citizen.CreateThread(function()
                         inRange = true
                         DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 55, 155, 255, 255, 0, 0, 0, 1, 0, 0, 0)
                         if TaskDistance < 1.5 then
-		          local requiredItems = {
-			    [1] = {name = QBCore.Shared.Items["screwdriverset"]["name"], image = QBCore.Shared.Items["screwdriverset"]["image"]},
-			    [2] = {name = QBCore.Shared.Items["copper"]["name"], image = QBCore.Shared.Items["copper"]["image"]},
-			  }
+
+		                    -- this is shit, I already have plans
+                            local requiredItems = {
+			                    [1] = {name = QBCore.Shared.Items["screwdriverset"]["name"], image = QBCore.Shared.Items["screwdriverset"]["image"]},
+			                    [2] = {name = QBCore.Shared.Items["copper"]["name"], image = QBCore.Shared.Items["copper"]["image"]},
+			                }
+                            -- end shit
 
                             DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] Complete task')
+
                             if IsControlJustPressed(0, 38) then
-			      QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
-				if hasItem then
-                                  TouchAnim()
-                                  TouchProcess()
-                                  BuilderData.CurrentTask = k
-                                  DoTask()
-				else	
-				  TriggerEvent('inventory:client:requiredItems', requiredItems, true)
-                                end
-                              end)
-                           end
-			else
-			TriggerEvent('inventory:client:requiredItems', requiredItems, false)
+			                    QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
+				                    if hasItem then
+                                        TouchAnim()
+                                        TouchProcess()
+                                        BuilderData.CurrentTask = k
+                                        DoTask()
+				                    else	
+				                        TriggerEvent('inventory:client:requiredItems', requiredItems, true)
+                                    end
+                                end)
+                            end
+			            else
+			                TriggerEvent('inventory:client:requiredItems', requiredItems, false)
                         end
                     end
                 end
@@ -138,7 +145,6 @@ Citizen.CreateThread(function()
         if not inRange then
             Citizen.Wait(1000)
         end
-
         Citizen.Wait(3)
     end
 end)
@@ -149,7 +155,6 @@ function DoTask()
     local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][BuilderData.CurrentTask]
     TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, true, false)
 
---    if RepairJob()
     if TaskData.type == "hammer" then
         TouchAnim()
 	TouchProcess()

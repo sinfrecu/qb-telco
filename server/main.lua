@@ -1,6 +1,5 @@
 ProjectDone = {}
 
-
 QBCore.Functions.CreateCallback('qb-telco:server:GetCurrentProject', function(source, cb)
     local CurProject = nil
     for k, v in pairs(Config.Projects) do
@@ -89,27 +88,7 @@ function PayTelco()
 end
 
 
---QBCore.Functions.CreateCallback('qb-telco:server:recurses', function(source, cb, item)
---  local src = source
---  local xPlayer = QBCore.Functions.GetPlayer(src)
---  local toolkit = {}
---  local toolkit = xPlayer.Functions.GetItemsByName('screwdriversetashdhas')
---  local retval = false
---  if toolkit ~= nil then
---    if xPlayer.Functions.RemoveItem("copper", 2) then
---      TriggerClientEvent('QBCore:Notify', src, 'Valido se desconto', 'success')
---      retval = true
---    else
---      TriggerClientEvent('QBCore:Notify', src, 'No tienes la cantidad necesaria de cobre', 'error')
---      retval = false
---    end
---  else
---    TriggerClientEvent('QBCore:Notify', src, 'No tienes toolkit', 'error')
---    retval = false
---  end
---  return retval
---end)
-
+-- Callback
 
 QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, cb)
     local Ply = QBCore.Functions.GetPlayer(source)
