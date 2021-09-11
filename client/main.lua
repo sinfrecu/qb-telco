@@ -133,8 +133,6 @@ Citizen.CreateThread(function()
                                 -- end shit
                                 DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] Complete task')
 
-                                local NumberCurrentTask = k
-
                                 TriggerServerEvent('qb-telco:server:CurrenTaskupdate', k )
 
                                 if IsControlJustPressed(0, 38) then

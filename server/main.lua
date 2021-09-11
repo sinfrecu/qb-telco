@@ -112,7 +112,6 @@ end)
 
 RegisterServerEvent('qb-telco:server:CurrenTaskupdate')
 AddEventHandler('qb-telco:server:CurrenTaskupdate', function(Task)
-    TriggerClientEvent('QBCore:Notify', source, 'DEBUG2: '..NumberCurrentTask, 'error')
     NumberCurrentTask = Task
 end)
 
