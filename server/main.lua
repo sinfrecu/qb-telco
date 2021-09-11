@@ -97,7 +97,7 @@ QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, c
 
     if Toolkit ~= nil then
     if Ply.Functions.RemoveItem(requiredItem, requiredItemAmount) then
-        TriggerClientEvent('QBCore:Notify', source, 'Using'..requiredItemAmount.. material '..QBCore.Shared.Items[requiredItem]["name"] , 'success')
+        TriggerClientEvent('QBCore:Notify', source, 'Using'..requiredItemAmount..'material '..QBCore.Shared.Items[requiredItem]["name"] , 'success')
             cb(true)
     else
         cb(false)
