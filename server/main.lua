@@ -88,10 +88,10 @@ function PayTelco()
 end
 
 -- Callback
-QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, cb)
+QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, cb, NumberCurrentTask)
     local Ply = QBCore.Functions.GetPlayer(source)
     local Toolkit = Ply.Functions.GetItemByName(requiredTool)
-    local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task]
+    local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][NumberCurrentTask]
 
     if Toolkit ~= nil then
     if Ply.Functions.RemoveItem(TaskData.requiredItem, TaskData.requiredItemAmount) then
@@ -106,5 +106,7 @@ QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, c
         cb(false)
     end
 end)
+
+
 
 
