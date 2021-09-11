@@ -20,7 +20,7 @@ end)
 
 RegisterServerEvent('qb-telco:server:SetTaskState')
 AddEventHandler('qb-telco:server:SetTaskState', function(Task, IsBusy, IsCompleted)
-    NumberCurrentTask = Task
+    local NumberCurrentTask = Task
     Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].IsBusy = IsBusy
     Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].completed = IsCompleted
     TriggerClientEvent('qb-telco:client:SetTaskState', -1, Task, IsBusy, IsCompleted)
@@ -93,7 +93,7 @@ QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, c
     local Ply = QBCore.Functions.GetPlayer(source)
     local Toolkit = Ply.Functions.GetItemByName(requiredTool)
     local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][NumberCurrentTask]
-
+    TriggerClientEvent('QBCore:Notify', source, 'DEBUG: '..NumberCurrentTask, 'error')
     if Toolkit ~= nil then
     if Ply.Functions.RemoveItem(TaskData.requiredItem, TaskData.requiredItemAmount) then
         TriggerClientEvent('QBCore:Notify', source, 'Using'..TaskData.requiredItemAmount..'material '..QBCore.Shared.Items[TaskData.requiredItem]["name"] , 'success')
