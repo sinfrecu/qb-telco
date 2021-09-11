@@ -134,7 +134,9 @@ Citizen.CreateThread(function()
                                 DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] Complete task')
 
                                 local NumberCurrentTask = k
-                                
+
+                                TriggerServerEvent('qb-telco:server:CurrenTaskupdate', k )
+
                                 if IsControlJustPressed(0, 38) then
                                     QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
                                         if hasItem then

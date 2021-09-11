@@ -20,7 +20,6 @@ end)
 
 RegisterServerEvent('qb-telco:server:SetTaskState')
 AddEventHandler('qb-telco:server:SetTaskState', function(Task, IsBusy, IsCompleted)
-    local NumberCurrentTask = Task
     Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].IsBusy = IsBusy
     Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].completed = IsCompleted
     TriggerClientEvent('qb-telco:client:SetTaskState', -1, Task, IsBusy, IsCompleted)
@@ -110,4 +109,10 @@ end)
 
 
 
+
+RegisterServerEvent('qb-telco:server:CurrenTaskupdate')
+AddEventHandler('qb-telco:server:CurrenTaskupdate', function(Task)
+    TriggerClientEvent('QBCore:Notify', source, 'DEBUG2: '..NumberCurrentTask, 'error')
+    NumberCurrentTask = Task
+end)
 
