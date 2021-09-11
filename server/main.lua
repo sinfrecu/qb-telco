@@ -10,6 +10,7 @@ QBCore.Functions.CreateCallback('qb-telco:server:GetCurrentProject', function(so
     end
 
     if CurProject == nil then
+        math.randomseed(os.time())
         CurProject = math.random(1, #Config.Projects)
         Config.Projects[CurProject].IsActive = true
         Config.CurrentProject = CurProject
@@ -44,6 +45,7 @@ AddEventHandler('qb-telco:server:FinishProject', function()
           table.insert(sorteo, k)
         end
       end
+    math.randomseed(os.time())
     local rand = math.random(1,#sorteo)
     local NewProject = sorteo[rand] 
     Config.CurrentProject = NewProject
@@ -51,7 +53,6 @@ AddEventHandler('qb-telco:server:FinishProject', function()
     TriggerClientEvent('qb-telco:client:FinishProject', -1, Config)
     TriggerClientEvent('qb-telco:client:UpdateBlip', -1, NewProject)
 end)
-
 
 function hasDoneLocation(locationId)
     local retval = false
@@ -64,7 +65,6 @@ function hasDoneLocation(locationId)
     end
     return retval
 end
-
 
 function PayTelco()
     local src = source 
@@ -87,9 +87,7 @@ function PayTelco()
     TriggerClientEvent('QBCore:Notify', src, 'You Earned $'..payment, 'success')
 end
 
-
 -- Callback
-
 QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, cb)
     local Ply = QBCore.Functions.GetPlayer(source)
     local Toolkit = Ply.Functions.GetItemByName("screwdriverset")
