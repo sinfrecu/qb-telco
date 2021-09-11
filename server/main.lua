@@ -104,7 +104,7 @@ QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, c
         TriggerClientEvent('QBCore:Notify', source, 'Dont have enough of '..QBCore.Shared.Items[requiredItem]["name"], 'error')
     end
     else
-    TriggerClientEvent('QBCore:Notify', source, 'Dont have the tool '..QBCore.Shared.Items[requiredTool]["name"] , 'error')
+        TriggerClientEvent('QBCore:Notify', source, 'Dont have the tool '..QBCore.Shared.Items[requiredTool]["name"] , 'error')
         cb(false)
     end
 end)
