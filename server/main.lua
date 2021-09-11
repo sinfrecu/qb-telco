@@ -91,20 +91,18 @@ end
 QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, cb)
     local Ply = QBCore.Functions.GetPlayer(source)
     local Toolkit = Ply.Functions.GetItemByName(requiredTool)
-    local requiredTool = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].requiredTool
-    local requiredItem = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].requiredItem
-    local requiredItemAmount = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].requiredItemAmount
+    local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][BuilderData.CurrentTask]
 
     if Toolkit ~= nil then
-    if Ply.Functions.RemoveItem(requiredItem, requiredItemAmount) then
-        TriggerClientEvent('QBCore:Notify', source, 'Using'..requiredItemAmount..'material '..QBCore.Shared.Items[requiredItem]["name"] , 'success')
+    if Ply.Functions.RemoveItem(TaskData.requiredItem, TaskData.requiredItemAmount) then
+        TriggerClientEvent('QBCore:Notify', source, 'Using'..TaskData.requiredItemAmount..'material '..QBCore.Shared.Items[TaskData.requiredItem]["name"] , 'success')
             cb(true)
     else
         cb(false)
-        TriggerClientEvent('QBCore:Notify', source, 'Dont have enough of '..QBCore.Shared.Items[requiredItem]["name"], 'error')
+        TriggerClientEvent('QBCore:Notify', source, 'Dont have enough of '..QBCore.Shared.Items[TaskData.requiredItem]["name"], 'error')
     end
     else
-        TriggerClientEvent('QBCore:Notify', source, 'Dont have the tool '..QBCore.Shared.Items[requiredTool]["name"] , 'error')
+        TriggerClientEvent('QBCore:Notify', source, 'Dont have the tool '..QBCore.Shared.Items[TaskData.requiredTool]["name"] , 'error')
         cb(false)
     end
 end)

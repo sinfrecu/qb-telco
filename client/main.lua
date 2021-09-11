@@ -126,11 +126,10 @@ Citizen.CreateThread(function()
                             DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 55, 155, 255, 255, 0, 0, 0, 1, 0, 0, 0)
                             if TaskDistance < 1.5 then
                                 -- this is shit, I already have plans
-                                local requiredTool = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][BuilderData.CurrentTask].requiredTool
-                                local requiredItem = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][BuilderData.CurrentTask].requiredItem
+                                local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][BuilderData.CurrentTask]
                                 local requiredItems = {
-                                    [1] = {name = QBCore.Shared.Items[requiredTool]["name"], image = QBCore.Shared.Items[requiredTool]["image"]},
-                                    [2] = {name = QBCore.Shared.Items[requiredItem]["name"], image = QBCore.Shared.Items[requiredItem]["image"]},
+                                    [1] = {name = QBCore.Shared.Items[TaskData.requiredTool]["name"], image = QBCore.Shared.Items[TaskData.requiredTool]["image"]},
+                                    [2] = {name = QBCore.Shared.Items[TaskData.requiredItem]["name"], image = QBCore.Shared.Items[TaskData.requiredItem]["image"]},
                                 }
                                 -- end shit
                                 DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] Complete task')
