@@ -7,6 +7,7 @@ local BuilderData = {
     CurrentTask = nil,
 }
 
+
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
     isLoggedIn = true
@@ -24,9 +25,6 @@ AddEventHandler('QBCore:Client:OnJobUpdate', function(JobInfo)
 end)
 
 
-
-
-
 Citizen.CreateThread(function()
     Wait(1000)
     isLoggedIn = true
@@ -34,11 +32,13 @@ Citizen.CreateThread(function()
     GetCurrentProject()
 end)
 
+
 function GetCurrentProject()
     QBCore.Functions.TriggerCallback('qb-telco:server:GetCurrentProject', function(BuilderConfig)
     Config = BuilderConfig
     end)
 end
+
 
 function DrawText3Ds(x, y, z, text)
     SetTextScale(0.35, 0.35)
@@ -55,6 +55,7 @@ function DrawText3Ds(x, y, z, text)
     ClearDrawOrigin()
 end
 
+
 function GetCompletedTasks()
     local retval = {
         completed = 0,
@@ -67,7 +68,6 @@ function GetCompletedTasks()
     end
     return retval
 end
-
 
 
 Citizen.CreateThread(function()
@@ -125,14 +125,14 @@ Citizen.CreateThread(function()
                             inRange = true
                             DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 55, 155, 255, 255, 0, 0, 0, 1, 0, 0, 0)
                             if TaskDistance < 1.5 then
-
                                 -- this is shit, I already have plans
+                                local requiredTool = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].requiredTool
+                                local requiredItem = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].requiredItem
                                 local requiredItems = {
-                                    [1] = {name = QBCore.Shared.Items["screwdriverset"]["name"], image = QBCore.Shared.Items["screwdriverset"]["image"]},
-                                    [2] = {name = QBCore.Shared.Items["copper"]["name"], image = QBCore.Shared.Items["copper"]["image"]},
+                                    [1] = {name = QBCore.Shared.Items[requiredTool]["name"], image = QBCore.Shared.Items[requiredTool]["image"]},
+                                    [2] = {name = QBCore.Shared.Items[requiredItem]["name"], image = QBCore.Shared.Items[requiredItem]["image"]},
                                 }
                                 -- end shit
-
                                 DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] Complete task')
 
                                 if IsControlJustPressed(0, 38) then
@@ -147,6 +147,7 @@ Citizen.CreateThread(function()
                                         end
                                     end)
                                 end
+
                             else
                                 TriggerEvent('inventory:client:requiredItems', requiredItems, false)
                             end
@@ -164,6 +165,7 @@ Citizen.CreateThread(function()
     end
 end)
 
+
 function DoTask()
     local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
@@ -172,14 +174,13 @@ function DoTask()
 
     if TaskData.type == "hammer" then
         TouchAnim()
-    TouchProcess()
+        TouchProcess()
     end
 
     if TaskData.type == "PickAnim" then
         PickAnim()
         TouchProcess()
     end
-
 end
 
 
@@ -196,7 +197,7 @@ function TouchProcess()
     end, function() -- Cancel
 
         ClearPedTasks(PlayerPedId())
-        QBCore.Functions.Notify("Process Canceled", "error")
+        QBCore.Functions.Notify("Process Canceled, you lost materials", "error")
     end)
 end
 
@@ -206,6 +207,7 @@ function PickAnim()
     LoadAnim('amb@prop_human_bum_bin@idle_a')
     TaskPlayAnim(ped, 'amb@prop_human_bum_bin@idle_a', 'idle_a', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
 end
+
 
 function TouchAnim()
     local ped = PlayerPedId()
@@ -228,12 +230,11 @@ AddEventHandler('qb-telco:client:SetTaskState', function(Task, IsBusy, IsComplet
     Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].completed = IsCompleted
 end)
 
+
 RegisterNetEvent('qb-telco:client:FinishProject')
 AddEventHandler('qb-telco:client:FinishProject', function(BuilderConfig)
     Config = BuilderConfig
 end)
-
-
 
 
 RegisterNetEvent('qb-telco:client:UpdateBlip')
@@ -241,18 +242,18 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
     DeleteBlip()
     Citizen.Wait(5)
     if PlayerJob.name == "telco" then
-    TelcoBlip = AddBlipForCoord(Config.Projects[id].ProjectLocations["main"].coords.x, Config.Projects[id].ProjectLocations["main"].coords.y, Config.Projects[id].ProjectLocations["main"].coords.z)
-    SetBlipSprite(TelcoBlip, 354)
-    SetBlipDisplay(TelcoBlip, 4)
-    SetBlipScale(TelcoBlip, 0.6)
-    SetBlipAsShortRange(TelcoBlip, true)
-    SetBlipColour(TelcoBlip, 1)
-    BeginTextCommandSetBlipName("STRING")
-    AddTextComponentSubstringPlayerName(Config.Projects[id].ProjectLocations["main"].label)
-    EndTextCommandSetBlipName(TelcoBlip)
+        TelcoBlip = AddBlipForCoord(Config.Projects[id].ProjectLocations["main"].coords.x, Config.Projects[id].ProjectLocations["main"].coords.y, Config.Projects[id].ProjectLocations["main"].coords.z)
+        SetBlipSprite(TelcoBlip, 354)
+        SetBlipDisplay(TelcoBlip, 4)
+        SetBlipScale(TelcoBlip, 0.6)
+        SetBlipAsShortRange(TelcoBlip, true)
+        SetBlipColour(TelcoBlip, 1)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentSubstringPlayerName(Config.Projects[id].ProjectLocations["main"].label)
+        EndTextCommandSetBlipName(TelcoBlip)
     end
-
 end)
+
 
 function DeleteBlip()
     if DoesBlipExist(TelcoBlip) then
