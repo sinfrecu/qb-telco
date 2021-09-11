@@ -90,9 +90,8 @@ end
 -- Callback
 QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, cb)
     local Ply = QBCore.Functions.GetPlayer(source)
-    local Toolkit = Ply.Functions.GetItemByName(requiredTool)
     local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][NumberCurrentTask]
-    TriggerClientEvent('QBCore:Notify', source, 'DEBUG: '..NumberCurrentTask, 'error')
+    local Toolkit = Ply.Functions.GetItemByName(TaskData.requiredTool)
     if Toolkit ~= nil then
     if Ply.Functions.RemoveItem(TaskData.requiredItem, TaskData.requiredItemAmount) then
         TriggerClientEvent('QBCore:Notify', source, 'Using'..TaskData.requiredItemAmount..'material '..QBCore.Shared.Items[TaskData.requiredItem]["name"] , 'success')
