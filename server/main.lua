@@ -20,6 +20,7 @@ end)
 
 RegisterServerEvent('qb-telco:server:SetTaskState')
 AddEventHandler('qb-telco:server:SetTaskState', function(Task, IsBusy, IsCompleted)
+    NumberCurrentTask = Task
     Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].IsBusy = IsBusy
     Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].completed = IsCompleted
     TriggerClientEvent('qb-telco:client:SetTaskState', -1, Task, IsBusy, IsCompleted)
@@ -88,7 +89,7 @@ function PayTelco()
 end
 
 -- Callback
-QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, cb, NumberCurrentTask)
+QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, cb)
     local Ply = QBCore.Functions.GetPlayer(source)
     local Toolkit = Ply.Functions.GetItemByName(requiredTool)
     local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][NumberCurrentTask]
