@@ -173,13 +173,11 @@ function DoTask()
     if TaskData.type == "hammer" then
         TouchAnim()
     TouchProcess()
-        TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, true, true)
     end
 
     if TaskData.type == "PickAnim" then
         PickAnim()
         TouchProcess()
-        TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, true, true)
     end
 
 end
@@ -192,6 +190,7 @@ function TouchProcess()
         disableMouse = false,
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
+        TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, true, true)
         ClearPedTasks(PlayerPedId())
 
     end, function() -- Cancel
