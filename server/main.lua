@@ -91,7 +91,7 @@ end
 QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, cb)
     local Ply = QBCore.Functions.GetPlayer(source)
     local Toolkit = Ply.Functions.GetItemByName(requiredTool)
-    local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][BuilderData.CurrentTask]
+    local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task]
 
     if Toolkit ~= nil then
     if Ply.Functions.RemoveItem(TaskData.requiredItem, TaskData.requiredItemAmount) then
