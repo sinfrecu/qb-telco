@@ -197,6 +197,7 @@ function TouchProcess()
     end, function() -- Cancel
 
         ClearPedTasks(PlayerPedId())
+        TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, false, false)
         QBCore.Functions.Notify("Process Canceled, you lost materials", "error")
     end)
 end
