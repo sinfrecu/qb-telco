@@ -191,15 +191,15 @@ Citizen.CreateThread(function()
                         local TaskData = GetCompletedTasks()
                         if TaskData ~= nil then
                             if not BuilderData.ShowDetails then
-                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] Turn on electricity')
+                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] Turn off site')
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z + 0.2, 'Exercises: '..TaskData.completed..' / '..TaskData.total)
                             else
-                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] Turn off site')
+                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] Turn on electricity')
                                 for k, v in pairs(Config.Projects[Config.CurrentProject].ProjectLocations["tasks"]) do
                                     if v.completed then
                                         DrawText3Ds(data.coords.x, data.coords.y, data.coords.z + OffsetZ, v.label..': Completed')
                                     else
-                                        DrawText3Ds(data.coords.x, data.coords.y, data.coords.z + OffsetZ, v.label..': Not completed')
+                                        DrawText3Ds(data.coords.x, data.coords.y, data.coords.z + OffsetZ, v.label..': Pending')
                                     end
                                     OffsetZ = OffsetZ + 0.2
                                 end
