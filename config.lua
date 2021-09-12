@@ -66,9 +66,9 @@ Config.Projects = {
                 },
                 [2] = {
                     coords = vector3(-1006.44, 4846.84, 275.01),
+                    label = "Repair cable",
                     type = "PickAnim",
                     requiredTool = "electronickit",
-                    label = "Repair cable",
                     requiredItem = "copper",
                     requiredItemAmount = 3,
                     completed = false,
@@ -93,13 +93,13 @@ Config.Projects = {
                     type = "TouchAnim",
                     requiredTool = "electronickit",
                     requiredItem = "cleaningkit",
-                    requiredItemAmount = 1
+                    requiredItemAmount = 1,
                     completed = false,
                     IsBusy = false,
                 },
                 [2] = {
                     coords = vector3(-2508.59, 3301.89, 36.54),
-                    label = "Arreglar Cable",
+                    label = "Repair cable",
                     type = "TouchAnim",
                     requiredTool = "electronickit",
                     requiredItem = "Steel",
