@@ -133,7 +133,7 @@ Citizen.CreateThread(function()
                                 -- end shit
                                 DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] Complete task')                
                                 if IsControlJustPressed(0, 38) then
-                                    TriggerServerEvent('qb-telco:server:CurrenTaskupdate', v )
+                                    TriggerServerEvent('qb-telco:server:CurrenTaskupdate', k )
                                     QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
                                         if hasItem then
                                             -- Prevent sticky panel 
