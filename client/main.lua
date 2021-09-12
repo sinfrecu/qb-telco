@@ -131,11 +131,9 @@ Citizen.CreateThread(function()
                                     [2] = {name = QBCore.Shared.Items[v.requiredItem]["name"], image = QBCore.Shared.Items[v.requiredItem]["image"]},
                                 }
                                 -- end shit
-                                DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] Complete task')
-
-                                TriggerServerEvent('qb-telco:server:CurrenTaskupdate', k )
-
+                                DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] Complete task')                
                                 if IsControlJustPressed(0, 38) then
+                                    TriggerServerEvent('qb-telco:server:CurrenTaskupdate', v )
                                     QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
                                         if hasItem then
                                             -- Prevent sticky panel 
