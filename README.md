@@ -11,7 +11,7 @@
 - [x] 🔨Requierd tool's on inventory  "screwdriverset" (Toolkit)
 - [x] 🔩Consume metals ,
 - [x] coords to vector3
-- [ ] Random copper 1-3 per task or requeriments on config.lua
+- [x] Requeriments Tool and Materials **per task** , all on config.lua
 - [ ] 📌blit's in task's (?)
 
 
