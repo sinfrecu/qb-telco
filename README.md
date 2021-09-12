@@ -8,11 +8,14 @@
 - [x] 💲Bonus pay 
 - [x] 🔍Job requierd "telco"
 - [x] 📍blit and update blit
-- [x] 🔨Requierd tool's on inventory  "screwdriverset" (Toolkit)
+- [x] 🔨Requierd tool's on inventory
 - [x] 🔩Consume metals ,
 - [x] coords to vector3
 - [x] Requeriments Tool and Materials **per task** , all on config.lua
-- [ ] 📌blit's in task's (?)
+
+Whislist:
+- [ ] ⚡Power system, use BuilderData.ShowDetails, to turn off the antenna before working, if you work without displaying "ShowDetails" you can be electrocuted by a random, (add Tazzer animation )
+- [ ] 📌blit's in task's
 
 
 ## Add job to Qb-core (⭐Required)
