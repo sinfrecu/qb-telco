@@ -232,7 +232,7 @@ Citizen.CreateThread(function()
                                     [2] = {name = QBCore.Shared.Items[v.requiredItem]["name"], image = QBCore.Shared.Items[v.requiredItem]["image"]},
                                 }
                                 -- end shit
-                                DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] Complete task')                
+                                DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] '..v.label )                
                                 if IsControlJustPressed(0, 38) then
                                     TriggerServerEvent('qb-telco:server:CurrenTaskupdate', k )
                                     QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
