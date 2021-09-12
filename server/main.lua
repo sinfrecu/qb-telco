@@ -103,7 +103,7 @@ QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, c
     local Ply = QBCore.Functions.GetPlayer(source)
     local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][NumberCurrentTask]
     local Toolkit = Ply.Functions.GetItemByName(TaskData.requiredTool)
-
+    
     if Toolkit ~= nil then
         if Ply.Functions.RemoveItem(TaskData.requiredItem, TaskData.requiredItemAmount) then
             TriggerClientEvent('QBCore:Notify', source, 'Using '..TaskData.requiredItemAmount..'of '..QBCore.Shared.Items[TaskData.requiredItem]["name"] , 'success')
@@ -116,7 +116,6 @@ QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, c
         TriggerClientEvent('QBCore:Notify', source, 'Dont have the tool '..QBCore.Shared.Items[TaskData.requiredTool]["name"] , 'error')
         cb(false)
     end
-    
 end)
 
 
