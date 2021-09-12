@@ -7,7 +7,7 @@ Config.Projects = {
         IsActive = false,
         ProjectLocations = {
             ["main"] = {
-                label = "WNW-01 Cell Tower",
+                label = "VIW-0 Cell Tower",
                 coords = vector3(765.94, 1273.79, 360.3),
             },
             ["tasks"] = {
@@ -50,7 +50,7 @@ Config.Projects = {
         IsActive = false,
         ProjectLocations = {
             ["main"] = {
-                label = "Rural link",
+                label = "RSC-P Rural small cell",
                 coords = vector3(-1001.97, 4853.76, 274.61),
             },
             ["tasks"] = {
@@ -83,7 +83,7 @@ Config.Projects = {
         IsActive = false,
         ProjectLocations = {
             ["main"] = {
-                label = "Enlace Rural",
+                label = "ARB-A Airport Base",
                 coords = vector3(-2507.9, 3306.33, 91.96),
             },
             ["tasks"] = {
