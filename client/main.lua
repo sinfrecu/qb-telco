@@ -191,10 +191,10 @@ Citizen.CreateThread(function()
                         local TaskData = GetCompletedTasks()
                         if TaskData ~= nil then
                             if not BuilderData.ShowDetails then
-                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] Detail view')
+                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] Turn on electricity')
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z + 0.2, 'Exercises: '..TaskData.completed..' / '..TaskData.total)
                             else
-                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] Details hide')
+                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] Turn off site')
                                 for k, v in pairs(Config.Projects[Config.CurrentProject].ProjectLocations["tasks"]) do
                                     if v.completed then
                                         DrawText3Ds(data.coords.x, data.coords.y, data.coords.z + OffsetZ, v.label..': Completed')
@@ -206,7 +206,7 @@ Citizen.CreateThread(function()
                             end
 
                             if TaskData.completed == TaskData.total then
-                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z - 0.2, '[G] End project')
+                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z - 0.2, '[G] Finish, send report to base.')
                                 if IsControlJustPressed(0, 47) then
                                     TriggerServerEvent('qb-telco:server:FinishProject')
                                 end
