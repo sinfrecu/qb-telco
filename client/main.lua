@@ -58,6 +58,12 @@ function DoTask()
         PickAnim()
         TouchProcess()
     end
+
+    if TaskData.type == "TouchLight" then
+        TouchLight()
+        TouchProcess()
+    end
+    
 end
 
 
@@ -95,6 +101,16 @@ function TouchAnim()
     LoadAnim('amb@prop_human_parking_meter@male@idle_a')
     TaskPlayAnim(ped, 'amb@prop_human_parking_meter@male@idle_a', 'idle_a', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
 end
+
+function TouchLight()
+    local ped = PlayerPedId()
+    LoadAnim('amb@prop_human_movie_studio_light@idle_a')
+    TaskPlayAnim(ped, 'amb@prop_human_movie_studio_light@idle_a', 'idle_a', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
+end
+
+
+
+
 
 function LoadAnim(dict)
     while not HasAnimDictLoaded(dict) do

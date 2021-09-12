@@ -89,7 +89,7 @@ Config.Projects = {
             ["tasks"] = {
                 [1] = {
                     coords = vector3(-2503.45, 3303.5, 51.45),
-                    label = "Clean air filter",
+                    label = "Repair cable",
                     type = "TouchAnim",
                     requiredTool = "screwdriverset",
                     requiredItem = "cleaningkit",
@@ -99,7 +99,7 @@ Config.Projects = {
                 },
                 [2] = {
                     coords = vector3(-2508.59, 3301.89, 36.54),
-                    label = "Repair cable",
+                    label = "Clean air filter",
                     type = "TouchAnim",
                     requiredTool = "screwdriverset",
                     requiredItem = "steel",
