@@ -106,14 +106,14 @@ QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, c
     
     if Toolkit ~= nil then
         if Ply.Functions.RemoveItem(TaskData.requiredItem, TaskData.requiredItemAmount) then
-            TriggerClientEvent('QBCore:Notify', source, 'Using '..TaskData.requiredItemAmount..'of '..QBCore.Shared.Items[TaskData.requiredItem]["name"] , 'success')
+            TriggerClientEvent('QBCore:Notify', source, 'Using '..TaskData.requiredItemAmount..' of '..QBCore.Shared.Items[TaskData.requiredItem]["label"] , 'success')
             cb(true)
         else
-            TriggerClientEvent('QBCore:Notify', source, 'Dont have enough of '..QBCore.Shared.Items[TaskData.requiredItem]["name"]..' x'..TaskData.requiredItemAmount, 'error')
+            TriggerClientEvent('QBCore:Notify', source, 'Dont have enough of '..QBCore.Shared.Items[TaskData.requiredItem]["label"]..' x'..TaskData.requiredItemAmount, 'error')
             cb(false)
         end
     else
-        TriggerClientEvent('QBCore:Notify', source, 'Dont have the tool '..QBCore.Shared.Items[TaskData.requiredTool]["name"] , 'error')
+        TriggerClientEvent('QBCore:Notify', source, 'Dont have the tool '..QBCore.Shared.Items[TaskData.requiredTool]["label"] , 'error')
         cb(false)
     end
 end)
