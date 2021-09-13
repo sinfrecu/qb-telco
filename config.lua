@@ -74,7 +74,16 @@ Config.Projects = {
                     completed = false,
                     IsBusy = false,
                 },
-
+                [3] = {
+                    coords = vector3(-1003.11, 4845.9, 278.84),
+                    label = "Repair plate",
+                    type = "TouchLight",
+                    requiredTool = "screwdriverset",
+                    requiredItem = "aluminum",
+                    requiredItemAmount = 3,
+                    completed = false,
+                    IsBusy = false,
+                },
         }
         }
     },    
