@@ -41,8 +41,7 @@ function GetCompletedTasks()
 end
 
 
--- Animation Selecction
-
+-- // Animations //
 function DoTask()
     local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
@@ -72,9 +71,7 @@ function DoTask()
     
 end
 
-
--- Progress Bar and confirm end task
-
+-- // Progressbars & Progression //
 function TouchProcess()
     QBCore.Functions.Progressbar("touch_process", "Reparando ..", math.random(6000,8000), false, true, {
         disableMovement = true,
@@ -94,8 +91,7 @@ function TouchProcess()
 end
 
 
--- Animations
-
+-- // Animations //
 function PickAnim()
     local ped = PlayerPedId()
     LoadAnim('amb@prop_human_bum_bin@idle_a')
@@ -114,18 +110,11 @@ function TouchLight()
     TaskPlayAnim(ped, 'amb@prop_human_movie_studio_light@idle_a', 'idle_a', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
 end
 
-
-
 function TouchUp()
     local ped = PlayerPedId()
     LoadAnim('amb@prop_human_movie_bulb@base')
     TaskPlayAnim(ped, 'amb@prop_human_movie_bulb@base', 'base', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
 end
-
-
-
-
-
 
 function LoadAnim(dict)
     while not HasAnimDictLoaded(dict) do
@@ -135,8 +124,7 @@ function LoadAnim(dict)
 end
 
 
--- State Task
-
+-- // States //
 RegisterNetEvent('qb-telco:client:SetTaskState')
 AddEventHandler('qb-telco:client:SetTaskState', function(Task, IsBusy, IsCompleted)
     Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].IsBusy = IsBusy
@@ -144,16 +132,14 @@ AddEventHandler('qb-telco:client:SetTaskState', function(Task, IsBusy, IsComplet
 end)
 
 
--- Finish Project
-
+-- // Finishing //
 RegisterNetEvent('qb-telco:client:FinishProject')
 AddEventHandler('qb-telco:client:FinishProject', function(BuilderConfig)
     Config = BuilderConfig
 end)
 
 
--- Blips
-
+-- // Blips //
 RegisterNetEvent('qb-telco:client:UpdateBlip')
 AddEventHandler('qb-telco:client:UpdateBlip', function(id)
     DeleteBlip()
@@ -172,13 +158,14 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
     end
 end)
 
-
+-- // Requirements Inventory //
 function ClearNeed(requiredItems)
     Citizen.Wait(1500)
     QBCore.Functions.Notify("Elimino alerta", "error")
     TriggerEvent('inventory:client:requiredItems', requiredItems, false)   
 end
 
+-- // Delete the Blip //
 function DeleteBlip()
     if DoesBlipExist(TelcoBlip) then
         RemoveBlip(TelcoBlip)
@@ -186,7 +173,6 @@ function DeleteBlip()
 end
 
 function DrawText3Ds(x, y, z, text)
-
     SetTextScale(0.35, 0.35)
     SetTextFont(4)
     SetTextProportional(1)
@@ -202,8 +188,7 @@ function DrawText3Ds(x, y, z, text)
 end
 
 
--- Threads
-
+-- // Threads //
 Citizen.CreateThread(function()
     Wait(1000)
     isLoggedIn = true
@@ -230,7 +215,6 @@ Citizen.CreateThread(function()
                     else
                         DrawMarker(2, data.coords.x, data.coords.y, data.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 57, 255, 110, 255, 0, 0, 0, 1, 0, 0, 0)
                     end
-
 
                     if MainDistance < 2 then
                         local TaskData = GetCompletedTasks()
@@ -275,7 +259,6 @@ Citizen.CreateThread(function()
                             else
                                 DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 57, 255, 110, 255, 0, 0, 0, 1, 0, 0, 0)
                             end
-
                             
                             if TaskDistance < 1.5 then
                                 -- this is shit, I already have plans
