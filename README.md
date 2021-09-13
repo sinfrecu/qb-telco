@@ -6,21 +6,21 @@
 
 - [x] 💰Pay 
 - [x] 💲Bonus pay 
-- [x] 🔍Job requierd "telco"
-- [x] 📍blit and update blit
-- [x] 🔨Requierd tool's on inventory
+- [x] 🔍Job Required "telco"
+- [x] 📍Blip and Update Blip
+- [x] 🔨Required tool's on Inventory
 - [x] 🔩Consume metals ,
 - [x] coords to vector3
-- [x] Requeriments Tool and Materials **per task** , all on config.lua
+- [x] Requirements Tool and Materials **per task** , all on config.lua
 
-Whislist:
+Wishlist:
 - [ ] ⚡Power system, use BuilderData.ShowDetails, to turn off the antenna before working, if you work without displaying "ShowDetails" you can be electrocuted by a random, (add Tazzer animation )
-- [ ] 📌blit's in task's
+- [ ] 📌Blips's in task's
 
 
 ## Add job to Qb-core (⭐Required)
 
-**Edit the file :** `/resources/[qb]/qb-core/shared.lua` and add job in `QBShared.Jobs = {`
+**Edit the file :** `/resources/[qb]/qb-core/shared.lua` and add the job in `QBShared.Jobs = {`
 
 ```
 	["telco"] = {
