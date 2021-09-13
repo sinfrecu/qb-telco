@@ -130,6 +130,47 @@ Config.Projects = {
         }
         }
     },
+-- Tatoo Sandy Shores (small tower)
+    [4] = {
+    IsActive = false,
+    ProjectLocations = {
+        ["main"] = {
+            label = "SAND-I Transmitter Station",
+            coords = vector3(1872.09, 3711.83, 33.08),
+        },
+        ["tasks"] = {
+            [1] = {
+                coords = vector3(1867.56, 3711.77, 33.07),
+                label = "Repair Fire Alarm",
+                type = "TouchAnim",
+                requiredTool = "screwdriverset",
+                requiredItem = "electronickit",
+                requiredItemAmount = 2,
+                completed = false,
+                IsBusy = false,
+            },
+            [2] = {
+                coords = vector3(1868.98, 3709.9, 33.32),
+                label = "Clean air filter",
+                type = "TouchUp",
+                requiredTool = "screwdriverset",
+                requiredItem = "cleaningkit",
+                requiredItemAmount = 1,
+                completed = false,
+                IsBusy = false,
+            },
+            [3] = {
+                coords = vector3(1865.89, 3716.54, 33.07),
+                label = "repair bandalism",
+                type = "TouchLight",
+                requiredTool = "screwdriverset",
+                requiredItem = "plastic",
+                requiredItemAmount = 4,
+                completed = false,
+                IsBusy = false,
+            },
 
-
+    }
+    }
+    },
 }

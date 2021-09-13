@@ -63,6 +63,12 @@ function DoTask()
         TouchLight()
         TouchProcess()
     end
+
+    if TaskData.type == "TouchUp" then
+        TouchUp()
+        TouchProcess()
+    end
+
     
 end
 
@@ -107,6 +113,15 @@ function TouchLight()
     LoadAnim('amb@prop_human_movie_studio_light@idle_a')
     TaskPlayAnim(ped, 'amb@prop_human_movie_studio_light@idle_a', 'idle_a', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
 end
+
+
+
+function TouchUp()
+    local ped = PlayerPedId()
+    LoadAnim('amb@prop_human_movie_bulb@base')
+    TaskPlayAnim(ped, 'amb@prop_human_movie_bulb@base', 'base', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
+end
+
 
 
 
@@ -253,7 +268,7 @@ Citizen.CreateThread(function()
                     if not v.completed or not v.IsBusy then
                         local TaskDistance = #(pos - vector3(v.coords.x, v.coords.y, v.coords.z))
                         if TaskDistance < 10 then
-                            
+
                             inRange = true
                             if not BuilderData.ShowDetails then
                                 DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 255, 77, 57, 255, 0, 0, 0, 1, 0, 0, 0)
