@@ -253,17 +253,21 @@ Citizen.CreateThread(function()
                                     TriggerServerEvent('qb-telco:server:CurrenTaskupdate', k )
                                     QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
                                         if hasItem then
-                                            -- Prevent sticky panel 
+                                            -- Prevent sticky panel
+                                            QBCore.Functions.Notify("Debug: sticky panel", "error")  
                                             TriggerEvent('inventory:client:requiredItems', requiredItems, false)
                                             BuilderData.CurrentTask = k
                                             DoTask()
-                                        else    
+                                        else
+                                            QBCore.Functions.Notify("Debug: ACTIVO", "error")    
                                             TriggerEvent('inventory:client:requiredItems', requiredItems, true)
                                         end
                                     end)
                                 end
                             else
+                                QBCore.Functions.Notify("Debug: ultimo antes", "error")
                                 TriggerEvent('inventory:client:requiredItems', requiredItems, false)
+                                QBCore.Functions.Notify("Debug: ultimo despues", "error")
                             end
                         end
                     end
