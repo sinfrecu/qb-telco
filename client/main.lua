@@ -211,9 +211,9 @@ Citizen.CreateThread(function()
                 if MainDistance < 10 then
                     inRange = true
                     if not BuilderData.ShowDetails then
-                        DrawMarker(2, data.coords.x, data.coords.y, data.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 57, 255, 110, 255, 0, 0, 0, 1, 0, 0, 0)
-                    else
                         DrawMarker(2, data.coords.x, data.coords.y, data.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 255, 77, 57, 255, 0, 0, 0, 1, 0, 0, 0)
+                    else
+                        DrawMarker(2, data.coords.x, data.coords.y, data.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 57, 255, 110, 255, 0, 0, 0, 1, 0, 0, 0)
                     end
 
 
@@ -253,8 +253,15 @@ Citizen.CreateThread(function()
                     if not v.completed or not v.IsBusy then
                         local TaskDistance = #(pos - vector3(v.coords.x, v.coords.y, v.coords.z))
                         if TaskDistance < 10 then
+                            
                             inRange = true
-                            DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 55, 155, 255, 255, 0, 0, 0, 1, 0, 0, 0)
+                            if not BuilderData.ShowDetails then
+                                DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 255, 77, 57, 255, 0, 0, 0, 1, 0, 0, 0)
+                            else
+                                DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 57, 255, 110, 255, 0, 0, 0, 1, 0, 0, 0)
+                            end
+
+                            
                             if TaskDistance < 1.5 then
                                 -- this is shit, I already have plans
                                 local requiredItems = {
