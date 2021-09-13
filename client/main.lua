@@ -144,6 +144,7 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
     DeleteBlip()
     Citizen.Wait(5)
     if PlayerJob.name == "telco" then
+        
         TelcoBlip = AddBlipForCoord(Config.Projects[id].ProjectLocations["main"].coords.x, Config.Projects[id].ProjectLocations["main"].coords.y, Config.Projects[id].ProjectLocations["main"].coords.z)
         SetBlipSprite(TelcoBlip, 354)
         SetBlipDisplay(TelcoBlip, 4)
@@ -170,6 +171,7 @@ function DeleteBlip()
 end
 
 function DrawText3Ds(x, y, z, text)
+
     SetTextScale(0.35, 0.35)
     SetTextFont(4)
     SetTextProportional(1)
@@ -208,14 +210,19 @@ Citizen.CreateThread(function()
                 -- Main blip
                 if MainDistance < 10 then
                     inRange = true
-                    DrawMarker(2, data.coords.x, data.coords.y, data.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 55, 155, 255, 255, 0, 0, 0, 1, 0, 0, 0)
+                    if not BuilderData.ShowDetails then
+                        DrawMarker(2, data.coords.x, data.coords.y, data.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 57, 255, 110, 255, 0, 0, 0, 1, 0, 0, 0)
+                    else
+                        DrawMarker(2, data.coords.x, data.coords.y, data.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 255, 77, 57, 255, 0, 0, 0, 1, 0, 0, 0)
+                    end
+
 
                     if MainDistance < 2 then
                         local TaskData = GetCompletedTasks()
                         if TaskData ~= nil then
                             if not BuilderData.ShowDetails then
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] Turn off site')
-                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z + 0.2, 'Exercises: '..TaskData.completed..' / '..TaskData.total)
+                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z + 0.2, 'Works: '..TaskData.completed..' / '..TaskData.total)
                             else
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] Turn on electricity')
                                 for k, v in pairs(Config.Projects[Config.CurrentProject].ProjectLocations["tasks"]) do
