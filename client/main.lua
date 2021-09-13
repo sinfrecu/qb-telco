@@ -156,6 +156,13 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
     end
 end)
 
+
+function ClearNeed(requiredItems)
+    Citizen.Wait(500)
+    QBCore.Functions.Notify("Elimino alerta", "error")
+    TriggerEvent('inventory:client:requiredItems', requiredItems, false)   
+end
+
 function DeleteBlip()
     if DoesBlipExist(TelcoBlip) then
         RemoveBlip(TelcoBlip)
@@ -254,20 +261,15 @@ Citizen.CreateThread(function()
                                     QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
                                         if hasItem then
                                             -- Prevent sticky panel
-                                            QBCore.Functions.Notify("Debug: sticky panel", "error")  
                                             TriggerEvent('inventory:client:requiredItems', requiredItems, false)
                                             BuilderData.CurrentTask = k
                                             DoTask()
                                         else
-                                            QBCore.Functions.Notify("Debug: ACTIVO", "error")    
                                             TriggerEvent('inventory:client:requiredItems', requiredItems, true)
+                                            ClearNeed(requiredItems)
                                         end
                                     end)
                                 end
-                            else
-                                QBCore.Functions.Notify("Debug: ultimo antes", "error")
-                                TriggerEvent('inventory:client:requiredItems', requiredItems, false)
-                                QBCore.Functions.Notify("Debug: ultimo despues", "error")
                             end
                         end
                     end
