@@ -175,7 +175,6 @@ end)
 
 function ClearNeed(requiredItems)
     Citizen.Wait(1500)
-    QBCore.Functions.Notify("Elimino alerta", "error")
     TriggerEvent('inventory:client:requiredItems', requiredItems, false)   
 end
 
