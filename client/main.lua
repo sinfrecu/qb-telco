@@ -1,5 +1,5 @@
-isLoggedIn = false
-PlayerData = {}
+local isLoggedIn = false
+local PlayerData = {}
 local PlayerJob = {}
 local BuilderData = {
     ShowDetails = false,
@@ -161,7 +161,6 @@ end)
 -- // Requirements Inventory //
 function ClearNeed(requiredItems)
     Citizen.Wait(1500)
-    QBCore.Functions.Notify("Elimino alerta", "error")
     TriggerEvent('inventory:client:requiredItems', requiredItems, false)   
 end
 
@@ -238,6 +237,8 @@ Citizen.CreateThread(function()
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z - 0.2, '[G] Finish, send report to base.')
                                 if IsControlJustPressed(0, 47) then
                                     TriggerServerEvent('qb-telco:server:FinishProject')
+                                    -- fix close details or turn off antenna at the end of the location
+                                    BuilderData.ShowDetails = false
                                 end
                             end
 
