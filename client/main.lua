@@ -130,7 +130,7 @@ end
 function TasserAnim()
     local ped = PlayerPedId()
     LoadAnim('missminuteman_1ig_2')
-    TaskPlayAnim(ped, 'missminuteman_1ig_2', 'tasered_1', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
+    TaskPlayAnim(ped, 'missminuteman_1ig_2', 'tasered_2', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
 end
 
 
