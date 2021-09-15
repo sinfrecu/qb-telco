@@ -76,21 +76,28 @@ end
 -- Progress Bar and confirm end task
 
 function TouchProcess()
-    QBCore.Functions.Progressbar("touch_process", "Reparando ..", math.random(6000,8000), false, true, {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {}, {}, {}, function() -- Done
-        TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, true, true)
-        ClearPedTasks(PlayerPedId())
-
-    end, function() -- Cancel
-
-        ClearPedTasks(PlayerPedId())
+    if not BuilderData.ShowDetails then
+        -- death
+        TasserAnim()
         TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, false, false)
-        QBCore.Functions.Notify("Process Canceled, you lost materials", "error")
-    end)
+        QBCore.Functions.Notify("You received an electric shock", "error")
+        Citizen.Wait(500)
+        TriggerClientEvent('hospital:client:KillPlayer', source)
+    else    
+        QBCore.Functions.Progressbar("touch_process", "Reparando ..", math.random(6000,8000), false, true, {
+            disableMovement = true,
+            disableCarMovement = true,
+            disableMouse = false,
+            disableCombat = true,
+        }, {}, {}, {}, function() -- Done
+            TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, true, true)
+            ClearPedTasks(PlayerPedId())    
+        end, function() -- Cancel
+            ClearPedTasks(PlayerPedId())
+            TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, false, false)
+            QBCore.Functions.Notify("Process Canceled, you lost materials", "error")
+        end)
+    end
 end
 
 
@@ -114,14 +121,17 @@ function TouchLight()
     TaskPlayAnim(ped, 'amb@prop_human_movie_studio_light@idle_a', 'idle_a', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
 end
 
-
-
 function TouchUp()
     local ped = PlayerPedId()
     LoadAnim('amb@prop_human_movie_bulb@base')
     TaskPlayAnim(ped, 'amb@prop_human_movie_bulb@base', 'base', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
 end
 
+function TasserAnim()
+    local ped = PlayerPedId()
+    LoadAnim('missminuteman_1ig_2')
+    TaskPlayAnim(ped, 'missminuteman_1ig_2', 'tasered_1', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
+end
 
 
 
@@ -272,11 +282,12 @@ Citizen.CreateThread(function()
 
                             inRange = true
                             if not BuilderData.ShowDetails then
+                                -- red  255, 77, 57
                                 DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 255, 77, 57, 255, 0, 0, 0, 1, 0, 0, 0)
                             else
+                                -- green 57, 255, 110
                                 DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 57, 255, 110, 255, 0, 0, 0, 1, 0, 0, 0)
                             end
-
                             
                             if TaskDistance < 1.5 then
                                 -- this is shit, I already have plans
@@ -286,7 +297,7 @@ Citizen.CreateThread(function()
                                 }
                                 -- end shit
                                 DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] '..v.label )                
-                                if IsControlJustPressed(0, 38) then
+                                if IsControlJustPressed(0, 38) then                                  
                                     TriggerServerEvent('qb-telco:server:CurrenTaskupdate', k )
                                     QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
                                         if hasItem then
