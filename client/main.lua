@@ -78,20 +78,19 @@ end
 function TouchProcess()
     if not BuilderData.ShowDetails then
         -- death
+        Citizen.Wait(200)
         ClearPedTasks(PlayerPedId())
         TasserAnim()
         TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, false, false)
         QBCore.Functions.Notify("You received an electric shock and materials were damaged", "error")
         Citizen.Wait(4000)
-        local random_boolean = Math.random() < 0.7;
-        if not random_boolean then
-            QBCore.Functions.Notify("the shock was lethal", "error")
-            TriggerEvent('hospital:client:KillPlayer', PlayerPedId())
-        else
+        if Math.random() < 0.7 then
             ClearPedTasks(PlayerPedId())
             QBCore.Functions.Notify("you are alive for a miracle, be more careful next time", "success")
+        else
+            QBCore.Functions.Notify("the shock was lethal", "error")
+            TriggerEvent('hospital:client:KillPlayer', PlayerPedId())
         end
-        
     else    
         QBCore.Functions.Progressbar("touch_process", "Reparando ..", math.random(6000,8000), false, true, {
             disableMovement = true,
