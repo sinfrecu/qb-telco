@@ -84,7 +84,6 @@ function TouchProcess()
         TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, false, false)
         QBCore.Functions.Notify("You received an electric shock and materials were damaged", "error", 4000)
         Citizen.Wait(4000)
-        math.randomseed(os.time())
         if (math.random() >= 0.5)  then
             ClearPedTasks(PlayerPedId())
             QBCore.Functions.Notify("You are alive for a miracle!, be more careful next time.", "success", 4000)
