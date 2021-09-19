@@ -85,8 +85,8 @@ function TouchProcess()
         QBCore.Functions.Notify("You received an electric shock and materials were damaged", "error")
         Citizen.Wait(4000)
         math.randomseed(os.time())
-        local rand = Math.random(1,10)
-        if  rand < 7 then
+        local rand = math.random(1,10)
+        if rand < 7 then
             ClearPedTasks(PlayerPedId())
             QBCore.Functions.Notify("you are alive for a miracle, be more careful next time", "success")
         else
@@ -140,7 +140,7 @@ end
 function TasserAnim()
     local ped = PlayerPedId()
     LoadAnim('melee@unarmed@streamed_variations')
-    TaskPlayAnim(ped, 'melee@unarmed@streamed_variations', 'victim_takedown_front_slap', 6.0, -6.0, 3000, 2, 0, 0, 0, 0)
+    TaskPlayAnim(ped, 'melee@unarmed@streamed_variations', 'victim_takedown_front_slap', 6.0, -6.0, 6000, 2, 0, 0, 0, 0)
 end
 
 
