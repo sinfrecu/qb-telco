@@ -82,13 +82,13 @@ function TouchProcess()
         TasserAnim()
         TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, false, false)
         QBCore.Functions.Notify("You received an electric shock and materials were damaged", "error")
-        Citizen.Wait(3000)
-
+        Citizen.Wait(4000)
         local random_boolean = Math.random() < 0.7;
         if not random_boolean then
             QBCore.Functions.Notify("the shock was lethal", "error")
             TriggerEvent('hospital:client:KillPlayer', PlayerPedId())
         else
+            ClearPedTasks(PlayerPedId())
             QBCore.Functions.Notify("you are alive for a miracle, be more careful next time", "success")
         end
         
