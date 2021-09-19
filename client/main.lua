@@ -85,7 +85,7 @@ function TouchProcess()
         QBCore.Functions.Notify("You received an electric shock and materials were damaged", "error")
         Citizen.Wait(4000)
         math.randomseed(os.time())
-        if if (math.random() >= 0.5)  then
+        if (math.random() >= 0.5)  then
             ClearPedTasks(PlayerPedId())
             QBCore.Functions.Notify("you are alive for a miracle, be more careful next time", "success")
         else
