@@ -82,7 +82,7 @@ function TouchProcess()
         TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, false, false)
         QBCore.Functions.Notify("You received an electric shock", "error")
         Citizen.Wait(8000)
-        TriggerClientEvent('hospital:client:KillPlayer', PlayerPedId())
+        TriggerEvent('hospital:client:KillPlayer', PlayerPedId())
     else    
         QBCore.Functions.Progressbar("touch_process", "Reparando ..", math.random(6000,8000), false, true, {
             disableMovement = true,
@@ -130,7 +130,7 @@ end
 function TasserAnim()
     local ped = PlayerPedId()
     LoadAnim('melee@unarmed@streamed_variations')
-    TaskPlayAnim(ped, 'melee@unarmed@streamed_variations', 'victim_takedown_front_slap', 6.0, -6.0, 8000, 47, 0, 0, 0, 0)
+    TaskPlayAnim(ped, 'melee@unarmed@streamed_variations', 'victim_takedown_front_slap', 6.0, -6.0, 2000, 47, 0, 0, 0, 0)
 end
 
 
