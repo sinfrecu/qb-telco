@@ -84,14 +84,18 @@ function TouchProcess()
         TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, false, false)
         QBCore.Functions.Notify("You received an electric shock and materials were damaged", "error")
         Citizen.Wait(4000)
+        QBCore.Functions.Notify("DEBUG: PASO", "error")
         math.randomseed(os.time())
         if (math.random() >= 0.5)  then
+            QBCore.Functions.Notify("DEBUG: ENTRO 1", "error")
             ClearPedTasks(PlayerPedId())
             QBCore.Functions.Notify("you are alive for a miracle, be more careful next time", "success")
         else
+            QBCore.Functions.Notify("DEBUG: ENTRO 2", "error")
             QBCore.Functions.Notify("The shock was lethal", "error")
             TriggerEvent('hospital:client:KillPlayer', PlayerPedId())
         end
+        QBCore.Functions.Notify("DEBUG: FIN", "error")
     else    
         QBCore.Functions.Progressbar("touch_process", "Reparando ..", math.random(6000,8000), false, true, {
             disableMovement = true,
