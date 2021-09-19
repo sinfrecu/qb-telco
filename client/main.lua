@@ -76,7 +76,6 @@ end
 -- Progress Bar and confirm end task
 
 function TouchProcess()
-    local src = 
     if not BuilderData.ShowDetails then
         -- death
         TasserAnim()
