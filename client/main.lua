@@ -95,6 +95,7 @@ function TouchProcess()
             QBCore.Functions.Notify("The shock was lethal", "error")
             TriggerEvent('hospital:client:KillPlayer', PlayerPedId())
         end
+
         QBCore.Functions.Notify("DEBUG: FIN", "error")
     else    
         QBCore.Functions.Progressbar("touch_process", "Reparando ..", math.random(6000,8000), false, true, {
