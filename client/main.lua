@@ -73,21 +73,36 @@ end
 
 -- // Progressbars & Progression //
 function TouchProcess()
-    QBCore.Functions.Progressbar("touch_process", "Reparando ..", math.random(6000,8000), false, true, {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {}, {}, {}, function() -- Done
-        TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, true, true)
+    if not BuilderData.ShowDetails then
+        -- death
+        Citizen.Wait(200)
         ClearPedTasks(PlayerPedId())
-
-    end, function() -- Cancel
-
-        ClearPedTasks(PlayerPedId())
+        TasserAnim()
         TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, false, false)
-        QBCore.Functions.Notify("Process Canceled, you lost materials", "error")
-    end)
+        QBCore.Functions.Notify("You received an electric shock and materials were damaged", "error", 4000)
+        Citizen.Wait(4000)
+        if (math.random() >= 0.5)  then
+            ClearPedTasks(PlayerPedId())
+            QBCore.Functions.Notify("You are alive for a miracle!, be more careful next time.", "success", 4000)
+        else
+            QBCore.Functions.Notify("The shock was lethal.", "error", 4000)
+            TriggerEvent('hospital:client:KillPlayer', PlayerPedId())
+        end
+    else    
+        QBCore.Functions.Progressbar("touch_process", "Reparando ..", math.random(6000,8000), false, true, {
+            disableMovement = true,
+            disableCarMovement = true,
+            disableMouse = false,
+            disableCombat = true,
+        }, {}, {}, {}, function() -- Done
+            TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, true, true)
+            ClearPedTasks(PlayerPedId())    
+        end, function() -- Cancel
+            ClearPedTasks(PlayerPedId())
+            TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, false, false)
+            QBCore.Functions.Notify("Process Canceled, you lost materials", "error")
+        end)
+    end
 end
 
 
@@ -114,6 +129,12 @@ function TouchUp()
     local ped = PlayerPedId()
     LoadAnim('amb@prop_human_movie_bulb@base')
     TaskPlayAnim(ped, 'amb@prop_human_movie_bulb@base', 'base', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
+end
+
+function TasserAnim()
+    local ped = PlayerPedId()
+    LoadAnim('melee@unarmed@streamed_variations')
+    TaskPlayAnim(ped, 'melee@unarmed@streamed_variations', 'victim_takedown_front_slap', 6.0, -6.0, 6000, 2, 0, 0, 0, 0)
 end
 
 function LoadAnim(dict)
@@ -256,8 +277,10 @@ Citizen.CreateThread(function()
 
                             inRange = true
                             if not BuilderData.ShowDetails then
+                                -- red  255, 77, 57
                                 DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 255, 77, 57, 255, 0, 0, 0, 1, 0, 0, 0)
                             else
+                                -- green 57, 255, 110
                                 DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 57, 255, 110, 255, 0, 0, 0, 1, 0, 0, 0)
                             end
                             
@@ -269,7 +292,7 @@ Citizen.CreateThread(function()
                                 }
                                 -- end shit
                                 DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] '..v.label )                
-                                if IsControlJustPressed(0, 38) then
+                                if IsControlJustPressed(0, 38) then                                  
                                     TriggerServerEvent('qb-telco:server:CurrenTaskupdate', k )
                                     QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
                                         if hasItem then
