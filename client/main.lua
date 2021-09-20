@@ -41,8 +41,7 @@ function GetCompletedTasks()
 end
 
 
--- Animation Selecction
-
+-- // Animations //
 function DoTask()
     local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
@@ -72,9 +71,7 @@ function DoTask()
     
 end
 
-
--- Progress Bar and confirm end task
-
+-- // Progressbars & Progression //
 function TouchProcess()
     if not BuilderData.ShowDetails then
         -- death
@@ -109,8 +106,7 @@ function TouchProcess()
 end
 
 
--- Animations
-
+-- // Animations //
 function PickAnim()
     local ped = PlayerPedId()
     LoadAnim('amb@prop_human_bum_bin@idle_a')
@@ -141,10 +137,6 @@ function TasserAnim()
     TaskPlayAnim(ped, 'melee@unarmed@streamed_variations', 'victim_takedown_front_slap', 6.0, -6.0, 6000, 2, 0, 0, 0, 0)
 end
 
-
-
-
-
 function LoadAnim(dict)
     while not HasAnimDictLoaded(dict) do
         RequestAnimDict(dict)
@@ -153,8 +145,7 @@ function LoadAnim(dict)
 end
 
 
--- State Task
-
+-- // States //
 RegisterNetEvent('qb-telco:client:SetTaskState')
 AddEventHandler('qb-telco:client:SetTaskState', function(Task, IsBusy, IsCompleted)
     Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].IsBusy = IsBusy
@@ -162,16 +153,14 @@ AddEventHandler('qb-telco:client:SetTaskState', function(Task, IsBusy, IsComplet
 end)
 
 
--- Finish Project
-
+-- // Finishing //
 RegisterNetEvent('qb-telco:client:FinishProject')
 AddEventHandler('qb-telco:client:FinishProject', function(BuilderConfig)
     Config = BuilderConfig
 end)
 
 
--- Blips
-
+-- // Blips //
 RegisterNetEvent('qb-telco:client:UpdateBlip')
 AddEventHandler('qb-telco:client:UpdateBlip', function(id)
     DeleteBlip()
@@ -190,12 +179,13 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
     end
 end)
 
-
+-- // Requirements Inventory //
 function ClearNeed(requiredItems)
     Citizen.Wait(1500)
     TriggerEvent('inventory:client:requiredItems', requiredItems, false)   
 end
 
+-- // Delete the Blip //
 function DeleteBlip()
     if DoesBlipExist(TelcoBlip) then
         RemoveBlip(TelcoBlip)
@@ -203,7 +193,6 @@ function DeleteBlip()
 end
 
 function DrawText3Ds(x, y, z, text)
-
     SetTextScale(0.35, 0.35)
     SetTextFont(4)
     SetTextProportional(1)
@@ -219,8 +208,7 @@ function DrawText3Ds(x, y, z, text)
 end
 
 
--- Threads
-
+-- // Threads //
 Citizen.CreateThread(function()
     Wait(1000)
     isLoggedIn = true
@@ -247,7 +235,6 @@ Citizen.CreateThread(function()
                     else
                         DrawMarker(2, data.coords.x, data.coords.y, data.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 57, 255, 110, 255, 0, 0, 0, 1, 0, 0, 0)
                     end
-
 
                     if MainDistance < 2 then
                         local TaskData = GetCompletedTasks()
