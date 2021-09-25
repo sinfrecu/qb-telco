@@ -177,7 +177,6 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
     DeleteBlip()
     Citizen.Wait(5)
     if PlayerJob.name == "telco" then
-        
         TelcoBlip = AddBlipForCoord(Config.Projects[id].ProjectLocations["main"].coords.x, Config.Projects[id].ProjectLocations["main"].coords.y, Config.Projects[id].ProjectLocations["main"].coords.z)
         SetBlipSprite(TelcoBlip, 354)
         SetBlipDisplay(TelcoBlip, 4)
@@ -277,7 +276,21 @@ Citizen.CreateThread(function()
                             end
 
                             if IsControlJustPressed(0, 38) then
-                                BuilderData.ShowDetails = not BuilderData.ShowDetails
+                                if not BuilderData.ShowDetails then
+                                    -- Start code of Tinus_NL
+                                    RegisterNUICallback("main", function(RequestData)
+                                    	if RequestData.ReturnType == "EXIT" then
+                                    			SetNuiFocus(false, false)
+                                    			SendNUIMessage({RequestType = "Visibility", RequestData = false})
+                                    	elseif RequestData.ReturnType == "DONE" then
+                                    			SetNuiFocus(false, false)
+                                    			SendNUIMessage({RequestType = "Visibility", RequestData = false})
+                                                BuilderData.ShowDetails = not BuilderData.ShowDetails
+                                    	end
+                                    end)--End code RegisterNUICallback of Tinus_NL
+                                else
+                                    BuilderData.ShowDetails = not BuilderData.ShowDetails
+                                end
                             end
                         end
                     end
