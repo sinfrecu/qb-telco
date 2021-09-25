@@ -206,6 +206,21 @@ function DrawText3Ds(x, y, z, text)
     ClearDrawOrigin()
 end
 
+-- // NUICallback //
+
+-- Start code of Tinus_NL
+RegisterNUICallback("main", function(RequestData)
+	if RequestData.ReturnType == "EXIT" then
+		SetNuiFocus(false, false)
+		SendNUIMessage({RequestType = "Visibility", RequestData = false})
+	elseif RequestData.ReturnType == "DONE" then
+		SetNuiFocus(false, false)
+		SendNUIMessage({RequestType = "Visibility", RequestData = false})
+        BuilderData.ShowDetails = not BuilderData.ShowDetails
+	end
+end)--End code RegisterNUICallback of Tinus_NL
+
+
 
 -- // Threads //
 Citizen.CreateThread(function()
@@ -266,17 +281,7 @@ Citizen.CreateThread(function()
                                 if not BuilderData.ShowDetails then
                                     SetNuiFocus(true, true)
                                     SendNUIMessage({RequestType = "Visibility", RequestData = true})
-                                    -- Start code of Tinus_NL
-                                    RegisterNUICallback("main", function(RequestData)
-                                    	if RequestData.ReturnType == "EXIT" then
-                                    			SetNuiFocus(false, false)
-                                    			SendNUIMessage({RequestType = "Visibility", RequestData = false})
-                                    	elseif RequestData.ReturnType == "DONE" then
-                                    			SetNuiFocus(false, false)
-                                    			SendNUIMessage({RequestType = "Visibility", RequestData = false})
-                                                BuilderData.ShowDetails = not BuilderData.ShowDetails
-                                    	end
-                                    end)--End code RegisterNUICallback of Tinus_NL
+
                                 else
                                     BuilderData.ShowDetails = not BuilderData.ShowDetails
                                 end
