@@ -74,7 +74,7 @@ $(function () {
 
     document.onkeydown = function (KeyData) {
         if (KeyData.which === 27 || KeyData.which === 8) {
-            $.post("http://esx_technician/main", JSON.stringify({ReturnType: "EXIT", ReturnData: "-"}))
+            $.post("http://qb-telco/main", JSON.stringify({ReturnType: "EXIT", ReturnData: "-"}))
         }
     }
 
@@ -103,7 +103,7 @@ $(function () {
         })
         
         if (FoundWrong === false){
-            $.post("http://esx_technician/main", JSON.stringify({ReturnType: "DONE", ReturnData: "-"}))
+            $.post("http://qb-telco/main", JSON.stringify({ReturnType: "DONE", ReturnData: "-"}))
         }
     })
 })
