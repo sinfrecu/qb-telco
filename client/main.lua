@@ -281,7 +281,6 @@ Citizen.CreateThread(function()
                                 if not BuilderData.ShowDetails then
                                     SetNuiFocus(true, true)
                                     SendNUIMessage({RequestType = "Visibility", RequestData = true})
-
                                 else
                                     BuilderData.ShowDetails = not BuilderData.ShowDetails
                                 end

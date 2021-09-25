@@ -73,7 +73,7 @@ $(function () {
     })
 
     document.onkeydown = function (KeyData) {
-        if (KeyData.which === 27 || KeyData.which === 8) {
+        if (KeyData.which === 38 || KeyData.which === 8) {
             $.post("http://qb-telco/main", JSON.stringify({ReturnType: "EXIT", ReturnData: "-"}))
         }
     }
