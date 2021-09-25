@@ -12,9 +12,10 @@
 - [x] 🔩Consume metals ,
 - [x] coords to vector3
 - [x] Requirements Tool and Materials **per task** , all on config.lua
+- [x] ⚡Power system, use BuilderData.ShowDetails, to turn off the antenna before working, if you work without displaying "ShowDetails" you can be electrocuted by a random, (add Tazzer animation )
 
 Wishlist:
-- [ ] ⚡Power system, use BuilderData.ShowDetails, to turn off the antenna before working, if you work without displaying "ShowDetails" you can be electrocuted by a random, (add Tazzer animation )
+
 - [ ] 📌Blips's in task's
 
 
