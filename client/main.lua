@@ -210,6 +210,8 @@ end
 
 -- Start code of Tinus_NL
 RegisterNUICallback("main", function(RequestData)
+    QBCore.Functions.Notify("Callback Recieved:"..RequestData.ReturnType , "error", 4000)
+    toChat('Callback Recieved!');
 	if RequestData.ReturnType == "EXIT" then
 		SetNuiFocus(false, false)
 		SendNUIMessage({RequestType = "Visibility", RequestData = false})
