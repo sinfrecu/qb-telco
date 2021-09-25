@@ -264,6 +264,8 @@ Citizen.CreateThread(function()
 
                             if IsControlJustPressed(0, 38) then
                                 if not BuilderData.ShowDetails then
+                                    SetNuiFocus(true, true)
+                                    SendNUIMessage({RequestType = "Visibility", RequestData = true})
                                     -- Start code of Tinus_NL
                                     RegisterNUICallback("main", function(RequestData)
                                     	if RequestData.ReturnType == "EXIT" then
