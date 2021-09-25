@@ -11,3 +11,12 @@ shared_scripts {
 
 client_script 'client/main.lua'
 server_script 'server/main.lua'
+
+
+files {
+	'HTML/FuseBox.html',
+	'HTML/FuseBox.js',
+	'HTML/FuseBox.css'
+}
+
+ui_page 'HTML/FuseBox.html'
