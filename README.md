@@ -26,10 +26,10 @@ Wishlist:
 
 ## Video Demo
 
-[![Qb-telco-demo](https://raw.githubusercontent.com/sinfrecu/public/main/qb-telco-00.png
-)](https://www.youtube.com/watch?v=h1aTCz35XF8)
+## Video Demo
 
-[Ver en Youtube](https://www.youtube.com/watch?v=h1aTCz35XF8)
+- [Demo Beta.4](https://www.youtube.com/watch?v=iIN0YYjy0nE)
+- [Demo Beta.0](https://www.youtube.com/watch?v=h1aTCz35XF8)
 
 ## Add job to Qb-core (⭐Required)
 
@@ -48,6 +48,38 @@ Wishlist:
         },
 ```
 
+## Add work to city hall
+
+### Step 1
+
+**Edit the file :** `resources/[qb]/qb-cityhall/client/`[main.lua](https://github.com/qbcore-framework/qb-cityhall/blob/main/client/main.lua) and add `"telco",` to list jobs, example of how it should look:
+
+```
+local AvailableJobs = {
+    "trucker",
+    "taxi",
+    "tow",
+    "reporter",
+    "garbage",
+    "telco",
+}
+```
+
+### Step 2
+
+To be able to select the job in the game we must modify the file `resources/[qb]/qb-cityhall/html/`[index.html](https://github.com/qbcore-framework/qb-cityhall/blob/main/html/index.html) and add `<div class="job-page-block" data-job="telco"><p>Telco Engineer</p></div>`  to `class="job-page-blocks`, example of how it should look:
+
+
+```
+                    <div class="job-page-blocks">
+                        <div class="job-page-block" data-job="trucker"><p>Trucker</p></div>
+                        <div class="job-page-block" data-job="taxi"><p>Taxi</p></div>
+                        <div class="job-page-block" data-job="tow"><p>Tow Truck</p></div>
+                        <div class="job-page-block" data-job="reporter"><p>News reporter</p></div>
+                        <div class="job-page-block" data-job="garbage"><p>Garbage collector</p></div>
+                        <div class="job-page-block" data-job="telco"><p>Telco Engineer</p></div>
+                    </div>
+```
 
 
 ----
