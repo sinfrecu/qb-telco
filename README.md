@@ -26,10 +26,10 @@ Wishlist:
 
 ## Video Demo
 
-[![Qb-telco-demo](https://raw.githubusercontent.com/sinfrecu/public/main/qb-telco-00.png
-)](https://www.youtube.com/watch?v=h1aTCz35XF8)
+## Video Demo
 
-[Ver en Youtube](https://www.youtube.com/watch?v=h1aTCz35XF8)
+[Demo Beta.4](https://www.youtube.com/watch?v=iIN0YYjy0nE)
+[Demo Beta.0](https://www.youtube.com/watch?v=h1aTCz35XF8)
 
 ## Add job to Qb-core (⭐Required)
 
@@ -52,7 +52,7 @@ Wishlist:
 
 ### Step 1
 
-**Edit the file : ** `resources/[qb]/qb-cityhall/client/`[main.lua](https://github.com/qbcore-framework/qb-cityhall/blob/main/client/main.lua) and add `"telco",` to list jobs, example of how it should look:
+**Edit the file :** `resources/[qb]/qb-cityhall/client/`[main.lua](https://github.com/qbcore-framework/qb-cityhall/blob/main/client/main.lua) and add `"telco",` to list jobs, example of how it should look:
 
 ```
 local AvailableJobs = {
