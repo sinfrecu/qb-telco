@@ -97,7 +97,7 @@ $(function () {
         let FoundWrong = false
 
         SwitchStatus.forEach(function (CurrentFuse, CurrentIndex) {
-            if (CurrentFuse === false){
+            if (CurrentFuse === true){
                 FoundWrong = true
             }
         })
