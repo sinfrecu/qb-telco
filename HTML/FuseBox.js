@@ -34,12 +34,12 @@ $(function () {
                     SwitchStatus[CurrentIndex] = true
                     
                     document.getElementById("Fuse" + (CurrentIndex + 1)).style.marginTop = "10%"
-                    document.getElementById("Fuse" + (CurrentIndex + 1)).style.backgroundColor = "rgb(0, 255, 0)"
+                    document.getElementById("Fuse" + (CurrentIndex + 1)).style.backgroundColor = "rgb(255, 0, 0)"
                 } else {
                     SwitchStatus[CurrentIndex] = false
 
                     document.getElementById("Fuse" + (CurrentIndex + 1)).style.marginTop = "135%"
-                    document.getElementById("Fuse" + (CurrentIndex + 1)).style.backgroundColor = "rgb(255, 0, 0)"
+                    document.getElementById("Fuse" + (CurrentIndex + 1)).style.backgroundColor = "rgb(0, 0, 0)"
                 }
             })
         } else {
@@ -86,12 +86,12 @@ $(function () {
             SwitchStatus[ClickedFuseArrayId] = true
 
             document.getElementById(ClickedFuseid).style.marginTop = "10%"
-            document.getElementById(ClickedFuseid).style.backgroundColor = "rgb(0, 255, 0)"
+            document.getElementById(ClickedFuseid).style.backgroundColor = "rgb(255, 0, 0)"
         } else {
             SwitchStatus[ClickedFuseArrayId] = false
 
             document.getElementById(ClickedFuseid).style.marginTop = "135%"
-            document.getElementById(ClickedFuseid).style.backgroundColor = "rgb(255, 0, 0)"
+            document.getElementById(ClickedFuseid).style.backgroundColor = "rgb(0, 0, 0)"
         }
 
         let FoundWrong = false
