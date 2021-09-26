@@ -28,8 +28,8 @@ Wishlist:
 
 ## Video Demo
 
-[Demo Beta.4](https://www.youtube.com/watch?v=iIN0YYjy0nE)
-[Demo Beta.0](https://www.youtube.com/watch?v=h1aTCz35XF8)
+- [Demo Beta.4](https://www.youtube.com/watch?v=iIN0YYjy0nE)
+- [Demo Beta.0](https://www.youtube.com/watch?v=h1aTCz35XF8)
 
 ## Add job to Qb-core (⭐Required)
 
