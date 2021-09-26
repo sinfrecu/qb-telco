@@ -1,0 +1,57 @@
+/*
+  _____   _                                 _   _   _
+ |_   _| (_)  _ __    _   _   ___          | \ | | | |
+   | |   | | | '_ \  | | | | / __|         |  \| | | |    
+   | |   | | | | | | | |_| | \__ \         | |\  | | |___ 
+   |_|   |_| |_| |_|  \__,_| |___/  _____  |_| \_| |_____|
+                                   |_____|
+*/
+
+.box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color:rgb(72, 78, 83);
+
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 60px 60px 60px 60px 60px 60px;
+    grid-template-rows: 100px 30px 100px;
+}
+
+.fuse {
+    background-color: rgb(115, 125, 133);
+    border-radius: 5px;
+
+    text-align: center;
+}
+
+.fuseline {
+    background-color: rgb(170, 176, 180);
+    width: 50%;
+    height: 70%;
+    border-radius: 5px;
+
+    margin-left: 25%;
+    margin-top: 25%;
+}
+
+.fusebutton {
+    background-color: orange;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    font-size: large;
+    width: 160%;
+    height: 40%;
+    border-radius: 5px;
+    border: 0px;
+    outline: none;
+
+    margin-left: -30%;
+    margin-top: 135%;
+}

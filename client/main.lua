@@ -83,13 +83,13 @@ function TouchProcess()
         Citizen.Wait(4000)
         if (math.random() >= 0.5)  then
             ClearPedTasks(PlayerPedId())
-            QBCore.Functions.Notify("You are alive for a miracle!, be more careful next time.", "success", 4000)
+            QBCore.Functions.Notify("You're still alive! be more careful next time.", "success", 4000)
         else
             QBCore.Functions.Notify("The shock was lethal.", "error", 4000)
             TriggerEvent('hospital:client:KillPlayer', PlayerPedId())
         end
     else    
-        QBCore.Functions.Progressbar("touch_process", "Reparando ..", math.random(6000,8000), false, true, {
+        QBCore.Functions.Progressbar("touch_process", "Repairing ..", math.random(6000,8000), false, true, {
             disableMovement = true,
             disableCarMovement = true,
             disableMouse = false,
@@ -100,7 +100,7 @@ function TouchProcess()
         end, function() -- Cancel
             ClearPedTasks(PlayerPedId())
             TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, false, false)
-            QBCore.Functions.Notify("Process Canceled, you lost materials", "error")
+            QBCore.Functions.Notify("Process canceled, you wasted some job materials", "error")
         end)
     end
 end
@@ -166,9 +166,8 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
     DeleteBlip()
     Citizen.Wait(5)
     if PlayerJob.name == "telco" then
-        
         TelcoBlip = AddBlipForCoord(Config.Projects[id].ProjectLocations["main"].coords.x, Config.Projects[id].ProjectLocations["main"].coords.y, Config.Projects[id].ProjectLocations["main"].coords.z)
-        SetBlipSprite(TelcoBlip, 354)
+        SetBlipSprite(TelcoBlip, 161)
         SetBlipDisplay(TelcoBlip, 4)
         SetBlipScale(TelcoBlip, 0.6)
         SetBlipAsShortRange(TelcoBlip, true)
@@ -207,6 +206,21 @@ function DrawText3Ds(x, y, z, text)
     ClearDrawOrigin()
 end
 
+-- // NUICallback //
+
+-- Start code of Tinus_NL
+RegisterNUICallback("main", function(RequestData)
+	if RequestData.ReturnType == "EXIT" then
+		SetNuiFocus(false, false)
+		SendNUIMessage({RequestType = "Visibility", RequestData = false})
+	elseif RequestData.ReturnType == "DONE" then
+		SetNuiFocus(false, false)
+		SendNUIMessage({RequestType = "Visibility", RequestData = false})
+        BuilderData.ShowDetails = not BuilderData.ShowDetails
+	end
+end)--End code RegisterNUICallback of Tinus_NL
+
+
 
 -- // Threads //
 Citizen.CreateThread(function()
@@ -240,7 +254,7 @@ Citizen.CreateThread(function()
                         local TaskData = GetCompletedTasks()
                         if TaskData ~= nil then
                             if not BuilderData.ShowDetails then
-                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] Turn off site')
+                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] Turn off electricity')
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z + 0.2, 'Works: '..TaskData.completed..' / '..TaskData.total)
                             else
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] Turn on electricity')
@@ -255,7 +269,7 @@ Citizen.CreateThread(function()
                             end
 
                             if TaskData.completed == TaskData.total then
-                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z - 0.2, '[G] Finish, send report to base.')
+                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z - 0.2, '[G] Finish Job, send report to base.')
                                 if IsControlJustPressed(0, 47) then
                                     TriggerServerEvent('qb-telco:server:FinishProject')
                                     -- fix close details or turn off antenna at the end of the location
@@ -264,7 +278,12 @@ Citizen.CreateThread(function()
                             end
 
                             if IsControlJustPressed(0, 38) then
-                                BuilderData.ShowDetails = not BuilderData.ShowDetails
+                                if not BuilderData.ShowDetails then
+                                    SetNuiFocus(true, true)
+                                    SendNUIMessage({RequestType = "Visibility", RequestData = true})
+                                else
+                                    BuilderData.ShowDetails = not BuilderData.ShowDetails
+                                end
                             end
                         end
                     end

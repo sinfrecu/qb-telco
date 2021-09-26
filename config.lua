@@ -2,7 +2,8 @@ Config = Config or {}
 
 Config.CurrentProject = 0
 Config.Projects = {
--- Centro de la ciudad, carteld de vinewood
+-- Spanish: Centro de la ciudad, carteld de vinewood
+-- English: Downtown Vinewood
     [1] = {
         IsActive = false,
         ProjectLocations = {
@@ -45,12 +46,13 @@ Config.Projects = {
 	    }
         }
     },
---- Enlace rural
+--- Spanish: Enlace rural
+--- English: Rural Link
     [2] = {
         IsActive = false,
         ProjectLocations = {
             ["main"] = {
-                label = "RSC-P Rural small cell",
+                label = "RSC-P Rural Small Cell",
                 coords = vector3(-1001.97, 4853.76, 274.61),
             },
             ["tasks"] = {
@@ -87,7 +89,8 @@ Config.Projects = {
         }
         }
     },    
--- Aeropuerto
+-- Spanish: Aeropuerto
+-- English: Airport
     [3] = {
         IsActive = false,
         ProjectLocations = {
