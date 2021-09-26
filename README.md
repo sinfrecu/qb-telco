@@ -13,10 +13,15 @@
 - [x] coords to vector3
 - [x] Requirements Tool and Materials **per task** , all on config.lua
 - [x] ⚡Power system, use BuilderData.ShowDetails, to turn off the antenna before working, if you work without displaying "ShowDetails" you can be electrocuted by a random, (add Tazzer animation )
+- [x] ⚡ FuseBox minigame to PowerOff electricity
+
 
 Wishlist:
 
-- [ ] 📌Blips's in task's
+- [ ] 📌 Blips's in task's
+- [ ] 🏢 building location ( by @nzkfc )
+- [ ] 🚐 Work car ( by @nzkfc )
+
 
 
 ## Video Demo
@@ -46,8 +51,15 @@ Wishlist:
 
 
 ----
-
-❤ Based on qb-builderjob, qb-vineyard, qb-truckerjob
+## ❤ Based on
+qb-builderjob, qb-vineyard, qb-truckerjob
 
 [Qb-core FiveM RP Framework](https://github.com/qbcore-framework)
 
+----
+# Fuse Box
+
+[![Qb-telco-demo](https://raw.githubusercontent.com/sinfrecu/public/main/FuseBox.png
+)](https://https://forum.cfx.re/t/release-free-esx-esx-technician/)
+
+A special thanks to [Tinus_NL](https://forum.cfx.re/u/tinus_nl/) original author of the [esx_technician](https://forum.cfx.re/t/release-free-esx-esx-technician/) module "fuse box", who authorized the use of the files and part of the code in this module.

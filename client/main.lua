@@ -167,7 +167,7 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
     Citizen.Wait(5)
     if PlayerJob.name == "telco" then
         TelcoBlip = AddBlipForCoord(Config.Projects[id].ProjectLocations["main"].coords.x, Config.Projects[id].ProjectLocations["main"].coords.y, Config.Projects[id].ProjectLocations["main"].coords.z)
-        SetBlipSprite(TelcoBlip, 354)
+        SetBlipSprite(TelcoBlip, 161)
         SetBlipDisplay(TelcoBlip, 4)
         SetBlipScale(TelcoBlip, 0.6)
         SetBlipAsShortRange(TelcoBlip, true)
