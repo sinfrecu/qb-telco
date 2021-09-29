@@ -43,7 +43,7 @@ function GetCurrentProject()
         Config.CurrentProject = CurProject
     end
     return Config
-end)
+end
 
 
 function getNewLocation()
