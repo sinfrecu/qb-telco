@@ -29,6 +29,23 @@ end)
 -- // BIG FIX //
 
 
+function GetCompletedTasks()
+    local retval = {
+        completed = 0,
+        total = #Config.Projects[Config.CurrentProject].ProjectLocations["tasks"]
+    }
+    for k, v in pairs(Config.Projects[Config.CurrentProject].ProjectLocations["tasks"]) do
+        if v.completed then
+            retval.completed = retval.completed + 1
+        end
+    end
+    return retval
+end
+
+
+
+
+
 function GetCurrentProject()
     local CurProject = nil
     for k, v in pairs(Config.Projects) do
