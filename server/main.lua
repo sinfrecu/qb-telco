@@ -1,15 +1,4 @@
 
--- // BIG FIX //
-
-RegisterServerEvent('qb-telco:server:CurrenTaskupdate')
-AddEventHandler('qb-telco:server:CurrenTaskupdate', function(Task)
-    local NumberCurrentTask = Task
-end)
-
-
--- // END BIG FIX //
-
-
 
 -- Finish project
 
@@ -82,7 +71,7 @@ end
 
 QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, cb)
     local Ply = QBCore.Functions.GetPlayer(source)
-    local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][NumberCurrentTask]
+    local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][k]
     local Toolkit = Ply.Functions.GetItemByName(TaskData.requiredTool)
     
     if Toolkit ~= nil then
