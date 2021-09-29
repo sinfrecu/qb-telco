@@ -71,7 +71,7 @@ end
 
 QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, cb, data)
     local Ply = QBCore.Functions.GetPlayer(source)
-    local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][data]
+    local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][data.quien]
     local Toolkit = Ply.Functions.GetItemByName(TaskData.requiredTool)
     
     if Toolkit ~= nil then
