@@ -1,5 +1,13 @@
 
+-- // BIG FIX //
 
+RegisterServerEvent('qb-telco:server:CurrenTaskupdate')
+AddEventHandler('qb-telco:server:CurrenTaskupdate', function(Task)
+    local NumberCurrentTask = Task
+end)
+
+
+-- // END BIG FIX //
 
 
 
@@ -72,7 +80,7 @@ end
 
 -- Callback items 
 
-QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, cb,NumberCurrentTask)
+QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, cb)
     local Ply = QBCore.Functions.GetPlayer(source)
     local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][NumberCurrentTask]
     local Toolkit = Ply.Functions.GetItemByName(TaskData.requiredTool)

@@ -26,10 +26,7 @@ end)
 
 -- // BIG FIX //
 
-RegisterServerEvent('qb-telco:server:CurrenTaskupdate')
-AddEventHandler('qb-telco:server:CurrenTaskupdate', function(Task)
-    local NumberCurrentTask = Task
-end)
+
 
 
 function GetCompletedTasks()
