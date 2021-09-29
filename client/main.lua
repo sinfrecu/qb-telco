@@ -302,6 +302,7 @@ Citizen.CreateThread(function()
     Wait(1000)
     isLoggedIn = true
     PlayerData = QBCore.Functions.GetPlayerData()
+    GetCurrentProject()
 end)
 
 Citizen.CreateThread(function()
