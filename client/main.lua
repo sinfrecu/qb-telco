@@ -396,7 +396,7 @@ Citizen.CreateThread(function()
                                 -- end shit
                                 DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] '..v.label )                
                                 if IsControlJustPressed(0, 38) then
-                                    local  sarlanga {}
+                                    local  sarlanga = {}
                                     sarlanga.quien = k                                  
                                     -- TriggerServerEvent('qb-telco:server:CurrenTaskupdate', k )
                                     QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
