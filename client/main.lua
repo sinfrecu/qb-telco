@@ -343,7 +343,7 @@ Citizen.CreateThread(function()
                                 end
                             end
 
-                            if currentCount < CurrentLocation.dropcount then 
+                            if TaskData.completed == TaskData.total then 
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z - 0.2, '[G] Finish Job, send report to base.')
                                 if IsControlJustPressed(0, 47) then
                                     -- Clear task's location
