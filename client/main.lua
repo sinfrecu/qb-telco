@@ -8,6 +8,7 @@ local BuilderData = {
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
+    GetCurrentProject()
     isLoggedIn = true
     PlayerData = QBCore.Functions.GetPlayerData()
     PlayerJob = QBCore.Functions.GetPlayerData().job
@@ -16,6 +17,7 @@ end)
 
 RegisterNetEvent('QBCore:Client:OnJobUpdate')
 AddEventHandler('QBCore:Client:OnJobUpdate', function(JobInfo)
+    GetCurrentProject()
     PlayerJob = JobInfo
     TriggerEvent('qb-telco:client:UpdateBlip', Config.CurrentProject)
 end)
