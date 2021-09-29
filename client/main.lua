@@ -11,7 +11,6 @@ AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
     isLoggedIn = true
     PlayerData = QBCore.Functions.GetPlayerData()
     PlayerJob = QBCore.Functions.GetPlayerData().job
-    GetCurrentProject()
     TriggerEvent('qb-telco:client:UpdateBlip', Config.CurrentProject)
 end)
 
@@ -21,24 +20,99 @@ AddEventHandler('QBCore:Client:OnJobUpdate', function(JobInfo)
     TriggerEvent('qb-telco:client:UpdateBlip', Config.CurrentProject)
 end)
 
+
+
+
+
+-- // BIG FIX //
+
+
 function GetCurrentProject()
-    QBCore.Functions.TriggerCallback('qb-telco:server:GetCurrentProject', function(BuilderConfig)
-        Config = BuilderConfig
-    end)
+    local CurProject = nil
+    for k, v in pairs(Config.Projects) do
+        if v.IsActive then
+            CurProject = k
+            break
+        end
+    end
+
+    if CurProject == nil then
+        math.randomseed(os.time())
+        CurProject = math.random(1, #Config.Projects)
+        Config.Projects[CurProject].IsActive = true
+        Config.CurrentProject = CurProject
+    end
+    return Config
+end)
+
+
+function getNewLocation()
+    local location = getNextClosestLocation()
+    if location ~= 0 then
+        CurrentLocation = {}
+        CurrentLocation.id = location
+        CurrentLocation.dropcount = math.random(1, 3)
+        CurrentLocation.store = Config.Locations["stores"][location].name
+        CurrentLocation.x = Config.Locations["stores"][location].coords.x
+        CurrentLocation.y = Config.Locations["stores"][location].coords.y
+        CurrentLocation.z = Config.Locations["stores"][location].coords.z
+
+        CurrentBlip = AddBlipForCoord(CurrentLocation.x, CurrentLocation.y, CurrentLocation.z)
+        SetBlipColour(CurrentBlip, 3)
+        SetBlipRoute(CurrentBlip, true)
+        SetBlipRouteColour(CurrentBlip, 3)
+    else
+        QBCore.Functions.Notify("You Went To All The Shops .. Time For Your Payslip!")
+        if CurrentBlip ~= nil then
+            RemoveBlip(CurrentBlip)
+	    ClearAllBlipRoutes()
+            CurrentBlip = nil
+        end
+    end
 end
 
-function GetCompletedTasks()
-    local retval = {
-        completed = 0,
-        total = #Config.Projects[Config.CurrentProject].ProjectLocations["tasks"]
-    }
-    for k, v in pairs(Config.Projects[Config.CurrentProject].ProjectLocations["tasks"]) do
-        if v.completed then
-            retval.completed = retval.completed + 1
+
+function getNextClosestLocation()
+    local current = 0
+    local ramd = nil
+    local sorteo = {}
+      for k, _ in pairs(Config.Projects) do
+        if not hasDoneLocation(k) then
+          table.insert(sorteo, k)
+        end
+      end
+    local rand = math.random(1,#sorteo)
+    current = sorteo[rand]
+    return current
+end
+
+
+function hasDoneLocation(locationId)
+    local retval = false
+    if LocationsDone ~= nil and next(LocationsDone) ~= nil then 
+        for k, v in pairs(LocationsDone) do
+            if v == locationId then
+                retval = true
+            end
         end
     end
     return retval
 end
+
+
+
+RegisterNetEvent('qb-telco:client:SetTaskState')
+AddEventHandler('qb-telco:client:SetTaskState', function(Task, IsBusy, IsCompleted)
+    Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].IsBusy = IsBusy
+    Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].completed = IsCompleted
+end)
+
+
+
+-- // END BIG FIX //
+
+
+
 
 
 -- // Animations //
@@ -46,30 +120,28 @@ function DoTask()
     local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
     local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][BuilderData.CurrentTask]
-    TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, true, false)
-
+    -- TriggerServerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, true, false)
     if TaskData.type == "TouchAnim" then
         TouchAnim()
         TouchProcess()
     end
-
     if TaskData.type == "PickAnim" then
         PickAnim()
         TouchProcess()
     end
-
     if TaskData.type == "TouchLight" then
         TouchLight()
         TouchProcess()
     end
-
     if TaskData.type == "TouchUp" then
         TouchUp()
         TouchProcess()
     end
-
-    
 end
+
+
+
+
 
 -- // Progressbars & Progression //
 function TouchProcess()
@@ -78,7 +150,7 @@ function TouchProcess()
         Citizen.Wait(200)
         ClearPedTasks(PlayerPedId())
         TasserAnim()
-        TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, false, false)
+        TriggerServerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, false, false)
         QBCore.Functions.Notify("You received an electric shock and materials were damaged", "error", 4000)
         Citizen.Wait(4000)
         if (math.random() >= 0.5)  then
@@ -95,11 +167,13 @@ function TouchProcess()
             disableMouse = false,
             disableCombat = true,
         }, {}, {}, {}, function() -- Done
-            TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, true, true)
+            currentCount = currentCount + 1
+
+            --TriggerServerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, true, true)
             ClearPedTasks(PlayerPedId())    
         end, function() -- Cancel
             ClearPedTasks(PlayerPedId())
-            TriggerServerEvent('qb-telco:server:SetTaskState', BuilderData.CurrentTask, false, false)
+            --TriggerServerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, false, false)
             QBCore.Functions.Notify("Process canceled, you wasted some job materials", "error")
         end)
     end
@@ -112,31 +186,26 @@ function PickAnim()
     LoadAnim('amb@prop_human_bum_bin@idle_a')
     TaskPlayAnim(ped, 'amb@prop_human_bum_bin@idle_a', 'idle_a', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
 end
-
 function TouchAnim()
     local ped = PlayerPedId()
     LoadAnim('amb@prop_human_parking_meter@male@idle_a')
     TaskPlayAnim(ped, 'amb@prop_human_parking_meter@male@idle_a', 'idle_a', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
 end
-
 function TouchLight()
     local ped = PlayerPedId()
     LoadAnim('amb@prop_human_movie_studio_light@idle_a')
     TaskPlayAnim(ped, 'amb@prop_human_movie_studio_light@idle_a', 'idle_a', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
 end
-
 function TouchUp()
     local ped = PlayerPedId()
     LoadAnim('amb@prop_human_movie_bulb@base')
     TaskPlayAnim(ped, 'amb@prop_human_movie_bulb@base', 'base', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
 end
-
 function TasserAnim()
     local ped = PlayerPedId()
     LoadAnim('melee@unarmed@streamed_variations')
     TaskPlayAnim(ped, 'melee@unarmed@streamed_variations', 'victim_takedown_front_slap', 6.0, -6.0, 6000, 2, 0, 0, 0, 0)
 end
-
 function LoadAnim(dict)
     while not HasAnimDictLoaded(dict) do
         RequestAnimDict(dict)
@@ -145,22 +214,8 @@ function LoadAnim(dict)
 end
 
 
--- // States //
-RegisterNetEvent('qb-telco:client:SetTaskState')
-AddEventHandler('qb-telco:client:SetTaskState', function(Task, IsBusy, IsCompleted)
-    Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].IsBusy = IsBusy
-    Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].completed = IsCompleted
-end)
-
-
--- // Finishing //
-RegisterNetEvent('qb-telco:client:FinishProject')
-AddEventHandler('qb-telco:client:FinishProject', function(BuilderConfig)
-    Config = BuilderConfig
-end)
-
-
 -- // Blips //
+
 RegisterNetEvent('qb-telco:client:UpdateBlip')
 AddEventHandler('qb-telco:client:UpdateBlip', function(id)
     DeleteBlip()
@@ -177,6 +232,7 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
         EndTextCommandSetBlipName(TelcoBlip)
     end
 end)
+
 
 -- // Requirements Inventory //
 function ClearNeed(requiredItems)
@@ -227,7 +283,6 @@ Citizen.CreateThread(function()
     Wait(1000)
     isLoggedIn = true
     PlayerData = QBCore.Functions.GetPlayerData()
-    GetCurrentProject()
 end)
 
 Citizen.CreateThread(function()
@@ -268,10 +323,19 @@ Citizen.CreateThread(function()
                                 end
                             end
 
-                            if TaskData.completed == TaskData.total then
+                            if currentCount < CurrentLocation.dropcount then 
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z - 0.2, '[G] Finish Job, send report to base.')
                                 if IsControlJustPressed(0, 47) then
-                                    TriggerServerEvent('qb-telco:server:FinishProject')
+                                    -- Clear task's location
+                                    currentCount = 0
+
+                                    -- table.insert(LocationsDone, CurrentLocation.id)
+
+                                            -- TriggerServerEvent('qb-telco:server:FinishProject') // Reemplace a pay sistem.
+                                    -- Update to new project ?
+                                    -- UPDATE: GetCurrentProject()
+
+
                                     -- fix close details or turn off antenna at the end of the location
                                     BuilderData.ShowDetails = false
                                 end
@@ -312,12 +376,12 @@ Citizen.CreateThread(function()
                                 -- end shit
                                 DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] '..v.label )                
                                 if IsControlJustPressed(0, 38) then                                  
-                                    TriggerServerEvent('qb-telco:server:CurrenTaskupdate', k )
+                                    -- TriggerServerEvent('qb-telco:server:CurrenTaskupdate', k )
                                     QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
                                         if hasItem then
                                             -- Prevent sticky panel
                                             TriggerEvent('inventory:client:requiredItems', requiredItems, false)
-                                            BuilderData.CurrentTask = k
+                                            -- BuilderData.CurrentTask = k
                                             DoTask()
                                         else
                                             TriggerEvent('inventory:client:requiredItems', requiredItems, true)
@@ -329,6 +393,10 @@ Citizen.CreateThread(function()
                         end
                     end
                 end
+            
+            else
+                QBCore.Functions.Notify("DEBUG: genero el primero", "error", 4000)
+                GetCurrentProject()
             end
         else
             Citizen.Wait(1000)

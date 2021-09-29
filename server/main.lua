@@ -1,21 +1,6 @@
-ProjectDone = {}
-
--- Get current task
-
-RegisterServerEvent('qb-telco:server:CurrenTaskupdate')
-AddEventHandler('qb-telco:server:CurrenTaskupdate', function(Task)
-    NumberCurrentTask = Task
-end)
 
 
--- State Task
 
-RegisterServerEvent('qb-telco:server:SetTaskState')
-AddEventHandler('qb-telco:server:SetTaskState', function(Task, IsBusy, IsCompleted)
-    Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].IsBusy = IsBusy
-    Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].completed = IsCompleted
-    TriggerClientEvent('qb-telco:client:SetTaskState', -1, Task, IsBusy, IsCompleted)
-end)
 
 
 -- Finish project
@@ -56,19 +41,7 @@ AddEventHandler('qb-telco:server:FinishProject', function()
     TriggerClientEvent('qb-telco:client:UpdateBlip', -1, NewProject)
 end)
 
--- Done location
 
-function hasDoneLocation(locationId)
-    local retval = false
-    if ProjectDone ~= nil and next(ProjectDone) ~= nil then 
-        for k, v in pairs(ProjectDone) do
-            if v == locationId then
-                retval = true
-            end
-        end
-    end
-    return retval
-end
 
 
 -- Pay
@@ -119,22 +92,3 @@ QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, c
 end)
 
 
--- Callback:  Get current project 
-
-QBCore.Functions.CreateCallback('qb-telco:server:GetCurrentProject', function(source, cb)
-    local CurProject = nil
-    for k, v in pairs(Config.Projects) do
-        if v.IsActive then
-            CurProject = k
-            break
-        end
-    end
-
-    if CurProject == nil then
-        math.randomseed(os.time())
-        CurProject = math.random(1, #Config.Projects)
-        Config.Projects[CurProject].IsActive = true
-        Config.CurrentProject = CurProject
-    end
-    cb(Config)
-end)
