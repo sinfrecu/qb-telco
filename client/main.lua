@@ -39,7 +39,7 @@ function GetCurrentProject()
     end
 
     if CurProject == nil then
-        math.randomseed(os.time())
+        -- math.randomseed(os.time())
         CurProject = math.random(1, #Config.Projects)
         Config.Projects[CurProject].IsActive = true
         Config.CurrentProject = CurProject
