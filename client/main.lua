@@ -135,11 +135,12 @@ end)
 
 
 -- // Animations //
+
 function DoTask()
     local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
     local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][BuilderData.CurrentTask]
-    -- TriggerServerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, true, false)
+    TriggerServerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, true, false)
     if TaskData.type == "TouchAnim" then
         TouchAnim()
         TouchProcess()
@@ -188,11 +189,11 @@ function TouchProcess()
         }, {}, {}, {}, function() -- Done
             currentCount = currentCount + 1
 
-            --TriggerServerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, true, true)
+            TriggerServerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, true, true)
             ClearPedTasks(PlayerPedId())    
         end, function() -- Cancel
             ClearPedTasks(PlayerPedId())
-            --TriggerServerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, false, false)
+            TriggerServerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, false, false)
             QBCore.Functions.Notify("Process canceled, you wasted some job materials", "error")
         end)
     end
