@@ -397,6 +397,7 @@ Citizen.CreateThread(function()
                                 DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] '..v.label )                
                                 if IsControlJustPressed(0, 38) then
                                     local CurrentTask = k
+                                    local CurrentProject = Config.CurrentProject
                                     QBCore.Functions.TriggerCallback('qbtelco:CbHas', function(result)
                                         QBCore.Functions.Notify("DEBUG: entro en trigger n°"..plate , "error", 4000)
                                         if result then
@@ -409,7 +410,7 @@ Citizen.CreateThread(function()
                                             TriggerEvent('inventory:client:requiredItems', requiredItems, true)
                                             ClearNeed(requiredItems)
                                         end
-                                    end, CurrentTask)
+                                    end, CurrentTask, CurrentProject)
                                      
                                     -- TriggerServerEvent('qb-telco:server:CurrenTaskupdate', k )
                                     --QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)

@@ -88,10 +88,10 @@ end
 --     end
 -- end)
 
-QBCore.Functions.CreateCallback('qbtelco:CbHas', function(source, cb, CurrentTask)
+QBCore.Functions.CreateCallback('qbtelco:CbHas', function(source, cb, CurrentTask, CurrentProject)
     TriggerClientEvent('QBCore:Notify', source, 'llego al server callback y CurrentTask es: '..CurrentTask , 'error')
     local Ply = QBCore.Functions.GetPlayer(source)
-    local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][CurrentTask]
+    local TaskData = Config.Projects[CurrentProject].ProjectLocations["tasks"][CurrentTask]
     local Toolkit = Ply.Functions.GetItemByName(TaskData.requiredTool)
     if Toolkit ~= nil then
         if Ply.Functions.RemoveItem(TaskData.requiredItem, TaskData.requiredItemAmount) then
