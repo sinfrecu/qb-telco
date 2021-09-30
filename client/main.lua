@@ -141,7 +141,7 @@ function DoTask()
     local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
     local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][BuilderData.CurrentTask]
-    TriggerServerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, true, false)
+    TriggerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, true, false)
     if TaskData.type == "TouchAnim" then
         TouchAnim()
         TouchProcess()
@@ -171,7 +171,7 @@ function TouchProcess()
         Citizen.Wait(200)
         ClearPedTasks(PlayerPedId())
         TasserAnim()
-        TriggerServerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, false, false)
+        TriggerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, false, false)
         QBCore.Functions.Notify("You received an electric shock and materials were damaged", "error", 4000)
         Citizen.Wait(4000)
         if (math.random() >= 0.5)  then
@@ -189,12 +189,12 @@ function TouchProcess()
             disableCombat = true,
         }, {}, {}, {}, function() -- Done
 
-            TriggerServerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, true, true)
+            TriggerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, true, true)
             QBCore.Functions.Notify("Done!"..BuilderData.CurrentTask , "success", 4000)
             ClearPedTasks(PlayerPedId())    
         end, function() -- Cancel
             ClearPedTasks(PlayerPedId())
-            TriggerServerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, false, false)
+            TriggerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, false, false)
             QBCore.Functions.Notify("Process canceled, you wasted some job materials", "error")
         end)
     end
