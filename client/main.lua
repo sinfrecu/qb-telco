@@ -187,7 +187,6 @@ function TouchProcess()
             disableMouse = false,
             disableCombat = true,
         }, {}, {}, {}, function() -- Done
-            currentCount = currentCount + 1
 
             TriggerServerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, true, true)
             ClearPedTasks(PlayerPedId())    
@@ -348,7 +347,7 @@ Citizen.CreateThread(function()
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z - 0.2, '[G] Finish Job, send report to base.')
                                 if IsControlJustPressed(0, 47) then
                                     -- Clear task's location
-                                    currentCount = 0
+
 
                                     -- table.insert(LocationsDone, CurrentLocation.id)
 
