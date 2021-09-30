@@ -89,7 +89,7 @@ end
 -- end)
 
 QBCore.Functions.CreateCallback('qbtelco:CbHas', function(source, cb, CurrentTask, CurrentProject)
-    TriggerClientEvent('QBCore:Notify', source, 'llego al server callback y CurrentTask es: '..CurrentTask , 'error')
+    TriggerClientEvent('QBCore:Notify', source, 'debug: '..CurrentProject..'es el CurrentProject y CurrentTask es: '..CurrentTask , 'error')
     local Ply = QBCore.Functions.GetPlayer(source)
     local TaskData = Config.Projects[CurrentProject].ProjectLocations["tasks"][CurrentTask]
     local Toolkit = Ply.Functions.GetItemByName(TaskData.requiredTool)
