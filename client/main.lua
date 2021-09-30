@@ -399,7 +399,7 @@ Citizen.CreateThread(function()
                                     local CurrentTask = k
                                     local CurrentProject = Config.CurrentProject
                                     QBCore.Functions.TriggerCallback('qbtelco:CbHas', function(result)
-                                        QBCore.Functions.Notify("DEBUG: entro en trigger n°"..plate , "error", 4000)
+                                        QBCore.Functions.Notify("DEBUG: entro en trigger", "error", 4000)
                                         if result == false then
                                             QBCore.Functions.Notify("DEBUG: salio arriba", "error", 4000)
                                             TriggerEvent('inventory:client:requiredItems', requiredItems, false)
