@@ -69,23 +69,28 @@ end
 
 -- Callback items 
 
-QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, cb, data)
-    local Ply = QBCore.Functions.GetPlayer(source)
-    local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][data.quien]
-    local Toolkit = Ply.Functions.GetItemByName(TaskData.requiredTool)
-    
-    if Toolkit ~= nil then
-        if Ply.Functions.RemoveItem(TaskData.requiredItem, TaskData.requiredItemAmount) then
-            TriggerClientEvent('QBCore:Notify', source, 'Using '..TaskData.requiredItemAmount..' of '..QBCore.Shared.Items[TaskData.requiredItem]["label"] , 'success')
-            cb(true)
-        else
-            TriggerClientEvent('QBCore:Notify', source, 'Dont have enough of '..QBCore.Shared.Items[TaskData.requiredItem]["label"]..' x'..TaskData.requiredItemAmount, 'error')
-            cb(false)
-        end
-    else
-        TriggerClientEvent('QBCore:Notify', source, 'Dont have the tool '..QBCore.Shared.Items[TaskData.requiredTool]["label"] , 'error')
-        cb(false)
-    end
+--QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, cb, data)
+--    local Ply = QBCore.Functions.GetPlayer(source)
+--    local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][data.quien]
+--    local Toolkit = Ply.Functions.GetItemByName(TaskData.requiredTool)
+--    
+--    if Toolkit ~= nil then
+--         if Ply.Functions.RemoveItem(TaskData.requiredItem, TaskData.requiredItemAmount) then
+--             TriggerClientEvent('QBCore:Notify', source, 'Using '..TaskData.requiredItemAmount..' of '..QBCore.Shared.Items[TaskData.requiredItem]["label"] , 'success')
+--             cb(true)
+--         else
+--             TriggerClientEvent('QBCore:Notify', source, 'Dont have enough of '..QBCore.Shared.Items[TaskData.requiredItem]["label"]..' x'..TaskData.requiredItemAmount, 'error')
+--             cb(false)
+--         end
+--     else
+--         TriggerClientEvent('QBCore:Notify', source, 'Dont have the tool '..QBCore.Shared.Items[TaskData.requiredTool]["label"] , 'error')
+--         cb(false)
+--     end
+-- end)
+
+QBCore.Functions.CreateCallback('qbtelco:CbHas', function(source, cb, plate)
+    TriggerClientEvent('QBCore:Notify', source, 'llego al server callback y plate es: '..plate , 'error')
+    cb(false)
 end)
 
 

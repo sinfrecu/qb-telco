@@ -396,21 +396,28 @@ Citizen.CreateThread(function()
                                 -- end shit
                                 DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.25, '[E] '..v.label )                
                                 if IsControlJustPressed(0, 38) then
-                                    local  sarlanga = {
-                                        quien = k                                  
-                                        }
-                                    -- TriggerServerEvent('qb-telco:server:CurrenTaskupdate', k )
-                                    QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
-                                        if hasItem then
-                                            -- Prevent sticky panel
-                                            TriggerEvent('inventory:client:requiredItems', requiredItems, false)
-                                            -- BuilderData.CurrentTask = k
-                                            DoTask()
+                                    local plate = "3"
+                                    QBCore.Functions.TriggerCallback('qbtelco:CbHas', function(result)
+                                        QBCore.Functions.Notify("DEBUG: entro en trigger n°"..plate , "error", 4000)
+                                        if result == false then
+                                            QBCore.Functions.Notify("DEBUG: salio arriba", "error", 4000)
                                         else
-                                            TriggerEvent('inventory:client:requiredItems', requiredItems, true)
-                                            ClearNeed(requiredItems)
+                                            QBCore.Functions.Notify("DEBUG: salio el abajo", "error", 4000)
                                         end
-                                    end, sarlanga)
+                                    end, plate)
+                                     
+                                    -- TriggerServerEvent('qb-telco:server:CurrenTaskupdate', k )
+                                    --QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
+                                    --    if hasItem then
+                                            -- Prevent sticky panel
+                                    --        TriggerEvent('inventory:client:requiredItems', requiredItems, false)
+                                            -- BuilderData.CurrentTask = k
+                                    --        DoTask()
+                                    --    else
+                                    --        TriggerEvent('inventory:client:requiredItems', requiredItems, true)
+                                    --        ClearNeed(requiredItems)
+                                    --    end
+                                    --end, sarlanga)
                                 end
                             end
                         end
