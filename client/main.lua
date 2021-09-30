@@ -122,6 +122,7 @@ end
 
 RegisterNetEvent('qb-telco:client:SetTaskState')
 AddEventHandler('qb-telco:client:SetTaskState', function(Task, IsBusy, IsCompleted)
+    QBCore.Functions.Notify("DEBUG, SetTaskState :"..Task..IsBusy..IsCompleted..":END" , "success", 4000)
     Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].IsBusy = IsBusy
     Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].completed = IsCompleted
 end)
@@ -189,6 +190,7 @@ function TouchProcess()
         }, {}, {}, {}, function() -- Done
 
             TriggerServerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, true, true)
+            QBCore.Functions.Notify("Done!"..BuilderData.CurrentTask , "success", 4000)
             ClearPedTasks(PlayerPedId())    
         end, function() -- Cancel
             ClearPedTasks(PlayerPedId())
