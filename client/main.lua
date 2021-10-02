@@ -77,6 +77,7 @@ function getNewLocation()
         QBCore.Functions.Notify("next location"..location)
         Config.Projects[Config.CurrentProject].IsActive = false
         Config.Projects[location].IsActive = true
+        -- se new location
         Config.CurrentProject = location
         TriggerEvent('qb-telco:client:UpdateBlip', location)
     else
@@ -332,10 +333,11 @@ Citizen.CreateThread(function()
                             if TaskData.completed == TaskData.total then 
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z - 0.2, '[G] Finish Job, send report to base.')
                                 if IsControlJustPressed(0, 47) then
+                                    table.insert(LocationsDone, CurrentLocation.id)
                                     getNewLocation()
                                     
 
-                                    -- table.insert(LocationsDone, CurrentLocation.id)
+                                    
                                     -- TriggerServerEvent('qb-telco:server:FinishProject') // Reemplace a pay sistem.
                                     -- Update to new project ?
                                     -- UPDATE: GetCurrentProject()
