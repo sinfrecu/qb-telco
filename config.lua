@@ -2,7 +2,7 @@ Config = Config or {}
 
 Config.CurrentProject = 0
 
-Config.joblocations = {
+Config.JobLocations = {
     ["npc"] = {
         label = "Cheef",
         coords = vector4(528.55, -1594.02, 29.31),
