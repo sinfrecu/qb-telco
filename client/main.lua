@@ -1,4 +1,5 @@
 local isLoggedIn = false
+local LocationsDone = {}
 local PlayerData = {}
 local PlayerJob = {}
 local BuilderData = {
