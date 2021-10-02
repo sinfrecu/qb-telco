@@ -83,12 +83,14 @@ function getNewLocation()
         TriggerEvent('qb-telco:client:UpdateBlip', location)
     else
         QBCore.Functions.Notify("You Went To All The Shops .. Time For Your Payslip!")
-        -- Force update blip to return to base
+        Config.Projects[Config.CurrentProject].IsActive = false
+        -- Force blip update to return to base with 0
         TriggerEvent('qb-telco:client:UpdateBlip', 0)
+        
     end
 end
 
--- // get random location //
+-- // Get random location //
 
 function getNextClosestLocation()
     local current = 0
@@ -335,12 +337,11 @@ Citizen.CreateThread(function()
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z - 0.2, '[G] Finish Job, send report to base.')
                                 if IsControlJustPressed(0, 47) then
                                     table.insert(LocationsDone, Config.CurrentProject)
+                                    -- Update to new project
                                     getNewLocation()
+                                    -- Paysistem
+                                    TriggerServerEvent('qb-telco:server:cWJ0ZWxjbw', TaskData.completed) 
                                     
-
-                                    
-                                    -- TriggerServerEvent('qb-telco:server:FinishProject') // Reemplace a pay sistem.
-                                    -- Update to new project ?
                                     -- UPDATE: GetCurrentProject()
                                     -- fix close details or turn off antenna at the end of the location
                                     BuilderData.ShowDetails = false
