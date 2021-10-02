@@ -329,10 +329,9 @@ Citizen.CreateThread(function()
                             if TaskData.completed == TaskData.total then 
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z - 0.2, '[G] Finish Job, send report to base.')
                                 if IsControlJustPressed(0, 47) then
-                                    getNextClosestLocation()
+                                    getNewLocation()
 
 
-                                    -- Clear task's location
                                     -- table.insert(LocationsDone, CurrentLocation.id)
                                     -- TriggerServerEvent('qb-telco:server:FinishProject') // Reemplace a pay sistem.
                                     -- Update to new project ?
