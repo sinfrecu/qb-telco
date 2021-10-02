@@ -24,7 +24,7 @@ AddEventHandler('qb-telco:server:cWJ0ZWxjbw', function(TaskDones)
     Player.Functions.AddMoney("bank", payment, "telco-salary")
     TriggerClientEvent('QBCore:Notify', src, 'You Earned $'..payment, 'success')
 
-end
+end)
 
 -- // Callback //
 
