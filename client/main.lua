@@ -20,14 +20,8 @@ AddEventHandler('QBCore:Client:OnJobUpdate', function(JobInfo)
     TriggerEvent('qb-telco:client:UpdateBlip', Config.CurrentProject)
 end)
 
-
-
-
-
 -- // BIG FIX //
-
-
-
+-- // count and output number of task completed //
 
 function GetCompletedTasks()
     local retval = {
@@ -42,69 +36,7 @@ function GetCompletedTasks()
     return retval
 end
 
-
-
-
-
-function GetCurrentProject()
-    local CurProject = nil
-    for k, v in pairs(Config.Projects) do
-        if v.IsActive then
-            CurProject = k
-            break
-        end
-    end
-
-    if CurProject == nil then
-        math.randomseed(GetGameTimer())
-        CurProject = math.random(1, #Config.Projects)
-        Config.Projects[CurProject].IsActive = true
-        Config.CurrentProject = CurProject
-    end
-    return Config
-end
-
-
-function getNewLocation()
-    local location = getNextClosestLocation()
-    if location ~= 0 then
-        CurrentLocation = {}
-        CurrentLocation.id = location
-        CurrentLocation.dropcount = math.random(1, 3)
-        CurrentLocation.store = Config.Locations["stores"][location].name
-        CurrentLocation.x = Config.Locations["stores"][location].coords.x
-        CurrentLocation.y = Config.Locations["stores"][location].coords.y
-        CurrentLocation.z = Config.Locations["stores"][location].coords.z
-
-        CurrentBlip = AddBlipForCoord(CurrentLocation.x, CurrentLocation.y, CurrentLocation.z)
-        SetBlipColour(CurrentBlip, 3)
-        SetBlipRoute(CurrentBlip, true)
-        SetBlipRouteColour(CurrentBlip, 3)
-    else
-        QBCore.Functions.Notify("You Went To All The Shops .. Time For Your Payslip!")
-        if CurrentBlip ~= nil then
-            RemoveBlip(CurrentBlip)
-	    ClearAllBlipRoutes()
-            CurrentBlip = nil
-        end
-    end
-end
-
-
-function getNextClosestLocation()
-    local current = 0
-    local ramd = nil
-    local sorteo = {}
-      for k, _ in pairs(Config.Projects) do
-        if not hasDoneLocation(k) then
-          table.insert(sorteo, k)
-        end
-      end
-    local rand = math.random(1,#sorteo)
-    current = sorteo[rand]
-    return current
-end
-
+-- // Done location list //
 
 function hasDoneLocation(locationId)
     local retval = false
@@ -118,24 +50,67 @@ function hasDoneLocation(locationId)
     return retval
 end
 
+-- // Get Current Project and frist project random //
 
+function GetCurrentProject()
+    local CurProject = nil
+    for k, v in pairs(Config.Projects) do
+        if v.IsActive then
+            CurProject = k
+            break
+        end
+    end
+    -- first project random
+    if CurProject == nil then
+        math.randomseed(GetGameTimer())
+        CurProject = math.random(1, #Config.Projects)
+        Config.Projects[CurProject].IsActive = true
+        Config.CurrentProject = CurProject
+    end
+    return Config
+end
+-- ######## FIX IT
+
+function getNewLocation()
+    local location = getNextClosestLocation()
+    if location ~= 0 then
+        TriggerEvent('qb-telco:client:UpdateBlip', location)
+    else
+        QBCore.Functions.Notify("You Went To All The Shops .. Time For Your Payslip!")
+        -- Force update blip to return to base
+        TriggerEvent('qb-telco:client:UpdateBlip', 0)
+    end
+end
+
+-- // get random location //
+
+function getNextClosestLocation()
+    local current = 0
+    local ramd = nil
+    local sorteo = {}
+      for k, _ in pairs(Config.Projects) do
+        if not hasDoneLocation(k) then
+          table.insert(sorteo, k)
+        end
+      end
+    
+    if #sorteo < 1 then
+        current = 0
+    else
+        local rand = math.random(1,#sorteo)
+        current = sorteo[rand]
+    end
+    return current
+end
 
 RegisterNetEvent('qb-telco:client:SetTaskState')
 AddEventHandler('qb-telco:client:SetTaskState', function(Task, IsBusy, IsCompleted)
     Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].IsBusy = IsBusy
     Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].completed = IsCompleted
 end)
-
-
-
 -- // END BIG FIX //
 
-
-
-
-
 -- // Animations //
-
 function DoTask()
     local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
@@ -159,10 +134,6 @@ function DoTask()
     end
 end
 
-
-
-
-
 -- // Progressbars & Progression //
 function TouchProcess()
     if not BuilderData.ShowDetails then
@@ -180,17 +151,16 @@ function TouchProcess()
             QBCore.Functions.Notify("The shock was lethal.", "error", 4000)
             TriggerEvent('hospital:client:KillPlayer', PlayerPedId())
         end
-    else    
+    else
         QBCore.Functions.Progressbar("touch_process", "Repairing ..", math.random(6000,8000), false, true, {
             disableMovement = true,
             disableCarMovement = true,
             disableMouse = false,
             disableCombat = true,
         }, {}, {}, {}, function() -- Done
-
             TriggerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, true, true)
             QBCore.Functions.Notify("Done!"..BuilderData.CurrentTask , "success", 4000)
-            ClearPedTasks(PlayerPedId())    
+            ClearPedTasks(PlayerPedId())
         end, function() -- Cancel
             ClearPedTasks(PlayerPedId())
             TriggerEvent('qb-telco:client:SetTaskState', BuilderData.CurrentTask, false, false)
@@ -206,26 +176,31 @@ function PickAnim()
     LoadAnim('amb@prop_human_bum_bin@idle_a')
     TaskPlayAnim(ped, 'amb@prop_human_bum_bin@idle_a', 'idle_a', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
 end
+
 function TouchAnim()
     local ped = PlayerPedId()
     LoadAnim('amb@prop_human_parking_meter@male@idle_a')
     TaskPlayAnim(ped, 'amb@prop_human_parking_meter@male@idle_a', 'idle_a', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
 end
+
 function TouchLight()
     local ped = PlayerPedId()
     LoadAnim('amb@prop_human_movie_studio_light@idle_a')
     TaskPlayAnim(ped, 'amb@prop_human_movie_studio_light@idle_a', 'idle_a', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
 end
+
 function TouchUp()
     local ped = PlayerPedId()
     LoadAnim('amb@prop_human_movie_bulb@base')
     TaskPlayAnim(ped, 'amb@prop_human_movie_bulb@base', 'base', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
 end
+
 function TasserAnim()
     local ped = PlayerPedId()
     LoadAnim('melee@unarmed@streamed_variations')
     TaskPlayAnim(ped, 'melee@unarmed@streamed_variations', 'victim_takedown_front_slap', 6.0, -6.0, 6000, 2, 0, 0, 0, 0)
 end
+
 function LoadAnim(dict)
     while not HasAnimDictLoaded(dict) do
         RequestAnimDict(dict)
@@ -235,20 +210,27 @@ end
 
 
 -- // Blips //
-
 RegisterNetEvent('qb-telco:client:UpdateBlip')
 AddEventHandler('qb-telco:client:UpdateBlip', function(id)
     DeleteBlip()
     Citizen.Wait(5)
     if PlayerJob.name == "telco" then
-        TelcoBlip = AddBlipForCoord(Config.Projects[id].ProjectLocations["main"].coords.x, Config.Projects[id].ProjectLocations["main"].coords.y, Config.Projects[id].ProjectLocations["main"].coords.z)
+        if id == 0 then
+            -- Retun to base
+            TelcoBlip = AddBlipForCoord(Config.JobLocations["npc"].coords.x, Config.JobLocations["npc"].coords.y, Config.JobLocations["npc"].coords.z)
+            AddTextComponentSubstringPlayerName(Config.JobLocations["npc"].label)
+        else
+            -- Normal job
+            TelcoBlip = AddBlipForCoord(Config.Projects[id].ProjectLocations["main"].coords.x, Config.Projects[id].ProjectLocations["main"].coords.y, Config.Projects[id].ProjectLocations["main"].coords.z)        
+            AddTextComponentSubstringPlayerName(Config.Projects[id].ProjectLocations["main"].label)
+        end
         SetBlipSprite(TelcoBlip, 161)
         SetBlipDisplay(TelcoBlip, 4)
         SetBlipScale(TelcoBlip, 0.6)
         SetBlipAsShortRange(TelcoBlip, true)
         SetBlipColour(TelcoBlip, 1)
         BeginTextCommandSetBlipName("STRING")
-        AddTextComponentSubstringPlayerName(Config.Projects[id].ProjectLocations["main"].label)
+        
         EndTextCommandSetBlipName(TelcoBlip)
     end
 end)
@@ -283,7 +265,6 @@ function DrawText3Ds(x, y, z, text)
 end
 
 -- // NUICallback //
-
 -- Start code of Tinus_NL
 RegisterNUICallback("main", function(RequestData)
 	if RequestData.ReturnType == "EXIT" then
@@ -298,7 +279,7 @@ end)--End code RegisterNUICallback of Tinus_NL
 
 
 
--- // Threads //
+-- // Thread update 1s //
 Citizen.CreateThread(function()
     Wait(1000)
     isLoggedIn = true
@@ -306,6 +287,7 @@ Citizen.CreateThread(function()
     GetCurrentProject()
 end)
 
+-- // Thread loop //
 Citizen.CreateThread(function()
     while true do
         local ped = PlayerPedId()
@@ -347,16 +329,14 @@ Citizen.CreateThread(function()
                             if TaskData.completed == TaskData.total then 
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z - 0.2, '[G] Finish Job, send report to base.')
                                 if IsControlJustPressed(0, 47) then
+                                    getNextClosestLocation()
+
+
                                     -- Clear task's location
-
-
                                     -- table.insert(LocationsDone, CurrentLocation.id)
-
-                                            -- TriggerServerEvent('qb-telco:server:FinishProject') // Reemplace a pay sistem.
+                                    -- TriggerServerEvent('qb-telco:server:FinishProject') // Reemplace a pay sistem.
                                     -- Update to new project ?
                                     -- UPDATE: GetCurrentProject()
-
-
                                     -- fix close details or turn off antenna at the end of the location
                                     BuilderData.ShowDetails = false
                                 end
@@ -378,7 +358,6 @@ Citizen.CreateThread(function()
                     if not v.completed or not v.IsBusy then
                         local TaskDistance = #(pos - vector3(v.coords.x, v.coords.y, v.coords.z))
                         if TaskDistance < 10 then
-
                             inRange = true
                             if not BuilderData.ShowDetails then
                                 -- red  255, 77, 57
@@ -387,7 +366,6 @@ Citizen.CreateThread(function()
                                 -- green 57, 255, 110
                                 DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 57, 255, 110, 255, 0, 0, 0, 1, 0, 0, 0)
                             end
-                            
                             if TaskDistance < 1.5 then
                                 -- this is shit, I already have plans
                                 local requiredItems = {

@@ -5,7 +5,7 @@
 RegisterServerEvent('qb-telco:server:FinishProject')
 AddEventHandler('qb-telco:server:FinishProject', function()
     Config.Projects[Config.CurrentProject].IsActive = false
-
+    
     for k, v in pairs(Config.Projects[Config.CurrentProject].ProjectLocations["tasks"]) do
         v.completed = false
         v.IsBusy = false

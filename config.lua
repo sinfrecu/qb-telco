@@ -1,6 +1,17 @@
 Config = Config or {}
 
 Config.CurrentProject = 0
+
+Config.joblocations = {
+    ["npc"] = {
+        label = "Cheef",
+        coords = vector3(765.94, 1273.79, 360.3),
+    ["vehicle"] = {
+        label = "[E] vehicle job",
+        coords = vector3(765.94, 1273.79, 360.3),
+}
+
+
 Config.Projects = {
 -- Spanish: Centro de la ciudad, carteld de vinewood
 -- English: Downtown Vinewood
