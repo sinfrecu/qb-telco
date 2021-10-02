@@ -77,7 +77,7 @@ function getNewLocation()
         QBCore.Functions.Notify("next location"..location)
         Config.Projects[Config.CurrentProject].IsActive = false
         Config.Projects[location].IsActive = true
-        GetCurrentProject()
+        Config.CurrentProject = location
         TriggerEvent('qb-telco:client:UpdateBlip', location)
     else
         QBCore.Functions.Notify("You Went To All The Shops .. Time For Your Payslip!")
