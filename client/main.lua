@@ -77,6 +77,7 @@ function getNewLocation()
         QBCore.Functions.Notify("next location"..location)
         Config.Projects[Config.CurrentProject].IsActive = false
         Config.Projects[location].IsActive = true
+        GetCurrentProject()
         TriggerEvent('qb-telco:client:UpdateBlip', location)
     else
         QBCore.Functions.Notify("You Went To All The Shops .. Time For Your Payslip!")
@@ -233,7 +234,6 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
         SetBlipAsShortRange(TelcoBlip, true)
         SetBlipColour(TelcoBlip, 1)
         BeginTextCommandSetBlipName("STRING")
-        
         EndTextCommandSetBlipName(TelcoBlip)
     end
 end)
@@ -333,7 +333,7 @@ Citizen.CreateThread(function()
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z - 0.2, '[G] Finish Job, send report to base.')
                                 if IsControlJustPressed(0, 47) then
                                     getNewLocation()
-
+                                    
 
                                     -- table.insert(LocationsDone, CurrentLocation.id)
                                     -- TriggerServerEvent('qb-telco:server:FinishProject') // Reemplace a pay sistem.
