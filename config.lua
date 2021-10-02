@@ -5,7 +5,7 @@ Config.CurrentProject = 0
 Config.JobLocations = {
     ["npc"] = {
         label = "Cheef",
-        coords = vector4(528.55, -1594.02, 29.31),
+        coords = vector3(528.55, -1594.02, 29.31),
     },
     ["vehicle"] = {
         label = "[E] vehicle job",
