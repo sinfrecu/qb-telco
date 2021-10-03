@@ -353,10 +353,11 @@ Citizen.CreateThread(function()
                             if TaskData.completed == TaskData.total then 
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z - 0.2, '[G] Finish Job, send report to base.')
                                 if IsControlJustPressed(0, 47) then
-                                    
+
                                     -- Reset status taks 
                                     local ResetTask = 1
                                     while ResetTask < TaskData.total do
+                                        QBCore.Functions.Notify("DEBUG: SetTaskState"..ResetTask.." de "..TaskData.total , "error", 4000)
                                         TriggerEvent('qb-telco:client:SetTaskState', ResetTask, false, false)  
                                         ResetTask = ResetTask+1
                                     end
