@@ -356,7 +356,7 @@ Citizen.CreateThread(function()
 
                                     -- Reset status taks 
                                     local ResetTask = 1
-                                    while ResetTask < TaskData.total do
+                                    while ResetTask == TaskData.total do
                                         QBCore.Functions.Notify("DEBUG: SetTaskState"..ResetTask.." de "..TaskData.total , "error", 4000)
                                         TriggerEvent('qb-telco:client:SetTaskState', ResetTask, false, false)  
                                         ResetTask = ResetTask+1
