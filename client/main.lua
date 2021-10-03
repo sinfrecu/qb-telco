@@ -70,7 +70,7 @@ function getNewLocation()
         Config.CurrentProject = location
         TriggerEvent('qb-telco:client:UpdateBlip', location)
     else
-        local LocationsDone = {}
+        LocationsDone = {}
         table.insert(LocationsDone, Config.CurrentProject)
         local location = getNextClosestLocation()
         QBCore.Functions.Notify("END: next location"..location)
