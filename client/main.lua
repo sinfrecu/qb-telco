@@ -131,6 +131,10 @@ AddEventHandler('qb-telco:client:SetTaskState', function(Task, IsBusy, IsComplet
 end)
 -- // END BIG FIX //
 
+
+
+
+
 -- // Animations //
 function DoTask()
     local ped = PlayerPedId()
@@ -349,6 +353,14 @@ Citizen.CreateThread(function()
                             if TaskData.completed == TaskData.total then 
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z - 0.2, '[G] Finish Job, send report to base.')
                                 if IsControlJustPressed(0, 47) then
+                                    
+                                    -- Reset status taks 
+                                    local ResetTask = 1
+                                    while ResetTask < TaskData.total do
+                                        TriggerEvent('qb-telco:client:SetTaskState', ResetTask, false, false)  
+                                        ResetTask = ResetTask+1
+                                    end
+
                                     table.insert(LocationsDone, Config.CurrentProject)
                                     -- Update to new project
                                     getNewLocation()
