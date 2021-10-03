@@ -122,8 +122,6 @@ function hasDoneLocation(locationId)
     return retval
 end
 
-
-
 RegisterNetEvent('qb-telco:client:SetTaskState')
 AddEventHandler('qb-telco:client:SetTaskState', function(Task, IsBusy, IsCompleted)
     Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].IsBusy = IsBusy
@@ -353,22 +351,18 @@ Citizen.CreateThread(function()
                             if TaskData.completed == TaskData.total then 
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z - 0.2, '[G] Finish Job, send report to base.')
                                 if IsControlJustPressed(0, 47) then
-
-                                    -- Reset status taks 
+                                    -- Reset status task 
                                     local ResetTask = 1
                                     while ResetTask < TaskData.total+1 do
                                         --QBCore.Functions.Notify("DEBUG: SetTaskState "..ResetTask.." de "..TaskData.total , "error", 4000)
                                         TriggerEvent('qb-telco:client:SetTaskState', ResetTask, false, false)  
                                         ResetTask = ResetTask+1
                                     end
-
                                     table.insert(LocationsDone, Config.CurrentProject)
                                     -- Update to new project
                                     getNewLocation()
                                     -- Paysistem
                                     TriggerServerEvent('qb-telco:server:cWJ0ZWxjbw', TaskData.completed) 
-                                    
-                                    -- UPDATE: GetCurrentProject()
                                     -- fix close details or turn off antenna at the end of the location
                                     BuilderData.ShowDetails = false
                                 end
@@ -421,20 +415,7 @@ Citizen.CreateThread(function()
                                             TriggerEvent('inventory:client:requiredItems', requiredItems, true)
                                             ClearNeed(requiredItems)
                                         end
-                                    end, CurrentTask, CurrentProject)
-                                     
-                                    -- TriggerServerEvent('qb-telco:server:CurrenTaskupdate', k )
-                                    --QBCore.Functions.TriggerCallback('qb-telco:server:HasToolkit', function(hasItem)
-                                    --    if hasItem then
-                                            -- Prevent sticky panel
-                                    --        TriggerEvent('inventory:client:requiredItems', requiredItems, false)
-                                            -- BuilderData.CurrentTask = k
-                                    --        DoTask()
-                                    --    else
-                                    --        TriggerEvent('inventory:client:requiredItems', requiredItems, true)
-                                    --        ClearNeed(requiredItems)
-                                    --    end
-                                    --end, sarlanga)
+                                    end, CurrentTask, CurrentProject)   
                                 end
                             end
                         end
