@@ -37,19 +37,7 @@ function GetCompletedTasks()
     return retval
 end
 
--- // Done location list //
 
-function hasDoneLocation(locationId)
-    local retval = false
-    if LocationsDone ~= nil and next(LocationsDone) ~= nil then 
-        for k, v in pairs(LocationsDone) do
-            if v == locationId then
-                retval = true
-            end
-        end
-    end
-    return retval
-end
 
 -- // Get Current Project and frist project random //
 
@@ -82,10 +70,19 @@ function getNewLocation()
         Config.CurrentProject = location
         TriggerEvent('qb-telco:client:UpdateBlip', location)
     else
-        QBCore.Functions.Notify("You Went To All The Shops .. Time For Your Payslip!")
+        local LocationsDone = {}
+        table.insert(LocationsDone, Config.CurrentProject)
+        local location = getNextClosestLocation()
+        QBCore.Functions.Notify("END: next location"..location)
         Config.Projects[Config.CurrentProject].IsActive = false
+        Config.Projects[location].IsActive = true
+        Config.CurrentProject = location
+        TriggerEvent('qb-telco:client:UpdateBlip', location)
+        --QBCore.Functions.Notify("You Went To All The Shops .. Time For Your Payslip!")
+        --Config.Projects[Config.CurrentProject].IsActive = false
+        --Config.CurrentProject = 0
         -- Force blip update to return to base with 0
-        TriggerEvent('qb-telco:client:UpdateBlip', 0)
+        --TriggerEvent('qb-telco:client:UpdateBlip', 0)
         
     end
 end
@@ -110,6 +107,22 @@ function getNextClosestLocation()
     end
     return current
 end
+
+-- // Done location list //
+
+function hasDoneLocation(locationId)
+    local retval = false
+    if LocationsDone ~= nil and next(LocationsDone) ~= nil then 
+        for k, v in pairs(LocationsDone) do
+            if v == locationId then
+                retval = true
+            end
+        end
+    end
+    return retval
+end
+
+
 
 RegisterNetEvent('qb-telco:client:SetTaskState')
 AddEventHandler('qb-telco:client:SetTaskState', function(Task, IsBusy, IsCompleted)
