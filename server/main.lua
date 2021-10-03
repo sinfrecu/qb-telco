@@ -1,90 +1,19 @@
-ProjectDone = {}
+-- // Finish project //
 
--- Get current task
-
-RegisterServerEvent('qb-telco:server:CurrenTaskupdate')
-AddEventHandler('qb-telco:server:CurrenTaskupdate', function(Task)
-    NumberCurrentTask = Task
-end)
-
-
--- State Task
-
-RegisterServerEvent('qb-telco:server:SetTaskState')
-AddEventHandler('qb-telco:server:SetTaskState', function(Task, IsBusy, IsCompleted)
-    Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].IsBusy = IsBusy
-    Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][Task].completed = IsCompleted
-    TriggerClientEvent('qb-telco:client:SetTaskState', -1, Task, IsBusy, IsCompleted)
-end)
-
-
--- Finish project
-
-RegisterServerEvent('qb-telco:server:FinishProject')
-AddEventHandler('qb-telco:server:FinishProject', function()
-    Config.Projects[Config.CurrentProject].IsActive = false
-
-    for k, v in pairs(Config.Projects[Config.CurrentProject].ProjectLocations["tasks"]) do
-        v.completed = false
-        v.IsBusy = false
-    end
-
-    table.insert(ProjectDone, Config.CurrentProject)
-    PayTelco()
-
-    if #ProjectDone == #Config.Projects then
-      ProjectDone = {}
-      -- Fix repeat last job after reset
-      table.insert(ProjectDone, Config.CurrentProject)
-    end
-
-    -- Clear table sorteo
-    local sorteo = {}
-
-    for k, _ in pairs(Config.Projects) do
-        if not hasDoneLocation(k) then
-        table.insert(sorteo, k)
-        end
-    end
-
-    math.randomseed(os.time())
-    local rand = math.random(1,#sorteo)
-    local NewProject = sorteo[rand] 
-    Config.CurrentProject = NewProject
-    Config.Projects[NewProject].IsActive = true
-    TriggerClientEvent('qb-telco:client:FinishProject', -1, Config)
-    TriggerClientEvent('qb-telco:client:UpdateBlip', -1, NewProject)
-end)
-
--- Done location
-
-function hasDoneLocation(locationId)
-    local retval = false
-    if ProjectDone ~= nil and next(ProjectDone) ~= nil then 
-        for k, v in pairs(ProjectDone) do
-            if v == locationId then
-                retval = true
-            end
-        end
-    end
-    return retval
-end
-
-
--- Pay
-
-function PayTelco()
+RegisterServerEvent('qb-telco:server:cWJ0ZWxjbw')
+AddEventHandler('qb-telco:server:cWJ0ZWxjbw', function(TaskDones)
     local src = source 
     local Player = QBCore.Functions.GetPlayer(src)
-    local projectsEnd = tonumber(#ProjectDone)
+    local projectsEnd = TaskDones
     local bonus = 0
     local DropPrice = math.random(100, 120)
 
-    if projectsEnd > 2 then 
+    -- TODO: add Player.Functions.AddJobReputation(drops) and use it as a payout multiplier
+    if projectsEnd > 1 then 
         bonus = math.ceil((DropPrice / 10) * 5) + 100
-    elseif projectsEnd > 3 then
+    elseif projectsEnd > 2 then
         bonus = math.ceil((DropPrice / 10) * 7) + 300
-    elseif projectsEnd > 4 then
+    elseif projectsEnd > 3 then
         bonus = math.ceil((DropPrice / 10) * 10) + 400
     elseif projectsEnd > 5 then
         bonus = math.ceil((DropPrice / 10) * 12) + 500
@@ -94,16 +23,16 @@ function PayTelco()
     local payment = price 
     Player.Functions.AddMoney("bank", payment, "telco-salary")
     TriggerClientEvent('QBCore:Notify', src, 'You Earned $'..payment, 'success')
-end
 
+end)
 
--- Callback items 
+-- // Callback //
 
-QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, cb)
+QBCore.Functions.CreateCallback('qbtelco:CbHas', function(source, cb, CurrentTask, CurrentProject)
+    TriggerClientEvent('QBCore:Notify', source, 'debug: '..CurrentProject..'es el CurrentProject y CurrentTask es: '..CurrentTask , 'error')
     local Ply = QBCore.Functions.GetPlayer(source)
-    local TaskData = Config.Projects[Config.CurrentProject].ProjectLocations["tasks"][NumberCurrentTask]
+    local TaskData = Config.Projects[CurrentProject].ProjectLocations["tasks"][CurrentTask]
     local Toolkit = Ply.Functions.GetItemByName(TaskData.requiredTool)
-    
     if Toolkit ~= nil then
         if Ply.Functions.RemoveItem(TaskData.requiredItem, TaskData.requiredItemAmount) then
             TriggerClientEvent('QBCore:Notify', source, 'Using '..TaskData.requiredItemAmount..' of '..QBCore.Shared.Items[TaskData.requiredItem]["label"] , 'success')
@@ -114,27 +43,8 @@ QBCore.Functions.CreateCallback('qb-telco:server:HasToolkit', function(source, c
         end
     else
         TriggerClientEvent('QBCore:Notify', source, 'Dont have the tool '..QBCore.Shared.Items[TaskData.requiredTool]["label"] , 'error')
-        cb(false)
+        cb(false) 
     end
 end)
 
 
--- Callback:  Get current project 
-
-QBCore.Functions.CreateCallback('qb-telco:server:GetCurrentProject', function(source, cb)
-    local CurProject = nil
-    for k, v in pairs(Config.Projects) do
-        if v.IsActive then
-            CurProject = k
-            break
-        end
-    end
-
-    if CurProject == nil then
-        math.randomseed(os.time())
-        CurProject = math.random(1, #Config.Projects)
-        Config.Projects[CurProject].IsActive = true
-        Config.CurrentProject = CurProject
-    end
-    cb(Config)
-end)
