@@ -357,7 +357,7 @@ Citizen.CreateThread(function()
                                     -- Reset status taks 
                                     local ResetTask = 1
                                     while ResetTask < TaskData.total+1 do
-                                        QBCore.Functions.Notify("DEBUG: SetTaskState "..ResetTask.." de "..TaskData.total , "error", 4000)
+                                        --QBCore.Functions.Notify("DEBUG: SetTaskState "..ResetTask.." de "..TaskData.total , "error", 4000)
                                         TriggerEvent('qb-telco:client:SetTaskState', ResetTask, false, false)  
                                         ResetTask = ResetTask+1
                                     end
@@ -410,14 +410,14 @@ Citizen.CreateThread(function()
                                     local CurrentTask = k
                                     local CurrentProject = Config.CurrentProject
                                     QBCore.Functions.TriggerCallback('qbtelco:CbHas', function(result)
-                                        QBCore.Functions.Notify("DEBUG: entro en trigger", "error", 4000)
+                                        --QBCore.Functions.Notify("DEBUG: entro en trigger", "error", 4000)
                                         if result then
-                                            QBCore.Functions.Notify("DEBUG: salio arriba", "error", 4000)
+                                            --QBCore.Functions.Notify("DEBUG: salio arriba", "error", 4000)
                                             TriggerEvent('inventory:client:requiredItems', requiredItems, false)
                                             BuilderData.CurrentTask = k
                                             DoTask()   
                                         else                                        
-                                            QBCore.Functions.Notify("DEBUG: salio el abajo", "error", 4000)
+                                            --QBCore.Functions.Notify("DEBUG: salio el abajo", "error", 4000)
                                             TriggerEvent('inventory:client:requiredItems', requiredItems, true)
                                             ClearNeed(requiredItems)
                                         end
@@ -442,7 +442,7 @@ Citizen.CreateThread(function()
                 end
             
             else
-                QBCore.Functions.Notify("DEBUG: genero el primero", "error", 4000)
+                --QBCore.Functions.Notify("DEBUG: genero el primero", "error", 4000)
                 GetCurrentProject()
             end
         else
