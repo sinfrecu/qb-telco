@@ -378,7 +378,7 @@ Citizen.CreateThread(function()
                         if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then
                             if isTruckerVehicle(GetVehiclePedIsIn(PlayerPedId(), false)) then
                                 DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
-                                TriggerServerEvent('qb-telcor:server:SuretyBond', false)
+                                TriggerServerEvent('qb-telco:server:SuretyBond', false)
                             else
                                 QBCore.Functions.Notify('This is not a commercial vehicle!', 'error')
                             end
@@ -387,7 +387,7 @@ Citizen.CreateThread(function()
                         end
                     else
                         QBCore.Functions.Notify('DEBUG: entro al pago')
-                        TriggerServerEvent('qb-trucker:server:SuretyBond', true, rumpo)
+                        TriggerServerEvent('qb-telco:server:SuretyBond', true, rumpo)
                     end
                 end
             end
