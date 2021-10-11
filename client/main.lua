@@ -25,7 +25,7 @@ end)
 -- // es un vehicle //
 function isTruckerVehicle(vehicle)
     local retval = false
-        if GetEntityModel(vehicle) == GetHashKey(rumpo) then
+        if GetEntityModel(vehicle) == GetHashKey("UtilliTruck") then
             retval = true
         end
     return retval
@@ -317,7 +317,7 @@ end)--End code RegisterNUICallback of Tinus_NL
 RegisterNetEvent('qb-telco:client:SpawnVehicle')
 AddEventHandler('qb-telco:client:SpawnVehicle', function()
     QBCore.Functions.Notify('DEBUG: trigger SpawnVehicle')
-    local vehicleInfo = "rumpo"
+    local vehicleInfo = "UtilliTruck"
     local coords = Config.JobLocations["vehicle"].coords 
     QBCore.Functions.SpawnVehicle(vehicleInfo, function(veh)
         SetVehicleNumberPlateText(veh, "TLCO"..tostring(math.random(1000, 9999)))
@@ -386,7 +386,7 @@ Citizen.CreateThread(function()
                         end
                     else
                         QBCore.Functions.Notify('DEBUG: entro al pago')
-                        TriggerServerEvent('qb-telco:server:SuretyBond', true, "rumpo")
+                        TriggerServerEvent('qb-telco:server:SuretyBond', true, "UtilliTruck")
                     end
                 end
             end
