@@ -1,5 +1,5 @@
 -- // Finish project //
-
+local Bail = {}
 
 RegisterServerEvent('qb-telco:server:cWJ0ZWxjbw')
 AddEventHandler('qb-telco:server:cWJ0ZWxjbw', function(TaskDones)
