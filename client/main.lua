@@ -361,12 +361,12 @@ Citizen.CreateThread(function()
                                 QBCore.Functions.Notify('You must be the driver to do this..')
                             end
                         else
-                            MenuGarage()
-                            Menu.hidden = not Menu.hidden
+--                            MenuGarage()
+  --                          Menu.hidden = not Menu.hidden
                         end
                     end
-                        TriggerServerEvent('qb-trucker:server:DoBail', true, rumpo)
-                        selectedVeh = rumpo                  
+                     --   TriggerServerEvent('qb-trucker:server:DoBail', true, rumpo)
+                     --   selectedVeh = rumpo                  
                 end 
             end
             -- // END - Thread for blip vehicle //
