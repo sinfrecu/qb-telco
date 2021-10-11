@@ -13,12 +13,14 @@ AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
     PlayerData = QBCore.Functions.GetPlayerData()
     PlayerJob = QBCore.Functions.GetPlayerData().job
     TriggerEvent('qb-telco:client:UpdateBlip', Config.CurrentProject)
+    BildingBlip()
 end)
 
 RegisterNetEvent('QBCore:Client:OnJobUpdate')
 AddEventHandler('QBCore:Client:OnJobUpdate', function(JobInfo)
     PlayerJob = JobInfo
     TriggerEvent('qb-telco:client:UpdateBlip', Config.CurrentProject)
+    BildingBlip()
 end)
 
 
@@ -247,11 +249,11 @@ end
 -- // Blips //
 RegisterNetEvent('qb-telco:client:UpdateBlip')
 AddEventHandler('qb-telco:client:UpdateBlip', function(id)
-    DeleteBlip()
+    DeleteBlip(TelcoBlip)
     Citizen.Wait(5)
     if PlayerJob.name == "telco" then
         if id == 0 then
-            -- Retun to base
+            -- Retun to base (not in use)
             TelcoBlip = AddBlipForCoord(Config.JobLocations["npc"].coords.x, Config.JobLocations["npc"].coords.y, Config.JobLocations["npc"].coords.z)
             AddTextComponentSubstringPlayerName(Config.JobLocations["npc"].label)
         else
@@ -268,6 +270,25 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
         EndTextCommandSetBlipName(TelcoBlip)
     end
 end)
+
+
+
+function BildingBlip()
+    DeleteBlip(BildingBlip)
+    Citizen.Wait(5)
+    if PlayerJob.name == "telco" then
+        BildingBlip = AddBlipForCoord(Config.JobLocations["npc"].coords.x, Config.JobLocations["npc"].coords.y, Config.JobLocations["npc"].coords.z)
+        AddTextComponentSubstringPlayerName(Config.JobLocations["npc"].label)
+        SetBlipSprite(BildingBlip, 498)
+        SetBlipDisplay(BildingBlip, 4)
+        SetBlipScale(BildingBlip, 0.6)
+        SetBlipAsShortRange(BildingBlip, true)
+        SetBlipColour(BildingBlip, 1)
+        BeginTextCommandSetBlipName("STRING")
+        EndTextCommandSetBlipName(BildingBlip)
+    end
+end
+
 
 
 -- // Requirements Inventory //
