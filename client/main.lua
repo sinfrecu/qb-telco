@@ -255,7 +255,6 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
         RemoveBlip(TelcoBlip)
     end
     Citizen.Wait(5)
-    QBCore.Functions.Notify('DEBUG:'..Config.Projects[id].ProjectLocations["main"].label)
     if PlayerJob.name == "telco" then
         if id == 0 then
             -- Retun to base (not in use)
@@ -263,8 +262,9 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
             AddTextComponentSubstringPlayerName(Config.JobLocations["npc"].label)
         else
             -- Normal job
+            local labelname = Config.Projects[id].ProjectLocations["main"].label
             TelcoBlip = AddBlipForCoord(Config.Projects[id].ProjectLocations["main"].coords.x, Config.Projects[id].ProjectLocations["main"].coords.y, Config.Projects[id].ProjectLocations["main"].coords.z)        
-            AddTextComponentSubstringPlayerName(Config.Projects[id].ProjectLocations["main"].label)
+            AddTextComponentSubstringPlayerName(labelname)
         end
         SetBlipSprite(TelcoBlip, 161)
         SetBlipDisplay(TelcoBlip, 4)
