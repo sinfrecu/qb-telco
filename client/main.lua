@@ -344,9 +344,9 @@ Citizen.CreateThread(function()
                 DrawMarker(2, Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 200, 200, 222, false, false, false, true, false, false, false)
                 if #(pos - vector3(Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z)) < 1.5 then
                     if IsPedInAnyVehicle(PlayerPedId(), false) then
-                        DrawText3D(Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z, "~g~E~w~ - Store Vehicle")
+                        DrawText3Ds(Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z, "~g~E~w~ - Store Vehicle")
                     else
-                        DrawText3D(Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z, "~g~E~w~ - Vehicle")
+                        DrawText3Ds(Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z, "~g~E~w~ - Vehicle")
                     end
                     if IsControlJustReleased(0, 38) then
                         if IsPedInAnyVehicle(PlayerPedId(), false) then
