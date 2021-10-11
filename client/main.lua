@@ -301,6 +301,27 @@ end)--End code RegisterNUICallback of Tinus_NL
 
 
 
+-- // START - Spanw vehicle //
+RegisterNetEvent('qb-telco:client:SpawnVehicle')
+AddEventHandler('qb-telco:client:SpawnVehicle', function()
+    local vehicleInfo = selectedVeh
+    local coords = Config.Locations["vehicle"].coords
+    QBCore.Functions.SpawnVehicle(vehicleInfo, function(veh)
+        SetVehicleNumberPlateText(veh, "TLCO"..tostring(math.random(1000, 9999)))
+        SetEntityHeading(veh, coords.w)
+        exports['LegacyFuel']:SetFuel(veh, 100.0)
+        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
+        SetEntityAsMissionEntity(veh, true, true)
+        TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
+        SetVehicleEngineOn(veh, true, true)
+        CurrentPlate = GetVehicleNumberPlateText(veh)
+    end, coords, true)
+end)
+-- // END - Spanw vehicle //
+
+
+
+
 -- // Thread update 1s //
 Citizen.CreateThread(function()
     Wait(1000)
@@ -317,6 +338,42 @@ Citizen.CreateThread(function()
         local inRange = false
         local OffsetZ = 0.2
         if PlayerJob.name == "telco" then
+
+            -- // START - Thread for blip vehicle //
+            if #(pos - vector3(Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z)) < 10.0 then
+                DrawMarker(2, Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 200, 200, 222, false, false, false, true, false, false, false)
+                if #(pos - vector3(Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z)) < 1.5 then
+                    if IsPedInAnyVehicle(PlayerPedId(), false) then
+                        DrawText3D(Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z, "~g~E~w~ - Store Vehicle")
+                    else
+                        DrawText3D(Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z, "~g~E~w~ - Vehicle")
+                    end
+                    if IsControlJustReleased(0, 38) then
+                        if IsPedInAnyVehicle(PlayerPedId(), false) then
+                            if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then
+                                if isTruckerVehicle(GetVehiclePedIsIn(PlayerPedId(), false)) then
+                                    DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
+                                    TriggerServerEvent('qb-telcor:server:SuretyBond', false)
+                                else
+                                    QBCore.Functions.Notify('This is not a commercial vehicle!', 'error')
+                                end
+                            else
+                                QBCore.Functions.Notify('You must be the driver to do this..')
+                            end
+                        else
+                            MenuGarage()
+                            Menu.hidden = not Menu.hidden
+                        end
+                    end
+                    Menu.renderGUI()
+                end 
+            end
+            -- // END - Thread for blip vehicle //
+
+
+
+
+
             if Config.CurrentProject ~= 0 then
                 local data = Config.Projects[Config.CurrentProject].ProjectLocations["main"]
                 local MainDistance = #(pos - vector3(data.coords.x, data.coords.y, data.coords.z))
