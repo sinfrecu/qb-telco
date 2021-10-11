@@ -339,37 +339,46 @@ Citizen.CreateThread(function()
         local OffsetZ = 0.2
         if PlayerJob.name == "telco" then
 
+
+
             -- // START - Thread for blip vehicle //
-            if #(pos - vector3(Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z)) < 10.0 then
+            local data = Config.JobLocations["vehicle"]
+            local MainDistance = #(pos - vector3(data.coords.x, data.coords.y, data.coords.z))
+            if MainDistance < 10 then
                 inRange = true
-                DrawMarker(2, Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 200, 200, 222, false, false, false, true, false, false, false)
-                if #(pos - vector3(Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z)) < 1.5 then
+                if not BuilderData.ShowDetails then
+                    DrawMarker(2, data.coords.x, data.coords.y, data.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 255, 77, 57, 255, 0, 0, 0, 1, 0, 0, 0)
+                else
+                    DrawMarker(2, data.coords.x, data.coords.y, data.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 57, 255, 110, 255, 0, 0, 0, 1, 0, 0, 0)
+                end
+
+                if MainDistance < 2 then
                     if IsPedInAnyVehicle(PlayerPedId(), false) then
-                        DrawText3Ds(Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z, "~g~E~w~ - Store Vehicle")
+                        DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '~g~E~w~ - Store Vehicle')
                     else
-                        DrawText3Ds(Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z, "~g~E~w~ - Vehicle")
+                        DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '~g~E~w~ - Vehicle')
                     end
-                    if IsControlJustReleased(0, 38) then
-                        if IsPedInAnyVehicle(PlayerPedId(), false) then
-                            if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then
-                                if isTruckerVehicle(GetVehiclePedIsIn(PlayerPedId(), false)) then
-                                    DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
-                                    TriggerServerEvent('qb-telcor:server:SuretyBond', false)
-                                else
-                                    QBCore.Functions.Notify('This is not a commercial vehicle!', 'error')
-                                end
+                end
+
+                if IsControlJustPressed(0, 38) then
+                    if IsPedInAnyVehicle(PlayerPedId(), false) then
+                        if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then
+                            if isTruckerVehicle(GetVehiclePedIsIn(PlayerPedId(), false)) then
+                                DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
+                                TriggerServerEvent('qb-telcor:server:SuretyBond', false)
                             else
-                                QBCore.Functions.Notify('You must be the driver to do this..')
+                                QBCore.Functions.Notify('This is not a commercial vehicle!', 'error')
                             end
                         else
---                            MenuGarage()
-  --                          Menu.hidden = not Menu.hidden
+                            QBCore.Functions.Notify('You must be the driver to do this..')
                         end
+                    else
+                        QBCore.Functions.Notify('DEBUG: entro al pago')
+                        TriggerServerEvent('qb-trucker:server:DoBail', true, rumpo)
                     end
-                     --   TriggerServerEvent('qb-trucker:server:DoBail', true, rumpo)
-                     --   selectedVeh = rumpo                  
-                end 
+                end
             end
+
             -- // END - Thread for blip vehicle //
 
 
