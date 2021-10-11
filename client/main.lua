@@ -7,6 +7,7 @@ local BuilderData = {
     CurrentTask = nil,
 }
 local BildingBlip = nil
+local labelname = nill
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
@@ -259,10 +260,10 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
         if id == 0 then
             -- Retun to base (not in use)
             TelcoBlip = AddBlipForCoord(Config.JobLocations["npc"].coords.x, Config.JobLocations["npc"].coords.y, Config.JobLocations["npc"].coords.z)
-            local labelname = Config.JobLocations["npc"].label
+            labelname = Config.JobLocations["npc"].label
         else
             -- Normal job
-            local labelname = Config.Projects[id].ProjectLocations["main"].label
+            labelname = Config.Projects[id].ProjectLocations["main"].label
             TelcoBlip = AddBlipForCoord(Config.Projects[id].ProjectLocations["main"].coords.x, Config.Projects[id].ProjectLocations["main"].coords.y, Config.Projects[id].ProjectLocations["main"].coords.z)        
             
         end
