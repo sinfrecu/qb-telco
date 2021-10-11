@@ -25,11 +25,9 @@ end)
 -- // es un vehicle //
 function isTruckerVehicle(vehicle)
     local retval = false
-    for k, v in pairs(Config.Vehicles) do
-        if GetEntityModel(vehicle) == GetHashKey(k) then
+        if GetEntityModel(vehicle) == GetHashKey(rumpo) then
             retval = true
         end
-    end
     return retval
 end
 
