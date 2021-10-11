@@ -259,12 +259,12 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
         if id == 0 then
             -- Retun to base (not in use)
             TelcoBlip = AddBlipForCoord(Config.JobLocations["npc"].coords.x, Config.JobLocations["npc"].coords.y, Config.JobLocations["npc"].coords.z)
-            AddTextComponentSubstringPlayerName(Config.JobLocations["npc"].label)
+            local labelname = Config.JobLocations["npc"].label
         else
             -- Normal job
             local labelname = Config.Projects[id].ProjectLocations["main"].label
             TelcoBlip = AddBlipForCoord(Config.Projects[id].ProjectLocations["main"].coords.x, Config.Projects[id].ProjectLocations["main"].coords.y, Config.Projects[id].ProjectLocations["main"].coords.z)        
-            AddTextComponentSubstringPlayerName(labelname)
+            
         end
         SetBlipSprite(TelcoBlip, 161)
         SetBlipDisplay(TelcoBlip, 4)
@@ -272,6 +272,7 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
         SetBlipAsShortRange(TelcoBlip, true)
         SetBlipColour(TelcoBlip, 1)
         BeginTextCommandSetBlipName("STRING")
+        AddTextComponentSubstringPlayerName(labelname)
         EndTextCommandSetBlipName(TelcoBlip)
     end
 end)
@@ -285,13 +286,13 @@ function BlipBilding()
     Citizen.Wait(5)
     if PlayerJob.name == "telco" then
         BildingBlip = AddBlipForCoord(Config.JobLocations["npc"].coords.x, Config.JobLocations["npc"].coords.y, Config.JobLocations["npc"].coords.z)
-        AddTextComponentSubstringPlayerName("NAP - Network Access Point")
         SetBlipSprite(BildingBlip, 498)
         SetBlipDisplay(BildingBlip, 4)
         SetBlipScale(BildingBlip, 0.6)
         SetBlipAsShortRange(BildingBlip, true)
         SetBlipColour(BildingBlip, 1)
         BeginTextCommandSetBlipName("STRING")
+        AddTextComponentSubstringPlayerName("NAP - Network Access Point")
         EndTextCommandSetBlipName(BildingBlip)
     end
 end
