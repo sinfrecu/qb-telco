@@ -6,6 +6,7 @@ local BuilderData = {
     ShowDetails = false,
     CurrentTask = nil,
 }
+local BildingBlip = nil
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
@@ -13,14 +14,14 @@ AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
     PlayerData = QBCore.Functions.GetPlayerData()
     PlayerJob = QBCore.Functions.GetPlayerData().job
     TriggerEvent('qb-telco:client:UpdateBlip', Config.CurrentProject)
-    BildingBlip()
+    BlipBilding()
 end)
 
 RegisterNetEvent('QBCore:Client:OnJobUpdate')
 AddEventHandler('QBCore:Client:OnJobUpdate', function(JobInfo)
     PlayerJob = JobInfo
     TriggerEvent('qb-telco:client:UpdateBlip', Config.CurrentProject)
-    BildingBlip()
+    BlipBilding()
 end)
 
 
@@ -273,7 +274,7 @@ end)
 
 
 
-function BildingBlip()
+function BlipBilding()
     DeleteBlip(BildingBlip)
     Citizen.Wait(5)
     if PlayerJob.name == "telco" then
