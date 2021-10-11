@@ -17,12 +17,11 @@
 - [x] ⚡Power system, use BuilderData.ShowDetails, to turn off the antenna before working, if you work without displaying "ShowDetails" you can be electrocuted by a random, (add Tazzer animation )
 - [x] ⚡ FuseBox minigame to PowerOff electricity by [Tinus_NL](https://forum.cfx.re/u/tinus_nl/)
 - [X] 🚐 Work car ( request by @nzkfc )
-
+- [X] 🏢 Blip building location ( request by @nzkfc )
 
 ## Wishlist:
-
 - [ ] 📌 Blips's in task's
-- [ ] 🏢 Blip building location ( request by @nzkfc )
+
 
 
 
