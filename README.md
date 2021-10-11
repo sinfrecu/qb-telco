@@ -2,6 +2,8 @@
 
 **Communications Technician job For QB-Core**
 
+![CodeQL](https://github.com/sinfrecu/qb-telco/workflows/CodeQL/badge.svg)
+
 ## Todo:
 
 - [x] 💰Pay 
