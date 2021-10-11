@@ -316,8 +316,9 @@ end)--End code RegisterNUICallback of Tinus_NL
 -- // START - Spanw vehicle //
 RegisterNetEvent('qb-telco:client:SpawnVehicle')
 AddEventHandler('qb-telco:client:SpawnVehicle', function()
+    QBCore.Functions.Notify('DEBUG: trigger SpawnVehicle')
     local vehicleInfo = rumpo
-    local coords = Config.JobLocations["vehicle"].coords
+    local coords = Config.JobLocations["vehicle"].coords 
     QBCore.Functions.SpawnVehicle(vehicleInfo, function(veh)
         SetVehicleNumberPlateText(veh, "TLCO"..tostring(math.random(1000, 9999)))
         SetEntityHeading(veh, coords.w)
@@ -386,7 +387,7 @@ Citizen.CreateThread(function()
                         end
                     else
                         QBCore.Functions.Notify('DEBUG: entro al pago')
-                        TriggerServerEvent('qb-trucker:server:DoBail', true, rumpo)
+                        TriggerServerEvent('qb-trucker:server:SuretyBond', true, rumpo)
                     end
                 end
             end
