@@ -327,7 +327,6 @@ AddEventHandler('qb-telco:client:SpawnVehicle', function()
         SetEntityAsMissionEntity(veh, true, true)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
         SetVehicleEngineOn(veh, true, true)
-        CurrentPlate = GetVehicleNumberPlateText(veh)
     end, coords, true)
 end)
 -- // END - Spanw vehicle //
@@ -387,7 +386,7 @@ Citizen.CreateThread(function()
                         end
                     else
                         QBCore.Functions.Notify('DEBUG: entro al pago')
-                        TriggerServerEvent('qb-telco:server:SuretyBond', true, rumpo)
+                        TriggerServerEvent('qb-telco:server:SuretyBond', true, 'rumpo')
                     end
                 end
             end
