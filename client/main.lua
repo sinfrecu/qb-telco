@@ -283,7 +283,6 @@ function BlipBilding()
         RemoveBlip(BildingBlip)
     end
     Citizen.Wait(5)
-    v
     if PlayerJob.name == "telco" then
         BildingBlip = AddBlipForCoord(Config.JobLocations["npc"].coords.x, Config.JobLocations["npc"].coords.y, Config.JobLocations["npc"].coords.z)
         AddTextComponentSubstringPlayerName("NAP - Network Access Point")
