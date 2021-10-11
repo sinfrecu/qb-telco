@@ -255,6 +255,7 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
         RemoveBlip(TelcoBlip)
     end
     Citizen.Wait(5)
+    QBCore.Functions.Notify('DEBUG:'..Config.Projects[id].ProjectLocations["main"].label)
     if PlayerJob.name == "telco" then
         if id == 0 then
             -- Retun to base (not in use)
@@ -278,11 +279,14 @@ end)
 
 
 function BlipBilding()
-    RemoveBlip(BildingBlip)
+    if DoesBlipExist(BildingBlip) then
+        RemoveBlip(BildingBlip)
+    end
     Citizen.Wait(5)
+    v
     if PlayerJob.name == "telco" then
         BildingBlip = AddBlipForCoord(Config.JobLocations["npc"].coords.x, Config.JobLocations["npc"].coords.y, Config.JobLocations["npc"].coords.z)
-        AddTextComponentSubstringPlayerName(Config.JobLocations["npc"].label)
+        AddTextComponentSubstringPlayerName("NAP - Network Access Point")
         SetBlipSprite(BildingBlip, 498)
         SetBlipDisplay(BildingBlip, 4)
         SetBlipScale(BildingBlip, 0.6)
