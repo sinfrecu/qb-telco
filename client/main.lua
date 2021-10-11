@@ -341,6 +341,7 @@ Citizen.CreateThread(function()
 
             -- // START - Thread for blip vehicle //
             if #(pos - vector3(Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z)) < 10.0 then
+                inRange = true
                 DrawMarker(2, Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 200, 200, 222, false, false, false, true, false, false, false)
                 if #(pos - vector3(Config.JobLocations["vehicle"].coords.x, Config.JobLocations["vehicle"].coords.y, Config.JobLocations["vehicle"].coords.z)) < 1.5 then
                     if IsPedInAnyVehicle(PlayerPedId(), false) then
@@ -412,7 +413,7 @@ Citizen.CreateThread(function()
                                     -- Reset status task 
                                     local ResetTask = 1
                                     while ResetTask < TaskData.total+1 do
-                                        --QBCore.Functions.Notify("DEBUG: SetTaskState "..ResetTask.." de "..TaskData.total , "error", 4000)
+                                        -- QBCore.Functions.Notify("DEBUG: SetTaskState "..ResetTask.." de "..TaskData.total , "error", 4000)
                                         TriggerEvent('qb-telco:client:SetTaskState', ResetTask, false, false)  
                                         ResetTask = ResetTask+1
                                     end
