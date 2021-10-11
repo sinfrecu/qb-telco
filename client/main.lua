@@ -316,7 +316,7 @@ end)--End code RegisterNUICallback of Tinus_NL
 -- // START - Spanw vehicle //
 RegisterNetEvent('qb-telco:client:SpawnVehicle')
 AddEventHandler('qb-telco:client:SpawnVehicle', function()
-    local vehicleInfo = selectedVeh
+    local vehicleInfo = rumpo
     local coords = Config.Locations["vehicle"].coords
     QBCore.Functions.SpawnVehicle(vehicleInfo, function(veh)
         SetVehicleNumberPlateText(veh, "TLCO"..tostring(math.random(1000, 9999)))
