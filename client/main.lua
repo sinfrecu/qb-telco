@@ -21,6 +21,20 @@ AddEventHandler('QBCore:Client:OnJobUpdate', function(JobInfo)
     TriggerEvent('qb-telco:client:UpdateBlip', Config.CurrentProject)
 end)
 
+
+-- // es un vehicle //
+function isTruckerVehicle(vehicle)
+    local retval = false
+    for k, v in pairs(Config.Vehicles) do
+        if GetEntityModel(vehicle) == GetHashKey(k) then
+            retval = true
+        end
+    end
+    return retval
+end
+
+
+
 -- // BIG FIX //
 -- // count and output number of task completed //
 
