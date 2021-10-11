@@ -365,7 +365,8 @@ Citizen.CreateThread(function()
                             Menu.hidden = not Menu.hidden
                         end
                     end
-                    Menu.renderGUI()
+                        TriggerServerEvent('qb-trucker:server:DoBail', true, rumpo)
+                        selectedVeh = rumpo                  
                 end 
             end
             -- // END - Thread for blip vehicle //
