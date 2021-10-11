@@ -14,6 +14,7 @@ AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
     PlayerData = QBCore.Functions.GetPlayerData()
     PlayerJob = QBCore.Functions.GetPlayerData().job
     TriggerEvent('qb-telco:client:UpdateBlip', Config.CurrentProject)
+
     BlipBilding()
 end)
 
@@ -250,7 +251,9 @@ end
 -- // Blips //
 RegisterNetEvent('qb-telco:client:UpdateBlip')
 AddEventHandler('qb-telco:client:UpdateBlip', function(id)
-    DeleteBlip(TelcoBlip)
+    if DoesBlipExist(TelcoBlip) then
+        RemoveBlip(TelcoBlip)
+    end
     Citizen.Wait(5)
     if PlayerJob.name == "telco" then
         if id == 0 then
@@ -275,7 +278,7 @@ end)
 
 
 function BlipBilding()
-    DeleteBlip(BildingBlip)
+    RemoveBlip(BildingBlip)
     Citizen.Wait(5)
     if PlayerJob.name == "telco" then
         BildingBlip = AddBlipForCoord(Config.JobLocations["npc"].coords.x, Config.JobLocations["npc"].coords.y, Config.JobLocations["npc"].coords.z)
@@ -298,12 +301,6 @@ function ClearNeed(requiredItems)
     TriggerEvent('inventory:client:requiredItems', requiredItems, false)   
 end
 
--- // Delete the Blip //
-function DeleteBlip()
-    if DoesBlipExist(TelcoBlip) then
-        RemoveBlip(TelcoBlip)
-    end
-end
 
 function DrawText3Ds(x, y, z, text)
     SetTextScale(0.35, 0.35)
