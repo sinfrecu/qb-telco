@@ -396,7 +396,7 @@ Citizen.CreateThread(function()
                 end
 
                 if IsControlJustPressed(0, 38) then
-                    if colddown then
+                    if not colddown then
                         if IsPedInAnyVehicle(PlayerPedId(), false) then
                             if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then
                                 if isTruckerVehicle(GetVehiclePedIsIn(PlayerPedId(), false)) then
