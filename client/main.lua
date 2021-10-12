@@ -31,11 +31,11 @@ end)
 
 function ColdDown()
     Citizen.CreateThread(function()
-    QBCore.Functions.Notify("Debug: entro en ColdDown:"..isColddown , "error")
+    QBCore.Functions.Notify("Debug: entro en ColdDown:"..tostring(isColddown) , "error")
     -- 600000 (10 minutos)
     Citizen.Wait(120000)
     isColddown = false
-    QBCore.Functions.Notify("Debug: salgo en ColdDown:"..isColddown , "error")
+    QBCore.Functions.Notify("Debug: salgo en ColdDown:"..tostring(isColddown) , "error")
     end)
 end
 
@@ -400,7 +400,7 @@ Citizen.CreateThread(function()
                 end
 
                 if IsControlJustPressed(0, 38) then
-                    QBCore.Functions.Notify('DEBUG: colddown value: '..isColddown , 'error')
+                    QBCore.Functions.Notify('DEBUG: colddown value: '..tostring(isColddown) , 'error')
                     if not isColddown then
                         if IsPedInAnyVehicle(PlayerPedId(), false) then
                             if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then
