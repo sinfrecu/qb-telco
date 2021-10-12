@@ -8,7 +8,7 @@ local BuilderData = {
 }
 local BildingBlip = nil
 local labelname = nill
-local colddown = nill
+local colddown = false
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
