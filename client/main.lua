@@ -347,8 +347,8 @@ end)--End code RegisterNUICallback of Tinus_NL
 -- // START - Spanw vehicle //
 RegisterNetEvent('qb-telco:client:SpawnVehicle')
 AddEventHandler('qb-telco:client:SpawnVehicle', function()
-    ColdDown()
     isColddown = true
+    ColdDown()
     QBCore.Functions.Notify('DEBUG: trigger SpawnVehicle')
     local vehicleInfo = Config.Vehicle
     local coords = Config.JobLocations["vehicle"].coords 
