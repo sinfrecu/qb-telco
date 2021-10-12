@@ -8,6 +8,7 @@ local BuilderData = {
 }
 local BildingBlip = nil
 local labelname = nill
+local colddown = nill
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
@@ -24,6 +25,15 @@ AddEventHandler('QBCore:Client:OnJobUpdate', function(JobInfo)
     TriggerEvent('qb-telco:client:UpdateBlip', Config.CurrentProject)
     BlipBilding()
 end)
+
+
+
+
+function ColdDown()
+    -- 600000 (10 minutos)
+    Citizen.Wait(120000)
+    colddown = false
+end
 
 -- // es un vehicle //
 function isTruckerVehicle(vehicle)
@@ -201,8 +211,8 @@ function TouchProcess()
     end
 end
 
-
 -- // Animations //
+
 function PickAnim()
     local ped = PlayerPedId()
     LoadAnim('amb@prop_human_bum_bin@idle_a')
@@ -258,7 +268,6 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
             -- Normal job
             labelname = Config.Projects[id].ProjectLocations["main"].label
             TelcoBlip = AddBlipForCoord(Config.Projects[id].ProjectLocations["main"].coords.x, Config.Projects[id].ProjectLocations["main"].coords.y, Config.Projects[id].ProjectLocations["main"].coords.z)        
-            
         end
         SetBlipSprite(TelcoBlip, 161)
         SetBlipDisplay(TelcoBlip, 4)
@@ -334,6 +343,7 @@ end)--End code RegisterNUICallback of Tinus_NL
 -- // START - Spanw vehicle //
 RegisterNetEvent('qb-telco:client:SpawnVehicle')
 AddEventHandler('qb-telco:client:SpawnVehicle', function()
+    colddown = true
     QBCore.Functions.Notify('DEBUG: trigger SpawnVehicle')
     local vehicleInfo = Config.Vehicle
     local coords = Config.JobLocations["vehicle"].coords 
@@ -385,21 +395,24 @@ Citizen.CreateThread(function()
                 end
 
                 if IsControlJustPressed(0, 38) then
-                    if IsPedInAnyVehicle(PlayerPedId(), false) then
-                        if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then
-                            if isTruckerVehicle(GetVehiclePedIsIn(PlayerPedId(), false)) then
-                                DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
-                                TriggerServerEvent('qb-telco:server:SuretyBond', false)
+                    if colddown then
+                        if IsPedInAnyVehicle(PlayerPedId(), false) then
+                            if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then
+                                if isTruckerVehicle(GetVehiclePedIsIn(PlayerPedId(), false)) then
+                                    DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
+                                    TriggerServerEvent('qb-telco:server:SuretyBond', false)
+                                else
+                                    QBCore.Functions.Notify('This is not a commercial vehicle!', 'error')
+                                end
                             else
-                                QBCore.Functions.Notify('This is not a commercial vehicle!', 'error')
+                                QBCore.Functions.Notify('You must be the driver to do this..')
                             end
                         else
-                            QBCore.Functions.Notify('You must be the driver to do this..')
+
+                            TriggerServerEvent('qb-telco:server:SuretyBond', true, Config.Vehicle)
                         end
-                    else
-                        
-                        TriggerServerEvent('qb-telco:server:SuretyBond', true, Config.Vehicle)
-                    end
+                    else 
+                        QBCore.Functions.Notify('You have taken out a vehicle very recently.', 'error')
                 end
             end -- // END - Thread for blip vehicle //
 
