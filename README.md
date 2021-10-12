@@ -18,11 +18,11 @@
 - [x] ⚡ FuseBox minigame to PowerOff electricity by [Tinus_NL](https://forum.cfx.re/u/tinus_nl/)
 - [X] 🚐 Work car ( request by @nzkfc )
 - [X] 🏢 Blip building location ( request by @nzkfc )
+- [x] 🐌 Colddown to prevent multispawn vehicle. (30 minutes)
 
 ## Wishlist:
 - [ ] 📌 Blips's in task's
-- [ ] 🐌 Colddown to prevent multispawn vehicle. (30 minutes)
-- [ ] 
+
 
 
 
