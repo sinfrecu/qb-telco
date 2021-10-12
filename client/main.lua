@@ -414,6 +414,7 @@ Citizen.CreateThread(function()
                         end
                     else 
                         QBCore.Functions.Notify('You have taken out a vehicle very recently.', 'error')
+                    end -- end of colddown
                 end
             end -- // END - Thread for blip vehicle //
 
