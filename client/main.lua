@@ -30,9 +30,13 @@ end)
 
 
 function ColdDown()
+    Citizen.CreateThread(function()
+    QBCore.Functions.Notify("Debug: entro en ColdDown:"..colddown , "error")
     -- 600000 (10 minutos)
     Citizen.Wait(120000)
     colddown = false
+    QBCore.Functions.Notify("Debug: salgo en ColdDown:"..colddown , "error")
+    end)
 end
 
 -- // es un vehicle //
