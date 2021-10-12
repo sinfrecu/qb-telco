@@ -396,6 +396,7 @@ Citizen.CreateThread(function()
                 end
 
                 if IsControlJustPressed(0, 38) then
+                    QBCore.Functions.Notify('DEBUG: colddown value: '..colddown , 'error')
                     if not colddown then
                         if IsPedInAnyVehicle(PlayerPedId(), false) then
                             if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then
