@@ -8,7 +8,7 @@ local BuilderData = {
 }
 local BildingBlip = nil
 local labelname = nill
-local colddown = false
+local isColddown = false
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
@@ -31,11 +31,11 @@ end)
 
 function ColdDown()
     Citizen.CreateThread(function()
-    QBCore.Functions.Notify("Debug: entro en ColdDown:"..colddown , "error")
+    QBCore.Functions.Notify("Debug: entro en ColdDown:"..isColddown , "error")
     -- 600000 (10 minutos)
     Citizen.Wait(120000)
-    colddown = false
-    QBCore.Functions.Notify("Debug: salgo en ColdDown:"..colddown , "error")
+    isColddown = false
+    QBCore.Functions.Notify("Debug: salgo en ColdDown:"..isColddown , "error")
     end)
 end
 
@@ -348,7 +348,7 @@ end)--End code RegisterNUICallback of Tinus_NL
 RegisterNetEvent('qb-telco:client:SpawnVehicle')
 AddEventHandler('qb-telco:client:SpawnVehicle', function()
     ColdDown()
-    colddown = true
+    isColddown = true
     QBCore.Functions.Notify('DEBUG: trigger SpawnVehicle')
     local vehicleInfo = Config.Vehicle
     local coords = Config.JobLocations["vehicle"].coords 
@@ -400,8 +400,8 @@ Citizen.CreateThread(function()
                 end
 
                 if IsControlJustPressed(0, 38) then
-                    QBCore.Functions.Notify('DEBUG: colddown value: '..colddown , 'error')
-                    if not colddown then
+                    QBCore.Functions.Notify('DEBUG: colddown value: '..isColddown , 'error')
+                    if not isColddown then
                         if IsPedInAnyVehicle(PlayerPedId(), false) then
                             if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then
                                 if isTruckerVehicle(GetVehiclePedIsIn(PlayerPedId(), false)) then
