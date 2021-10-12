@@ -21,6 +21,8 @@
 
 ## Wishlist:
 - [ ] 📌 Blips's in task's
+- [ ] 🐌 Colddown to prevent multispawn vehicle. (30 minutes)
+- [ ] 
 
 
 

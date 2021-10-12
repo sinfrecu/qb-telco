@@ -15,7 +15,6 @@ AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
     PlayerData = QBCore.Functions.GetPlayerData()
     PlayerJob = QBCore.Functions.GetPlayerData().job
     TriggerEvent('qb-telco:client:UpdateBlip', Config.CurrentProject)
-
     BlipBilding()
 end)
 
@@ -26,17 +25,14 @@ AddEventHandler('QBCore:Client:OnJobUpdate', function(JobInfo)
     BlipBilding()
 end)
 
-
 -- // es un vehicle //
 function isTruckerVehicle(vehicle)
     local retval = false
-        if GetEntityModel(vehicle) == GetHashKey("UtilliTruck") then
+        if GetEntityModel(vehicle) == GetHashKey(Config.Vehicle) then
             retval = true
         end
     return retval
 end
-
-
 
 -- // BIG FIX //
 -- // count and output number of task completed //
@@ -53,8 +49,6 @@ function GetCompletedTasks()
     end
     return retval
 end
-
-
 
 -- // Get Current Project and frist project random //
 
@@ -75,6 +69,7 @@ function GetCurrentProject()
     end
     return Config
 end
+
 -- ######## FIX IT
 
 function getNewLocation()
@@ -146,10 +141,6 @@ AddEventHandler('qb-telco:client:SetTaskState', function(Task, IsBusy, IsComplet
 end)
 -- // END BIG FIX //
 
-
-
-
-
 -- // Animations //
 function DoTask()
     local ped = PlayerPedId()
@@ -175,6 +166,7 @@ function DoTask()
 end
 
 -- // Progressbars & Progression //
+
 function TouchProcess()
     if not BuilderData.ShowDetails then
         -- death
@@ -241,6 +233,7 @@ function TasserAnim()
     TaskPlayAnim(ped, 'melee@unarmed@streamed_variations', 'victim_takedown_front_slap', 6.0, -6.0, 6000, 2, 0, 0, 0, 0)
 end
 
+-- // Load Animations //
 function LoadAnim(dict)
     while not HasAnimDictLoaded(dict) do
         RequestAnimDict(dict)
@@ -278,7 +271,7 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
     end
 end)
 
-
+-- // Blip Location base //
 
 function BlipBilding()
     if DoesBlipExist(BildingBlip) then
@@ -298,14 +291,15 @@ function BlipBilding()
     end
 end
 
-
-
 -- // Requirements Inventory //
+
 function ClearNeed(requiredItems)
     Citizen.Wait(1500)
     TriggerEvent('inventory:client:requiredItems', requiredItems, false)   
 end
 
+
+-- // DrawText
 
 function DrawText3Ds(x, y, z, text)
     SetTextScale(0.35, 0.35)
@@ -341,7 +335,7 @@ end)--End code RegisterNUICallback of Tinus_NL
 RegisterNetEvent('qb-telco:client:SpawnVehicle')
 AddEventHandler('qb-telco:client:SpawnVehicle', function()
     QBCore.Functions.Notify('DEBUG: trigger SpawnVehicle')
-    local vehicleInfo = "UtilliTruck"
+    local vehicleInfo = Config.Vehicle
     local coords = Config.JobLocations["vehicle"].coords 
     QBCore.Functions.SpawnVehicle(vehicleInfo, function(veh)
         SetVehicleNumberPlateText(veh, "TLCO"..tostring(math.random(1000, 9999)))
@@ -354,9 +348,6 @@ AddEventHandler('qb-telco:client:SpawnVehicle', function()
     end, coords, true)
 end)
 -- // END - Spanw vehicle //
-
-
-
 
 -- // Thread update 1s //
 Citizen.CreateThread(function()
@@ -375,8 +366,6 @@ Citizen.CreateThread(function()
         local OffsetZ = 0.2
         if PlayerJob.name == "telco" then
 
-
-
             -- // START - Thread for blip vehicle //
             local data = Config.JobLocations["vehicle"]
             local MainDistance = #(pos - vector3(data.coords.x, data.coords.y, data.coords.z))
@@ -387,7 +376,6 @@ Citizen.CreateThread(function()
                 else
                     DrawMarker(2, data.coords.x, data.coords.y, data.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 57, 255, 110, 255, 0, 0, 0, 1, 0, 0, 0)
                 end
-
                 if MainDistance < 2 then
                     if IsPedInAnyVehicle(PlayerPedId(), false) then
                         DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '~g~E~w~ - Store Vehicle')
@@ -409,17 +397,11 @@ Citizen.CreateThread(function()
                             QBCore.Functions.Notify('You must be the driver to do this..')
                         end
                     else
-                        QBCore.Functions.Notify('DEBUG: entro al pago')
-                        TriggerServerEvent('qb-telco:server:SuretyBond', true, "UtilliTruck")
+                        
+                        TriggerServerEvent('qb-telco:server:SuretyBond', true, Config.Vehicle)
                     end
                 end
-            end
-
-            -- // END - Thread for blip vehicle //
-
-
-
-
+            end -- // END - Thread for blip vehicle //
 
             if Config.CurrentProject ~= 0 then
                 local data = Config.Projects[Config.CurrentProject].ProjectLocations["main"]

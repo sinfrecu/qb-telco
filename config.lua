@@ -3,6 +3,7 @@ Config = Config or {}
 Config.CurrentProject = 0
 
 Config.BailPrice = 250
+Config.Vehicle = "UtilliTruck"
 
 Config.JobLocations = {
     ["npc"] = {
