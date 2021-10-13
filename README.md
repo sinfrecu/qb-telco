@@ -2,6 +2,8 @@
 
 **Communications Technician job For QB-Core**
 
+![CodeQL](https://github.com/sinfrecu/qb-telco/workflows/CodeQL/badge.svg)
+
 ## Todo:
 
 - [x] 💰Pay 
@@ -13,18 +15,17 @@
 - [x] coords to vector3
 - [x] Requirements Tool and Materials **per task** , all on config.lua
 - [x] ⚡Power system, use BuilderData.ShowDetails, to turn off the antenna before working, if you work without displaying "ShowDetails" you can be electrocuted by a random, (add Tazzer animation )
-- [x] ⚡ FuseBox minigame to PowerOff electricity
+- [x] ⚡ FuseBox minigame to PowerOff electricity by [Tinus_NL](https://forum.cfx.re/u/tinus_nl/)
+- [X] 🚐 Work car ( request by @nzkfc )
+- [X] 🏢 Blip building location ( request by @nzkfc )
+- [x] 🐌 Colddown to prevent multispawn vehicle. (30 minutes)
 
-
-Wishlist:
-
+## Wishlist:
 - [ ] 📌 Blips's in task's
-- [ ] 🏢 building location ( by @nzkfc )
-- [ ] 🚐 Work car ( by @nzkfc )
 
 
 
-## Video Demo
+
 
 ## Video Demo
 

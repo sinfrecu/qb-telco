@@ -2,6 +2,9 @@ Config = Config or {}
 
 Config.CurrentProject = 0
 
+Config.BailPrice = 250
+Config.Vehicle = "UtilliTruck"
+
 Config.JobLocations = {
     ["npc"] = {
         label = "Cheef",
@@ -9,7 +12,7 @@ Config.JobLocations = {
     },
     ["vehicle"] = {
         label = "[E] vehicle job",
-        coords = vector3(525.31, -1600.89, 29.19),
+        coords = vector4(525.27, -1600.91, 29.2, 225.05),
     },
 }
 

@@ -1,4 +1,5 @@
 -- // Finish project //
+local Bail = {}
 
 RegisterServerEvent('qb-telco:server:cWJ0ZWxjbw')
 AddEventHandler('qb-telco:server:cWJ0ZWxjbw', function(TaskDones)
@@ -26,6 +27,36 @@ AddEventHandler('qb-telco:server:cWJ0ZWxjbw', function(TaskDones)
 
 end)
 
+
+-- // Surety Bond Vehicle // 
+
+RegisterServerEvent('qb-telco:server:SuretyBond')
+AddEventHandler('qb-telco:server:SuretyBond', function(bool, vehInfo)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+
+    if bool then
+        if Player.PlayerData.money.cash >= Config.BailPrice then
+            Bail[Player.PlayerData.citizenid] = Config.BailPrice
+            Player.Functions.RemoveMoney('cash', Config.BailPrice, "tow-received-bail")
+            TriggerClientEvent('QBCore:Notify', src, '$250 Deposit Paid With Cash', 'success')
+            TriggerClientEvent('qb-telco:client:SpawnVehicle', src, vehInfo)
+        elseif Player.PlayerData.money.bank >= Config.BailPrice then
+            Bail[Player.PlayerData.citizenid] = Config.BailPrice
+            Player.Functions.RemoveMoney('bank', Config.BailPrice, "tow-received-bail")
+            TriggerClientEvent('QBCore:Notify', src, '$250 Deposit Paid From Bank', 'success')
+            TriggerClientEvent('qb-telco:client:SpawnVehicle', src, vehInfo)
+        else
+            TriggerClientEvent('QBCore:Notify', src, '$250 Deposit Required', 'error')
+        end
+    else
+        if Bail[Player.PlayerData.citizenid] ~= nil then
+            Player.Functions.AddMoney('cash', Bail[Player.PlayerData.citizenid], "trucker-bail-paid")
+            Bail[Player.PlayerData.citizenid] = nil
+            TriggerClientEvent('QBCore:Notify', src, '$250 Deposit Refunded To Cash', 'success')
+        end
+    end
+end)
 -- // Callback //
 
 QBCore.Functions.CreateCallback('qbtelco:CbHas', function(source, cb, CurrentTask, CurrentProject)

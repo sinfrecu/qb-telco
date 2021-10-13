@@ -6,6 +6,9 @@ local BuilderData = {
     ShowDetails = false,
     CurrentTask = nil,
 }
+local BildingBlip = nil
+local labelname = nill
+local isColddown = false
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
@@ -13,13 +16,39 @@ AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
     PlayerData = QBCore.Functions.GetPlayerData()
     PlayerJob = QBCore.Functions.GetPlayerData().job
     TriggerEvent('qb-telco:client:UpdateBlip', Config.CurrentProject)
+    BlipBilding()
 end)
 
 RegisterNetEvent('QBCore:Client:OnJobUpdate')
 AddEventHandler('QBCore:Client:OnJobUpdate', function(JobInfo)
     PlayerJob = JobInfo
     TriggerEvent('qb-telco:client:UpdateBlip', Config.CurrentProject)
+    BlipBilding()
 end)
+
+
+
+-- // Cold Down vehicle //
+
+function ColdDown()
+    Citizen.CreateThread(function()
+    QBCore.Functions.Notify("Debug: entro en ColdDown:"..tostring(isColddown) , "error")
+    -- 600000 (10 minutos)
+    Citizen.Wait(300000)
+    isColddown = false
+    QBCore.Functions.Notify("Debug: salgo en ColdDown:"..tostring(isColddown) , "error")
+    end)
+end
+
+-- // is a job vechile ? //
+
+function isTruckerVehicle(vehicle)
+    local retval = false
+        if GetEntityModel(vehicle) == GetHashKey(Config.Vehicle) then
+            retval = true
+        end
+    return retval
+end
 
 -- // BIG FIX //
 -- // count and output number of task completed //
@@ -36,8 +65,6 @@ function GetCompletedTasks()
     end
     return retval
 end
-
-
 
 -- // Get Current Project and frist project random //
 
@@ -58,6 +85,7 @@ function GetCurrentProject()
     end
     return Config
 end
+
 -- ######## FIX IT
 
 function getNewLocation()
@@ -129,10 +157,6 @@ AddEventHandler('qb-telco:client:SetTaskState', function(Task, IsBusy, IsComplet
 end)
 -- // END BIG FIX //
 
-
-
-
-
 -- // Animations //
 function DoTask()
     local ped = PlayerPedId()
@@ -158,6 +182,7 @@ function DoTask()
 end
 
 -- // Progressbars & Progression //
+
 function TouchProcess()
     if not BuilderData.ShowDetails then
         -- death
@@ -192,8 +217,8 @@ function TouchProcess()
     end
 end
 
-
 -- // Animations //
+
 function PickAnim()
     local ped = PlayerPedId()
     LoadAnim('amb@prop_human_bum_bin@idle_a')
@@ -224,6 +249,7 @@ function TasserAnim()
     TaskPlayAnim(ped, 'melee@unarmed@streamed_variations', 'victim_takedown_front_slap', 6.0, -6.0, 6000, 2, 0, 0, 0, 0)
 end
 
+-- // Load Animations //
 function LoadAnim(dict)
     while not HasAnimDictLoaded(dict) do
         RequestAnimDict(dict)
@@ -235,17 +261,19 @@ end
 -- // Blips //
 RegisterNetEvent('qb-telco:client:UpdateBlip')
 AddEventHandler('qb-telco:client:UpdateBlip', function(id)
-    DeleteBlip()
+    if DoesBlipExist(TelcoBlip) then
+        RemoveBlip(TelcoBlip)
+    end
     Citizen.Wait(5)
     if PlayerJob.name == "telco" then
         if id == 0 then
-            -- Retun to base
+            -- Retun to base (not in use)
             TelcoBlip = AddBlipForCoord(Config.JobLocations["npc"].coords.x, Config.JobLocations["npc"].coords.y, Config.JobLocations["npc"].coords.z)
-            AddTextComponentSubstringPlayerName(Config.JobLocations["npc"].label)
+            labelname = Config.JobLocations["npc"].label
         else
             -- Normal job
+            labelname = Config.Projects[id].ProjectLocations["main"].label
             TelcoBlip = AddBlipForCoord(Config.Projects[id].ProjectLocations["main"].coords.x, Config.Projects[id].ProjectLocations["main"].coords.y, Config.Projects[id].ProjectLocations["main"].coords.z)        
-            AddTextComponentSubstringPlayerName(Config.Projects[id].ProjectLocations["main"].label)
         end
         SetBlipSprite(TelcoBlip, 161)
         SetBlipDisplay(TelcoBlip, 4)
@@ -253,23 +281,40 @@ AddEventHandler('qb-telco:client:UpdateBlip', function(id)
         SetBlipAsShortRange(TelcoBlip, true)
         SetBlipColour(TelcoBlip, 1)
         BeginTextCommandSetBlipName("STRING")
+        AddTextComponentSubstringPlayerName(labelname)
         EndTextCommandSetBlipName(TelcoBlip)
     end
 end)
 
+-- // Blip Location base //
+
+function BlipBilding()
+    if DoesBlipExist(BildingBlip) then
+        RemoveBlip(BildingBlip)
+    end
+    Citizen.Wait(5)
+    if PlayerJob.name == "telco" then
+        BildingBlip = AddBlipForCoord(Config.JobLocations["npc"].coords.x, Config.JobLocations["npc"].coords.y, Config.JobLocations["npc"].coords.z)
+        SetBlipSprite(BildingBlip, 498)
+        SetBlipDisplay(BildingBlip, 4)
+        SetBlipScale(BildingBlip, 0.6)
+        SetBlipAsShortRange(BildingBlip, true)
+        SetBlipColour(BildingBlip, 1)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentSubstringPlayerName("NAP - Network Access Point")
+        EndTextCommandSetBlipName(BildingBlip)
+    end
+end
 
 -- // Requirements Inventory //
+
 function ClearNeed(requiredItems)
     Citizen.Wait(1500)
     TriggerEvent('inventory:client:requiredItems', requiredItems, false)   
 end
 
--- // Delete the Blip //
-function DeleteBlip()
-    if DoesBlipExist(TelcoBlip) then
-        RemoveBlip(TelcoBlip)
-    end
-end
+
+-- // DrawText
 
 function DrawText3Ds(x, y, z, text)
     SetTextScale(0.35, 0.35)
@@ -301,6 +346,26 @@ end)--End code RegisterNUICallback of Tinus_NL
 
 
 
+-- // START - Spanw vehicle //
+RegisterNetEvent('qb-telco:client:SpawnVehicle')
+AddEventHandler('qb-telco:client:SpawnVehicle', function()
+    isColddown = true
+    ColdDown()
+    QBCore.Functions.Notify('DEBUG: trigger SpawnVehicle')
+    local vehicleInfo = Config.Vehicle
+    local coords = Config.JobLocations["vehicle"].coords 
+    QBCore.Functions.SpawnVehicle(vehicleInfo, function(veh)
+        SetVehicleNumberPlateText(veh, "TLCO"..tostring(math.random(1000, 9999)))
+        SetEntityHeading(veh, coords.w)
+        exports['LegacyFuel']:SetFuel(veh, 100.0)
+        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
+        SetEntityAsMissionEntity(veh, true, true)
+        TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
+        SetVehicleEngineOn(veh, true, true)
+    end, coords, true)
+end)
+-- // END - Spanw vehicle //
+
 -- // Thread update 1s //
 Citizen.CreateThread(function()
     Wait(1000)
@@ -317,6 +382,49 @@ Citizen.CreateThread(function()
         local inRange = false
         local OffsetZ = 0.2
         if PlayerJob.name == "telco" then
+
+            -- // START - Thread for blip vehicle //
+            local data = Config.JobLocations["vehicle"]
+            local MainDistance = #(pos - vector3(data.coords.x, data.coords.y, data.coords.z))
+            if MainDistance < 10 then
+                inRange = true
+                if not BuilderData.ShowDetails then
+                    DrawMarker(2, data.coords.x, data.coords.y, data.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 255, 77, 57, 255, 0, 0, 0, 1, 0, 0, 0)
+                else
+                    DrawMarker(2, data.coords.x, data.coords.y, data.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 57, 255, 110, 255, 0, 0, 0, 1, 0, 0, 0)
+                end
+                if MainDistance < 2 then
+                    if IsPedInAnyVehicle(PlayerPedId(), false) then
+                        DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '~g~E~w~ - Store Vehicle')
+                    else
+                        DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '~g~E~w~ - Vehicle')
+                    end
+                end
+
+                if IsControlJustPressed(0, 38) then
+                    QBCore.Functions.Notify('DEBUG: colddown value: '..tostring(isColddown) , 'error')
+                    if not isColddown then
+                        if IsPedInAnyVehicle(PlayerPedId(), false) then
+                            if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then
+                                if isTruckerVehicle(GetVehiclePedIsIn(PlayerPedId(), false)) then
+                                    DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
+                                    TriggerServerEvent('qb-telco:server:SuretyBond', false)
+                                else
+                                    QBCore.Functions.Notify('This is not a commercial vehicle!', 'error')
+                                end
+                            else
+                                QBCore.Functions.Notify('You must be the driver to do this..')
+                            end
+                        else
+
+                            TriggerServerEvent('qb-telco:server:SuretyBond', true, Config.Vehicle)
+                        end
+                    else 
+                        QBCore.Functions.Notify('You have taken out a vehicle very recently.', 'error')
+                    end -- end of colddown
+                end
+            end -- // END - Thread for blip vehicle //
+
             if Config.CurrentProject ~= 0 then
                 local data = Config.Projects[Config.CurrentProject].ProjectLocations["main"]
                 local MainDistance = #(pos - vector3(data.coords.x, data.coords.y, data.coords.z))
@@ -354,7 +462,7 @@ Citizen.CreateThread(function()
                                     -- Reset status task 
                                     local ResetTask = 1
                                     while ResetTask < TaskData.total+1 do
-                                        --QBCore.Functions.Notify("DEBUG: SetTaskState "..ResetTask.." de "..TaskData.total , "error", 4000)
+                                        -- QBCore.Functions.Notify("DEBUG: SetTaskState "..ResetTask.." de "..TaskData.total , "error", 4000)
                                         TriggerEvent('qb-telco:client:SetTaskState', ResetTask, false, false)  
                                         ResetTask = ResetTask+1
                                     end
