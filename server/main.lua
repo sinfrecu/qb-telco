@@ -1,5 +1,7 @@
 -- // Finish project //
 local Bail = {}
+local QBCore = exports['qb-core']:GetCoreObject()
+ 
 
 RegisterServerEvent('qb-telco:server:cWJ0ZWxjbw')
 AddEventHandler('qb-telco:server:cWJ0ZWxjbw', function(TaskDones)

@@ -1,3 +1,4 @@
+local QBCore = exports['qb-core']:GetCoreObject()
 local isLoggedIn = false
 local LocationsDone = {}
 local PlayerData = {}
