@@ -95,4 +95,4 @@ qb-builderjob, qb-vineyard, qb-truckerjob
 [![Qb-telco-demo](https://raw.githubusercontent.com/sinfrecu/public/main/FuseBox.png
 )](https://https://forum.cfx.re/t/release-free-esx-esx-technician/)
 
-A special thanks to [Tinus_NL](https://forum.cfx.re/u/tinus_nl/) original author of the [esx_technician](https://forum.cfx.re/t/release-free-esx-esx-technician/) module "fuse box", who authorized the use of the files and part of the code in this module.
+A special thanks to [Tinus_NL](https://forum.cfx.re/u/tinus_nl/) original author of the [esx_technician](https://forum.cfx.re/t/release-free-esx-esx-technician/) module "fuse box", who authorized the use of the files and part of the code in this module..
