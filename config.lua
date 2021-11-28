@@ -180,7 +180,7 @@ Config.Projects = {
             },
             [3] = {
                 coords = vector3(1865.89, 3716.54, 33.07),
-                label = "repair bandalism",
+                label = "Repair Vandalism",
                 type = "TouchLight",
                 requiredTool = "screwdriverset",
                 requiredItem = "plastic",
